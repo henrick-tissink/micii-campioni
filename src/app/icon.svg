@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="32" fill="#0891b2"/>
+
+  <!-- Swimmer head -->
+  <circle cx="28" cy="18" r="6" fill="#facc15"/>
+
+  <!-- Swimmer arm stroke -->
+  <path d="M32 20 C36 14, 44 12, 50 16" stroke="#facc15" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Swimmer body -->
+  <path d="M22 22 C24 26, 28 28, 32 28" stroke="#facc15" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Wave 1 -->
+  <path d="M8 34 C14 28, 22 28, 28 34 C34 40, 42 40, 48 34 C50 32, 54 32, 58 34" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Wave 2 -->
+  <path d="M6 44 C12 38, 20 38, 26 44 C32 50, 40 50, 46 44 C50 40, 54 40, 58 44" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Wave 3 -->
+  <path d="M10 52 C16 48, 22 48, 28 52 C34 56, 40 56, 46 52 C50 49, 54 49, 56 52" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4"/>
+</svg>

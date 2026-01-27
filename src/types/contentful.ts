@@ -27,17 +27,16 @@ export interface SiteSettingsSkeleton extends EntrySkeletonType {
   fields: {
     internalName: string;
     siteName: string;
-    tagline?: string;
+    tagLine?: string;
     logo: Asset;
     logoWhite?: Asset;
     favicon?: Asset;
     anniversaryText?: string;
-    anniversaryActive: boolean;
-    phone: string;
-    email: string;
+    showAnniversaryBanner: boolean;
+    phoneNumber: string;
+    emailAddress: string;
     address: string;
-    gpsLatitude?: number;
-    gpsLongitude?: number;
+    location?: { lat: number; lon: number };
     facebookUrl?: string;
     twitterUrl?: string;
     instagramUrl?: string;

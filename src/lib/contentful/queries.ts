@@ -62,18 +62,19 @@ export async function getSiteSettings(
     if (!entries.items.length) return null;
 
     const item = entries.items[0];
+    const location = item.fields.location as { lat: number; lon: number } | undefined;
     return {
       siteName: item.fields.siteName,
-      tagline: item.fields.tagline,
+      tagline: item.fields.tagLine,
       logo: parseAsset(item.fields.logo as Asset)!,
       logoWhite: parseAsset(item.fields.logoWhite as unknown as Asset | undefined),
       anniversaryText: item.fields.anniversaryText,
-      anniversaryActive: item.fields.anniversaryActive,
-      phone: item.fields.phone,
-      email: item.fields.email,
+      anniversaryActive: item.fields.showAnniversaryBanner,
+      phone: item.fields.phoneNumber,
+      email: item.fields.emailAddress,
       address: item.fields.address,
-      gpsLatitude: item.fields.gpsLatitude,
-      gpsLongitude: item.fields.gpsLongitude,
+      gpsLatitude: location?.lat,
+      gpsLongitude: location?.lon,
       facebookUrl: item.fields.facebookUrl,
       twitterUrl: item.fields.twitterUrl,
       instagramUrl: item.fields.instagramUrl,

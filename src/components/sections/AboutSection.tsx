@@ -58,30 +58,32 @@ export function AboutSection({
       >
         {/* Image */}
         <div
-          className={`relative aspect-[4/3] overflow-hidden rounded-3xl ${
+          className={`relative pb-6 pr-6 ${
             reverse ? "lg:order-2" : ""
           }`}
         >
-          {image ? (
-            <Image
-              src={image.url}
-              alt={image.alt || title}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center bg-gradient-to-br from-lagoon-100 to-lagoon-200">
-              <div className="text-center">
-                <span className="text-6xl">🏊</span>
-                <p className="mt-4 font-heading text-lg font-semibold text-lagoon-600">
-                  Micii Campioni
-                </p>
+          <div className="aspect-[4/3] overflow-hidden rounded-3xl">
+            {image ? (
+              <Image
+                src={image.url}
+                alt={image.alt || title}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center bg-gradient-to-br from-lagoon-100 to-lagoon-200">
+                <div className="text-center">
+                  <span className="text-6xl">🏊</span>
+                  <p className="mt-4 font-heading text-lg font-semibold text-lagoon-600">
+                    Micii Campioni
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Decorative badge */}
-          <div className="absolute -bottom-4 -right-4 rounded-2xl bg-coral-500 px-6 py-4 text-center shadow-elevated lg:-bottom-6 lg:-right-6">
+          <div className="absolute bottom-0 right-0 rounded-2xl bg-coral-500 px-6 py-4 text-center shadow-elevated">
             <p className="font-heading text-2xl font-bold text-white lg:text-3xl">
               15+
             </p>

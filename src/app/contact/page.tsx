@@ -121,13 +121,11 @@ export default async function ContactPage() {
         <Section background="white" spacing="lg" noContainer>
           <div className="h-[400px] w-full">
             <iframe
-              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || ""}&q=${settings.gpsLatitude},${settings.gpsLongitude}`}
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${settings.gpsLongitude - 0.005},${settings.gpsLatitude - 0.003},${settings.gpsLongitude + 0.005},${settings.gpsLatitude + 0.003}&layer=mapnik&marker=${settings.gpsLatitude},${settings.gpsLongitude}`}
               width="100%"
               height="100%"
               style={{ border: 0 }}
-              allowFullScreen
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
               title="Locația Micii Campioni"
             />
           </div>

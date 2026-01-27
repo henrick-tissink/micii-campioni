@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { getServiceBySlug, getServices } from "@/lib/contentful/queries";
+import { getServiceBySlug, getServices, getFAQs } from "@/lib/contentful/queries";
 import { RichText } from "@/lib/contentful/rich-text";
 import { Markdown } from "@/lib/contentful/markdown";
 import { Section } from "@/components/ui/Section";
@@ -9,6 +9,7 @@ import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabList, TabTrigger, TabContent } from "@/components/ui/Tabs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/Accordion";
 import { CompactServices } from "@/components/sections/ServicesSection";
 import { CTASection } from "@/components/sections/CTASection";
 
@@ -63,9 +64,11 @@ export async function generateStaticParams() {
 
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params;
-  const [service, allServices] = await Promise.all([
+  const isFAQPage = slug === "intrebari-frecvente";
+  const [service, allServices, faqs] = await Promise.all([
     getServiceBySlug(slug),
     getServices(),
+    isFAQPage ? getFAQs() : Promise.resolve([]),
   ]);
 
   if (!service) {
@@ -179,6 +182,22 @@ export default async function ServicePage({ params }: Props) {
             ) : (
               <div className="prose prose-sand max-w-none">
                 <RichText content={service.content} />
+              </div>
+            )}
+
+            {/* FAQ Accordion */}
+            {isFAQPage && faqs.length > 0 && (
+              <div className="mt-12">
+                <Accordion allowMultiple>
+                  {faqs.map((faq, index) => (
+                    <AccordionItem key={index} id={`faq-${index}`}>
+                      <AccordionTrigger>{faq.question}</AccordionTrigger>
+                      <AccordionContent>
+                        <Markdown content={faq.answer} />
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </div>
             )}
 

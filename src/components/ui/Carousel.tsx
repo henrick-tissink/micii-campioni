@@ -141,7 +141,7 @@ export function Carousel({
 
       {/* Dot indicators */}
       {showDots && scrollSnaps.length > 1 && (
-        <div className="mt-6 flex justify-center gap-2">
+        <div className="absolute bottom-4 left-0 right-0 z-10 flex justify-center gap-2">
           {scrollSnaps.map((_, index) => (
             <button
               key={index}
@@ -149,8 +149,8 @@ export function Carousel({
               className={cn(
                 "h-2 rounded-full transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2",
                 index === selectedIndex
-                  ? "w-6 bg-lagoon-500"
-                  : "w-2 bg-sand-300 hover:bg-sand-400"
+                  ? "w-6 bg-white"
+                  : "w-2 bg-white/50 hover:bg-white/75"
               )}
               aria-label={`Go to slide ${index + 1}`}
               aria-current={index === selectedIndex ? "true" : undefined}
