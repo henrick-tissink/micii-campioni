@@ -98,7 +98,7 @@ export function Modal({
       ref={dialogRef}
       onClick={handleBackdropClick}
       className={cn(
-        "fixed inset-0 z-modal m-0 h-full w-full max-w-none max-h-none bg-transparent p-4 backdrop:bg-black/50 backdrop:backdrop-blur-sm",
+        "fixed inset-0 z-500 m-0 h-full w-full max-w-none max-h-none bg-transparent p-4 backdrop:bg-black/50 backdrop:backdrop-blur-sm",
         "open:flex open:items-center open:justify-center"
       )}
     >

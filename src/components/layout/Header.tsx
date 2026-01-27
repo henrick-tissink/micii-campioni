@@ -93,7 +93,7 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
       {/* Main header */}
       <header
         className={cn(
-          "sticky top-0 z-header w-full transition-all duration-200",
+          "sticky top-0 z-300 w-full transition-all duration-200",
           isScrolled
             ? "bg-white/95 shadow-soft backdrop-blur-md"
             : "bg-white"
@@ -169,7 +169,7 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
       {/* Mobile navigation - outside header to avoid backdrop-filter containing block */}
       <div
         className={cn(
-          "fixed inset-x-0 top-16 bottom-0 z-overlay bg-white transition-transform duration-300 lg:hidden",
+          "fixed inset-x-0 top-16 bottom-0 z-400 bg-white transition-transform duration-300 lg:hidden",
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
