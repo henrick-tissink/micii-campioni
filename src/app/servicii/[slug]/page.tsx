@@ -194,21 +194,21 @@ export default async function ServicePage({ params }: Props) {
                 </TabList>
 
                 <TabContent id="descriere">
-                  <div className="prose prose-sand max-w-none">
+                  <div className="prose max-w-none">
                     <RichText content={service.content} />
                   </div>
                 </TabContent>
 
                 {service.tabs.map((tab) => (
                   <TabContent key={tab.title} id={tab.title.toLowerCase().replace(/\s+/g, "-")}>
-                    <div className="prose prose-sand max-w-none">
+                    <div className="prose max-w-none">
                       <Markdown content={tab.content} />
                     </div>
                   </TabContent>
                 ))}
               </Tabs>
             ) : (
-              <div className="prose prose-sand max-w-none">
+              <div className="prose max-w-none">
                 <RichText content={service.content} />
               </div>
             )}

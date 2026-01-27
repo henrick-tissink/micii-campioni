@@ -79,7 +79,7 @@ export default async function ConceptSubPage({ params }: Props) {
       >
         {/* Main Content */}
         {page.content && (
-          <div className="prose prose-sand prose-lg max-w-none">
+          <div className="prose max-w-none">
             <RichText content={page.content} />
           </div>
         )}

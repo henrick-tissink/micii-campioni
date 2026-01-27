@@ -214,7 +214,7 @@ function TeamMemberDetail({ member }: TeamMemberDetailProps) {
 
       {/* Bio */}
       {member.bio && (
-        <div className="prose prose-sand max-w-none">
+        <div className="prose max-w-none">
           <Markdown content={member.bio} />
         </div>
       )}

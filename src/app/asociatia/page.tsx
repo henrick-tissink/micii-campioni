@@ -72,7 +72,7 @@ export default async function AsociatiaPage() {
       {page?.content && (
         <Section background="white" spacing="xl">
           <div className="mx-auto max-w-4xl">
-            <div className="prose prose-sand prose-lg max-w-none">
+            <div className="prose max-w-none">
               <RichText content={page.content} />
             </div>
           </div>

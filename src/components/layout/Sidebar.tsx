@@ -103,7 +103,7 @@ function WidgetCard({ widget }: WidgetCardProps) {
         <div
           className={cn(
             "prose prose-sm max-w-none",
-            isCta ? "prose-invert" : "prose-sand"
+            isCta ? "text-white" : ""
           )}
         >
           <Markdown content={content} />

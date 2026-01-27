@@ -92,7 +92,7 @@ export default async function GenericPage({ params }: Props) {
       <Section background="white" spacing="xl">
         <div className="mx-auto max-w-4xl">
           {page.content && (
-            <div className="prose prose-sand prose-lg max-w-none">
+            <div className="prose max-w-none">
               <RichText content={page.content} />
             </div>
           )}
