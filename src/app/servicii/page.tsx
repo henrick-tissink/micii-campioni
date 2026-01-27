@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   title: "Servicii - Cursuri de Înot pentru Copii",
   description:
     "Descoperă programele noastre de educație acvatică pentru toate vârstele: cursuri prenatale, înot bebeluși, înot copii și kinetoterapie.",
+  alternates: { canonical: "/servicii" },
+  openGraph: {
+    title: "Servicii - Cursuri de Înot pentru Copii",
+    description:
+      "Descoperă programele noastre de educație acvatică pentru toate vârstele: cursuri prenatale, înot bebeluși, înot copii și kinetoterapie.",
+  },
 };
 
 export default async function ServicesListPage() {

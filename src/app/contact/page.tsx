@@ -7,16 +7,71 @@ import { Card } from "@/components/ui/Card";
 import { ContactForm } from "@/components/forms/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact - Micii Campioni",
+  title: "Contact",
   description:
     "Contactează-ne pentru informații despre cursurile de înot, programări sau orice alte întrebări. Suntem aici să te ajutăm.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contactează Micii Campioni",
+    description:
+      "Contactează-ne pentru informații despre cursurile de înot, programări sau orice alte întrebări. Suntem aici să te ajutăm.",
+  },
 };
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}/#organization`,
+    name: "Clubul Micii Campioni",
+    description:
+      "Primul club de educatie acvatica din Romania - cursuri de inot pentru bebelusi si copii.",
+    url: siteUrl,
+    telephone: settings?.phone,
+    email: settings?.email,
+    address: settings?.address
+      ? {
+          "@type": "PostalAddress",
+          streetAddress: settings.address,
+          addressLocality: "Bucuresti",
+          addressCountry: "RO",
+        }
+      : undefined,
+    geo:
+      settings?.gpsLatitude && settings?.gpsLongitude
+        ? {
+            "@type": "GeoCoordinates",
+            latitude: settings.gpsLatitude,
+            longitude: settings.gpsLongitude,
+          }
+        : undefined,
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "20:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Saturday",
+        opens: "09:00",
+        closes: "14:00",
+      },
+    ],
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessJsonLd),
+        }}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-lagoon-600 to-lagoon-700 py-16 md:py-24">
         <Container>

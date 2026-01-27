@@ -7,9 +7,15 @@ import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 
 export const metadata: Metadata = {
-  title: "Harta Site - Micii Campioni",
+  title: "Harta Site-ului",
   description:
     "Navigare completă prin site-ul Clubului Micii Campioni - găsește rapid informațiile de care ai nevoie.",
+  alternates: { canonical: "/harta-site" },
+  openGraph: {
+    title: "Harta Site-ului Micii Campioni",
+    description:
+      "Navigare completă prin site-ul Clubului Micii Campioni - găsește rapid informațiile de care ai nevoie.",
+  },
 };
 
 // Site structure definition

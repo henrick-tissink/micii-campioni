@@ -42,6 +42,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Clubul Micii Campioni" }],
   creator: "Georgeta Sultana",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "ro_RO",
@@ -58,9 +61,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default async function RootLayout({
@@ -73,11 +73,52 @@ export default async function RootLayout({
     getSiteSettings(),
   ]);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Clubul Micii Campioni",
+    alternateName: "Micii Campioni",
+    url: siteUrl,
+    logo: siteSettings?.logo?.url
+      ? `https:${siteSettings.logo.url}`
+      : `${siteUrl}/images/logos/logo-micii-campioni.png`,
+    foundingDate: "2001",
+    founder: {
+      "@type": "Person",
+      name: "Georgeta Sultana",
+    },
+    description:
+      "Primul club de educatie acvatica din Romania, dedicat dezvoltarii armonioase a copiilor prin intermediul apei.",
+    address: siteSettings?.address
+      ? {
+          "@type": "PostalAddress",
+          streetAddress: siteSettings.address,
+          addressLocality: "Bucuresti",
+          addressCountry: "RO",
+        }
+      : undefined,
+    telephone: siteSettings?.phone,
+    email: siteSettings?.email,
+    sameAs: [
+      siteSettings?.facebookUrl,
+      siteSettings?.instagramUrl,
+      siteSettings?.twitterUrl,
+    ].filter(Boolean),
+  };
+
   return (
     <html lang="ro">
       <body
         className={`${plusJakarta.variable} ${inter.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
         <a href="#main-content" className="skip-link">
           Salt la continut principal
         </a>

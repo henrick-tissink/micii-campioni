@@ -10,9 +10,15 @@ import { PartnersStrip } from "@/components/content/PartnersStrip";
 import { CTASection } from "@/components/sections/CTASection";
 
 export const metadata: Metadata = {
-  title: "Concept - Filosofia Micii Campioni",
+  title: "Conceptul Nostru",
   description:
     "Descoperă conceptul și filosofia din spatele Clubului Micii Campioni - educație acvatică bazată pe încredere, siguranță și bucurie.",
+  alternates: { canonical: "/concept" },
+  openGraph: {
+    title: "Conceptul Micii Campioni",
+    description:
+      "Descoperă conceptul și filosofia din spatele Clubului Micii Campioni - educație acvatică bazată pe încredere, siguranță și bucurie.",
+  },
 };
 
 // Section navigation cards

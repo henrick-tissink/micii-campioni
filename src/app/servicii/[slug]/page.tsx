@@ -31,11 +31,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  // Strip "Micii Campioni" from metaTitle if present to avoid duplication with template
+  const rawTitle = service.metaTitle || service.title;
+  const title = rawTitle.replace(/\s*[-–|]\s*Micii Campioni\s*$/i, "");
+
   return {
-    title: service.metaTitle || service.title,
+    title,
     description: service.metaDescription || service.shortDescription,
+    alternates: { canonical: `/servicii/${slug}` },
     openGraph: {
-      title: service.metaTitle || service.title,
+      title: rawTitle,
       description: service.metaDescription || service.shortDescription,
       images: service.heroImage
         ? [
@@ -80,8 +85,31 @@ export default async function ServicePage({ params }: Props) {
   // Get first age group's age range if available
   const primaryAgeRange = service.ageGroups?.[0]?.ageRange;
 
+  // FAQ structured data for rich results
+  const faqJsonLd =
+    isFAQPage && faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
   return (
     <>
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       {/* Hero Section */}
       <section className="relative min-h-[400px] overflow-hidden bg-gradient-to-br from-lagoon-600 to-lagoon-800">
         {service.heroImage && (

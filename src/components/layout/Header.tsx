@@ -164,65 +164,66 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
           </nav>
         </Container>
 
-        {/* Mobile navigation */}
-        <div
-          className={cn(
-            "fixed inset-x-0 top-16 bottom-0 z-header bg-white transition-transform duration-300 lg:hidden",
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          )}
-        >
-          <Container className="h-full overflow-y-auto py-6">
-            <ul className="space-y-1">
-              {navItems.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={cn(
-                      "block rounded-xl px-4 py-3 font-medium text-sand-700 transition-colors hover:bg-sand-50 hover:text-lagoon-600",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-6 px-4">
-              <Button
-                href="/contact"
-                fullWidth
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Button>
-            </div>
-
-            {/* Mobile contact info */}
-            <div className="mt-8 space-y-3 border-t border-sand-200 px-4 pt-6">
-              {siteSettings?.phone && (
-                <a
-                  href={`tel:${siteSettings.phone}`}
-                  className="flex items-center gap-3 text-sand-600"
-                >
-                  <Phone className="h-5 w-5 text-lagoon-500" />
-                  {siteSettings.phone}
-                </a>
-              )}
-              {siteSettings?.email && (
-                <a
-                  href={`mailto:${siteSettings.email}`}
-                  className="flex items-center gap-3 text-sand-600"
-                >
-                  <Mail className="h-5 w-5 text-lagoon-500" />
-                  {siteSettings.email}
-                </a>
-              )}
-            </div>
-          </Container>
-        </div>
       </header>
+
+      {/* Mobile navigation - outside header to avoid backdrop-filter containing block */}
+      <div
+        className={cn(
+          "fixed inset-x-0 top-16 bottom-0 z-overlay bg-white transition-transform duration-300 lg:hidden",
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <Container className="h-full overflow-y-auto py-6">
+          <ul className="space-y-1">
+            {navItems.map((item) => (
+              <li key={item.label}>
+                <Link
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={cn(
+                    "block rounded-xl px-4 py-3 font-medium text-sand-700 transition-colors hover:bg-sand-50 hover:text-lagoon-600",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 px-4">
+            <Button
+              href="/contact"
+              fullWidth
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Button>
+          </div>
+
+          {/* Mobile contact info */}
+          <div className="mt-8 space-y-3 border-t border-sand-200 px-4 pt-6">
+            {siteSettings?.phone && (
+              <a
+                href={`tel:${siteSettings.phone}`}
+                className="flex items-center gap-3 text-sand-600"
+              >
+                <Phone className="h-5 w-5 text-lagoon-500" />
+                {siteSettings.phone}
+              </a>
+            )}
+            {siteSettings?.email && (
+              <a
+                href={`mailto:${siteSettings.email}`}
+                className="flex items-center gap-3 text-sand-600"
+              >
+                <Mail className="h-5 w-5 text-lagoon-500" />
+                {siteSettings.email}
+              </a>
+            )}
+          </div>
+        </Container>
+      </div>
     </>
   );
 }

@@ -11,9 +11,15 @@ import { Markdown } from "@/lib/contentful/markdown";
 import { CTASection } from "@/components/sections/CTASection";
 
 export const metadata: Metadata = {
-  title: "Asociația - Clubul Micii Campioni",
+  title: "Asociația",
   description:
     "Asociația Clubul Micii Campioni - misiunea noastră de a promova educația acvatică în România și proiectele sociale pe care le derulăm.",
+  alternates: { canonical: "/asociatia" },
+  openGraph: {
+    title: "Asociația Clubul Micii Campioni",
+    description:
+      "Asociația Clubul Micii Campioni - misiunea noastră de a promova educația acvatică în România și proiectele sociale pe care le derulăm.",
+  },
 };
 
 // Section navigation cards

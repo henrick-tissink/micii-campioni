@@ -40,6 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: page.metaTitle || page.title,
     description: page.metaDescription,
+    alternates: { canonical: `/despre-noi/${slug}` },
     openGraph: {
       title: page.metaTitle || page.title,
       description: page.metaDescription,
