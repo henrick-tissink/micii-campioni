@@ -39,7 +39,7 @@ export default async function HomePage() {
         title="Pregătit să începi aventura acvatică?"
         description="Înscrie-ți copilul astăzi și oferă-i șansa de a deveni un mic campion al apei. Prima lecție este gratuită!"
         primaryButton={{ label: "Programează o lecție gratuită", href: "/contact" }}
-        secondaryButton={{ label: "Vezi Programul", href: "/cursuri" }}
+        secondaryButton={{ label: "Vezi Programul", href: "/servicii" }}
         variant="gradient"
       />
     </>

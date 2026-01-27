@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import type { Navigation as NavigationType, SiteSettings } from "@/types/contentful";
 
@@ -84,7 +84,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
                   className="rounded-lg p-2 text-sand-400 transition-colors hover:bg-sand-800 hover:text-white"
                   aria-label="Twitter"
                 >
-                  <Youtube className="h-5 w-5" />
+                  <Twitter className="h-5 w-5" />
                 </a>
               )}
             </div>
@@ -111,7 +111,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
 
           <div>
             <h3 className="mb-4 font-heading font-semibold text-white">
-              Informatii
+              Informații
             </h3>
             <ul className="space-y-2">
               {secondaryLinks.map((item) => (

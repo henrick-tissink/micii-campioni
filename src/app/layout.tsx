@@ -82,7 +82,9 @@ export default async function RootLayout({
     alternateName: "Micii Campioni",
     url: siteUrl,
     logo: siteSettings?.logo?.url
-      ? `https:${siteSettings.logo.url}`
+      ? siteSettings.logo.url.startsWith("//")
+        ? `https:${siteSettings.logo.url}`
+        : siteSettings.logo.url
       : `${siteUrl}/images/logos/logo-micii-campioni.png`,
     foundingDate: "2001",
     founder: {
@@ -120,7 +122,7 @@ export default async function RootLayout({
           }}
         />
         <a href="#main-content" className="skip-link">
-          Salt la continut principal
+          Salt la conținut principal
         </a>
         <Header navigation={headerNav} siteSettings={siteSettings} />
         <main id="main-content">{children}</main>

@@ -37,13 +37,13 @@ const sectionCards = [
     icon: History,
   },
   {
-    slug: "siguranta",
+    slug: "siguranta-si-securitate-pentru-copilul-tau",
     title: "Siguranță și Securitate",
     description: "Standardele noastre de siguranță pentru copilul tău",
     icon: Shield,
   },
   {
-    slug: "echipa",
+    slug: "echipa-micii-campioni",
     title: "Echipa",
     description: "Cunoaște instructorii și specialiștii noștri",
     icon: Users,
@@ -55,7 +55,7 @@ const sectionCards = [
     icon: Newspaper,
   },
   {
-    slug: "distinctii",
+    slug: "distinctii-si-certificari",
     title: "Distincții și Certificări",
     description: "Recunoașterea muncii noastre",
     icon: Award,
