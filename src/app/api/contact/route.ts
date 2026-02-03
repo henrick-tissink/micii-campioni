@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 // =============================================================================
 // Types
@@ -151,14 +152,35 @@ export async function POST(request: Request) {
       message: stripHtml(data.message).trim(),
     };
 
-    // TODO: Implement email sending with Resend
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send({
-    //   from: "noreply@miciicampioni.ro",
-    //   to: process.env.CONTACT_EMAIL || "contact@miciicampioni.ro",
-    //   subject: `Mesaj nou de la ${sanitized.name}`,
-    //   html: `...`,
-    // });
+    // --- Send email via Resend ---
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const to = process.env.CONTACT_EMAIL_TO || "info@miciicampioni.ro";
+    const from = process.env.CONTACT_EMAIL_FROM || "website@miciicampioni.ro";
+
+    const { error: sendError } = await resend.emails.send({
+      from: `Micii Campioni Website <${from}>`,
+      to,
+      replyTo: sanitized.email,
+      subject: `Mesaj nou de la ${sanitized.name}`,
+      html: `
+        <h2>Mesaj nou de pe site</h2>
+        <p><strong>Nume:</strong> ${sanitized.name}</p>
+        <p><strong>Email:</strong> ${sanitized.email}</p>
+        ${sanitized.phone ? `<p><strong>Telefon:</strong> ${sanitized.phone}</p>` : ""}
+        ${sanitized.service ? `<p><strong>Serviciu:</strong> ${sanitized.service}</p>` : ""}
+        <hr />
+        <p>${sanitized.message.replace(/\n/g, "<br />")}</p>
+      `,
+    });
+
+    if (sendError) {
+      console.error("Resend error:", sendError);
+      return NextResponse.json(
+        { error: "A apărut o eroare la trimiterea mesajului. Te rugăm să încerci din nou." },
+        { status: 500 }
+      );
+    }
 
     // Redacted log — no full PII
     console.log("Contact form submission:", {
