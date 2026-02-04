@@ -15,6 +15,12 @@ interface ContactFormData {
 }
 
 // =============================================================================
+// Resend Client (module-level singleton — avoids per-request instantiation)
+// =============================================================================
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// =============================================================================
 // Rate Limiting (in-memory, per-process)
 // =============================================================================
 
@@ -36,21 +42,31 @@ function isRateLimited(ip: string): boolean {
 
   recent.push(now);
   rateLimitMap.set(ip, recent);
+
+  // Inline cleanup: evict entries older than the window to prevent unbounded growth
+  if (rateLimitMap.size > 1000) {
+    for (const [key, ts] of rateLimitMap) {
+      if (ts.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) {
+        rateLimitMap.delete(key);
+      }
+    }
+  }
+
   return false;
 }
 
-// Periodically clean up stale entries to prevent memory leaks
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, timestamps] of rateLimitMap) {
-    const recent = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-    if (recent.length === 0) {
-      rateLimitMap.delete(ip);
-    } else {
-      rateLimitMap.set(ip, recent);
-    }
-  }
-}, RATE_LIMIT_WINDOW_MS);
+// =============================================================================
+// Service label lookup
+// =============================================================================
+
+const SERVICE_LABELS: Record<string, string> = {
+  "cursuri-prenatale": "Cursuri Prenatale Lamaze",
+  "inot-bebelusi": "Înot Bebeluși (0-3 ani)",
+  "inot-copii": "Înot Copii (3-12 ani)",
+  "kinetoterapie": "Kinetoterapie Pediatrică",
+  "consultatie": "Consultație Generală",
+  "altele": "Altele",
+};
 
 // =============================================================================
 // Helpers
@@ -123,10 +139,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const data: ContactFormData = await request.json();
+    const body: ContactFormData = await request.json();
 
     // --- Honeypot check ---
-    if (data.website) {
+    if (body.website) {
       // Bot detected — return 200 silently
       return NextResponse.json(
         { success: true, message: "Mesajul a fost trimis cu succes!" },
@@ -135,7 +151,7 @@ export async function POST(request: Request) {
     }
 
     // --- Validation ---
-    const validationError = validate(data);
+    const validationError = validate(body);
     if (validationError) {
       return NextResponse.json(
         { error: validationError },
@@ -145,20 +161,20 @@ export async function POST(request: Request) {
 
     // --- Sanitize ---
     const sanitized = {
-      name: stripHtml(data.name).trim(),
-      email: stripHtml(data.email).trim(),
-      phone: data.phone ? stripHtml(data.phone).trim() : undefined,
-      service: data.service ? stripHtml(data.service).trim() : undefined,
-      message: stripHtml(data.message).trim(),
+      name: stripHtml(body.name).trim(),
+      email: stripHtml(body.email).trim(),
+      phone: body.phone ? stripHtml(body.phone).trim() : undefined,
+      service: body.service
+        ? SERVICE_LABELS[body.service] ?? stripHtml(body.service).trim()
+        : undefined,
+      message: stripHtml(body.message).trim(),
     };
 
     // --- Send email via Resend ---
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
     const to = process.env.CONTACT_EMAIL_TO || "info@miciicampioni.ro";
     const from = process.env.CONTACT_EMAIL_FROM || "website@miciicampioni.ro";
 
-    const { error: sendError } = await resend.emails.send({
+    const { data: sendResult, error: sendError } = await resend.emails.send({
       from: `Micii Campioni Website <${from}>`,
       to,
       replyTo: sanitized.email,
@@ -174,8 +190,8 @@ export async function POST(request: Request) {
       `,
     });
 
-    if (sendError) {
-      console.error("Resend error:", sendError);
+    if (sendError || !sendResult?.id) {
+      console.error("Resend error:", sendError ?? "No email ID returned");
       return NextResponse.json(
         { error: "A apărut o eroare la trimiterea mesajului. Te rugăm să încerci din nou." },
         { status: 500 }
