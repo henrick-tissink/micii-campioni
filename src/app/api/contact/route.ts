@@ -85,6 +85,112 @@ function redact(value: string | undefined): string {
 }
 
 // =============================================================================
+// Email Template
+// =============================================================================
+
+interface EmailFields {
+  name: string;
+  email: string;
+  phone?: string;
+  service?: string;
+  message: string;
+}
+
+function buildContactEmailHtml(fields: EmailFields): string {
+  const preheader = `Mesaj de la ${fields.name}${fields.service ? ` — ${fields.service}` : ""}`;
+
+  const row = (label: string, content: string) => `
+    <tr>
+      <td style="padding:12px 0;border-bottom:1px solid #e7e5e4;">
+        <span style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#78716c;margin-bottom:4px;">${label}</span>
+        ${content}
+      </td>
+    </tr>`;
+
+  const textValue = (v: string) =>
+    `<span style="font-size:15px;color:#1c1917;">${v}</span>`;
+
+  const linkValue = (href: string, v: string) =>
+    `<a href="${href}" style="font-size:15px;color:#0d9488;text-decoration:none;">${v}</a>`;
+
+  const contactRows = [
+    row("Nume", textValue(fields.name)),
+    row("Email", linkValue(`mailto:${fields.email}`, fields.email)),
+    fields.phone ? row("Telefon", linkValue(`tel:${fields.phone}`, fields.phone)) : "",
+    fields.service ? row("Serviciu", textValue(fields.service)) : "",
+  ].join("");
+
+  return `<!DOCTYPE html>
+<html lang="ro" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <meta name="supported-color-schemes" content="light" />
+  <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+</head>
+<body style="margin:0;padding:0;background-color:#f5f0eb;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <!-- Preheader (hidden inbox preview text) -->
+  <div style="display:none;max-height:0;overflow:hidden;">${preheader}${"&nbsp;&zwnj;".repeat(20)}</div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f5f0eb;">
+    <tr><td style="padding:32px 16px;" align="center">
+      <!--[if mso]><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600"><tr><td><![endif]-->
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background-color:#ffffff;border-radius:8px;overflow:hidden;">
+        <!-- Header -->
+        <tr>
+          <td style="background-color:#0d9488;padding:24px 32px;">
+            <h1 style="margin:0;font-size:20px;font-weight:700;color:#ffffff;font-family:Arial,Helvetica,sans-serif;">Mesaj nou de pe site</h1>
+          </td>
+        </tr>
+        <!-- Contact details -->
+        <tr>
+          <td style="padding:24px 32px 8px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              ${contactRows}
+            </table>
+          </td>
+        </tr>
+        <!-- Message body -->
+        <tr>
+          <td style="padding:24px 32px;">
+            <span style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#78716c;margin-bottom:8px;">Mesaj</span>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="background-color:#f5f0eb;border-radius:6px;padding:16px;font-size:15px;line-height:1.6;color:#292524;">
+                  ${fields.message.replace(/\n/g, "<br />")}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <!-- Reply CTA -->
+        <tr>
+          <td style="padding:0 32px 32px;" align="center">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="background-color:#0d9488;border-radius:6px;text-align:center;">
+                  <a href="mailto:${fields.email}" style="display:inline-block;padding:12px 28px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">Răspunde lui ${fields.name}</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <!-- Footer -->
+        <tr>
+          <td style="background-color:#f5f0eb;padding:16px 32px;text-align:center;">
+            <span style="font-size:12px;color:#78716c;">Trimis prin formularul de contact &mdash; miciicampioni.ro</span>
+          </td>
+        </tr>
+      </table>
+      <!--[if mso]></td></tr></table><![endif]-->
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+// =============================================================================
 // Validation
 // =============================================================================
 
@@ -179,15 +285,7 @@ export async function POST(request: Request) {
       to,
       replyTo: sanitized.email,
       subject: `Mesaj nou de la ${sanitized.name}`,
-      html: `
-        <h2>Mesaj nou de pe site</h2>
-        <p><strong>Nume:</strong> ${sanitized.name}</p>
-        <p><strong>Email:</strong> ${sanitized.email}</p>
-        ${sanitized.phone ? `<p><strong>Telefon:</strong> ${sanitized.phone}</p>` : ""}
-        ${sanitized.service ? `<p><strong>Serviciu:</strong> ${sanitized.service}</p>` : ""}
-        <hr />
-        <p>${sanitized.message.replace(/\n/g, "<br />")}</p>
-      `,
+      html: buildContactEmailHtml(sanitized),
     });
 
     if (sendError || !sendResult?.id) {
