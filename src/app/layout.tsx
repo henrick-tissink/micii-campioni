@@ -4,6 +4,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { getNavigation, getSiteSettings } from "@/lib/contentful/queries";
+import { ThemeProvider } from "@/lib/theme/ThemeProvider";
+import { LenisProvider } from "@/lib/scroll/LenisProvider";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -112,7 +114,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="ro">
+    <html lang="ro" suppressHydrationWarning>
       <body
         className={`${plusJakarta.variable} ${inter.variable} antialiased`}
       >
@@ -122,15 +124,19 @@ export default async function RootLayout({
             __html: JSON.stringify(organizationJsonLd),
           }}
         />
-        <a href="#main-content" className="skip-link">
-          Salt la conținut principal
-        </a>
-        <Header navigation={headerNav} siteSettings={siteSettings} />
-        <main id="main-content">{children}</main>
-        <Footer navigation={headerNav} siteSettings={siteSettings} />
-        {siteSettings?.phone && (
-          <WhatsAppButton phone={siteSettings.phone} />
-        )}
+        <ThemeProvider>
+          <LenisProvider>
+            <a href="#main-content" className="skip-link">
+              Salt la conținut principal
+            </a>
+            <Header navigation={headerNav} siteSettings={siteSettings} />
+            <main id="main-content">{children}</main>
+            <Footer navigation={headerNav} siteSettings={siteSettings} />
+            {siteSettings?.phone && (
+              <WhatsAppButton phone={siteSettings.phone} />
+            )}
+          </LenisProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

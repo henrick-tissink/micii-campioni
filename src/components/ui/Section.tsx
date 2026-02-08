@@ -30,10 +30,10 @@ const spacingStyles: Record<SectionSpacing, string> = {
 };
 
 const backgroundStyles: Record<SectionBackground, string> = {
-  white: "bg-white",
-  sand: "bg-sand-50",
-  lagoon: "bg-lagoon-50",
-  gradient: "bg-gradient-to-b from-white to-sand-50",
+  white: "bg-white dark:bg-night-900",
+  sand: "bg-sand-50 dark:bg-night-800",
+  lagoon: "bg-lagoon-50 dark:bg-night-800/50",
+  gradient: "bg-gradient-to-b from-white to-sand-50 dark:from-night-900 dark:to-night-800",
 };
 
 // =============================================================================
@@ -102,18 +102,18 @@ export function SectionHeader({
       {subtitle && (
         <span className={cn(
           "mb-2 inline-block font-heading text-sm font-semibold uppercase tracking-wider",
-          accent === "coral" ? "text-coral-600" : "text-lagoon-600"
+          accent === "coral" ? "text-coral-600 dark:text-coral-400" : "text-lagoon-600 dark:text-lagoon-400"
         )}>
           {subtitle}
         </span>
       )}
-      <h2 className="font-heading text-3xl font-bold text-sand-900 md:text-4xl">
+      <h2 className="font-heading text-3xl font-bold text-sand-900 dark:text-white md:text-4xl">
         {title}
       </h2>
       {description && (
         <p
           className={cn(
-            "mt-4 text-lg text-sand-600",
+            "mt-4 text-lg text-sand-600 dark:text-sand-400",
             align === "center" && "mx-auto max-w-2xl"
           )}
         >

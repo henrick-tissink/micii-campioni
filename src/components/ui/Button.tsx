@@ -28,13 +28,13 @@ const baseStyles =
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-lagoon-500 text-white hover:bg-lagoon-600 hover:-translate-y-0.5 hover:shadow-lagoon focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2",
+    "bg-lagoon-500 text-white hover:bg-lagoon-600 hover:-translate-y-0.5 hover:shadow-lagoon focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2 dark:bg-night-glow dark:hover:bg-night-bright dark:hover:shadow-[0_0_20px_rgba(32,178,170,0.4)] dark:focus-visible:ring-offset-night-900",
   secondary:
-    "bg-coral-500 text-white hover:bg-coral-600 hover:-translate-y-0.5 hover:shadow-coral focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2",
+    "bg-coral-500 text-white hover:bg-coral-600 hover:-translate-y-0.5 hover:shadow-coral focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-night-900",
   outline:
-    "bg-transparent border-lagoon-500 text-lagoon-600 hover:bg-lagoon-100 focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2",
+    "bg-transparent border-lagoon-500 text-lagoon-600 hover:bg-lagoon-100 focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2 dark:border-lagoon-400 dark:text-lagoon-400 dark:hover:bg-night-800 dark:hover:text-lagoon-300 dark:focus-visible:ring-offset-night-900",
   ghost:
-    "bg-transparent text-lagoon-600 hover:bg-lagoon-50 focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2",
+    "bg-transparent text-lagoon-600 hover:bg-lagoon-50 focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2 dark:text-lagoon-400 dark:hover:bg-night-800 dark:hover:text-lagoon-300 dark:focus-visible:ring-offset-night-900",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
 import { Container } from "@/components/ui/Container";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 import type { CarouselSlide as CarouselSlideType } from "@/types/contentful";
 
 // =============================================================================
@@ -53,28 +55,65 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
               {/* Content */}
               <Container className="relative z-10 flex h-full min-h-[500px] items-center md:min-h-[600px] lg:min-h-[700px]">
-                <div className="max-w-2xl py-16">
+                <motion.div
+                  className="max-w-2xl py-16"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+                    },
+                  }}
+                >
                   {slide.badge && (
-                    <span className="mb-4 inline-block rounded-full bg-lagoon-500/20 px-4 py-1.5 text-sm font-semibold text-lagoon-300">
+                    <motion.span
+                      className="mb-4 inline-block rounded-full bg-lagoon-500/20 px-4 py-1.5 text-sm font-semibold text-lagoon-300"
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                      }}
+                    >
                       {slide.badge}
-                    </span>
+                    </motion.span>
                   )}
-                  <h1 className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+                  <motion.h1
+                    className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl"
+                    variants={{
+                      hidden: { opacity: 0, y: 30 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                  >
                     {slide.title}
-                  </h1>
+                  </motion.h1>
                   {slide.subtitle && (
-                    <p className="mt-6 text-lg text-sand-200 md:text-xl">
+                    <motion.p
+                      className="mt-6 text-lg text-sand-200 md:text-xl"
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                      }}
+                    >
                       {slide.subtitle}
-                    </p>
+                    </motion.p>
                   )}
                   {slide.ctaText && slide.ctaLink && (
-                    <div className="mt-8 flex flex-wrap gap-4">
-                      <Button href={slide.ctaLink} size="lg">
-                        {slide.ctaText}
-                      </Button>
-                    </div>
+                    <motion.div
+                      className="mt-8 flex flex-wrap gap-4"
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                      }}
+                    >
+                      <MagneticButton>
+                        <Button href={slide.ctaLink} size="lg">
+                          {slide.ctaText}
+                        </Button>
+                      </MagneticButton>
+                    </motion.div>
                   )}
-                </div>
+                </motion.div>
               </Container>
             </div>
           </CarouselSlide>

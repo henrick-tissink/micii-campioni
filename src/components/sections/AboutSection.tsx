@@ -1,8 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import { Check } from "lucide-react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { MotionSection } from "@/components/motion/MotionSection";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 
 // =============================================================================
 // Types
@@ -106,50 +111,77 @@ export function AboutSection({
           </div>
 
           {/* Decorative badge */}
-          <div className="absolute bottom-0 right-0 rounded-2xl bg-coral-500 px-6 py-4 text-center shadow-elevated">
+          <motion.div
+            className="absolute bottom-0 right-0 rounded-2xl bg-coral-500 dark:bg-coral-600 px-6 py-4 text-center shadow-elevated dark:shadow-[0_0_20px_rgba(232,108,74,0.3)]"
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
             <p className="font-heading text-2xl font-bold text-white lg:text-3xl">
               15+
             </p>
             <p className="text-sm text-coral-100">Ani Experiență</p>
-          </div>
+          </motion.div>
         </div>
 
         {/* Content */}
-        <div className={reverse ? "lg:order-1" : ""}>
-          <span className="mb-2 inline-block font-heading text-sm font-semibold uppercase tracking-wider text-lagoon-600">
+        <MotionSection animation="fadeUp" className={reverse ? "lg:order-1" : ""}>
+          <span className="mb-2 inline-block font-heading text-sm font-semibold uppercase tracking-wider text-lagoon-600 dark:text-lagoon-400">
             {subtitle}
           </span>
-          <h2 className="font-heading text-3xl font-bold text-sand-900 md:text-4xl">
+          <h2 className="font-heading text-3xl font-bold text-sand-900 dark:text-white md:text-4xl">
             {title}
           </h2>
-          <p className="mt-4 text-lg text-sand-600">{description}</p>
+          <p className="mt-4 text-lg text-sand-600 dark:text-sand-400">{description}</p>
 
           {/* Features list */}
           {features.length > 0 && (
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            <motion.ul
+              className="mt-8 grid gap-3 sm:grid-cols-2"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+                },
+              }}
+            >
               {features.map((feature, index) => {
                 const isCoral = (index + 1) % 3 === 0;
                 return (
-                  <li key={feature} className="flex items-start gap-3">
+                  <motion.li
+                    key={feature}
+                    className="flex items-start gap-3"
+                    variants={{
+                      hidden: { opacity: 0, x: -10 },
+                      visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
+                    }}
+                  >
                     <span className={cn(
                       "flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full",
-                      isCoral ? "bg-coral-100" : "bg-lagoon-100"
+                      isCoral ? "bg-coral-100 dark:bg-coral-500/20" : "bg-lagoon-100 dark:bg-lagoon-500/20"
                     )}>
-                      <Check className={cn("h-4 w-4", isCoral ? "text-coral-600" : "text-lagoon-600")} />
+                      <Check className={cn("h-4 w-4", isCoral ? "text-coral-600 dark:text-coral-400" : "text-lagoon-600 dark:text-lagoon-400")} />
                     </span>
-                    <span className="text-sand-700">{feature}</span>
-                  </li>
+                    <span className="text-sand-700 dark:text-sand-300">{feature}</span>
+                  </motion.li>
                 );
               })}
-            </ul>
+            </motion.ul>
           )}
 
           {ctaButton && (
             <div className="mt-8">
-              <Button href={ctaButton.href}>{ctaButton.label}</Button>
+              <MagneticButton>
+                <Button href={ctaButton.href}>{ctaButton.label}</Button>
+              </MagneticButton>
             </div>
           )}
-        </div>
+        </MotionSection>
       </div>
     </Section>
   );

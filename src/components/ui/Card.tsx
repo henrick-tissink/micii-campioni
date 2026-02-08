@@ -28,9 +28,9 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const baseStyles = "rounded-2xl overflow-hidden transition-all duration-200";
 
 const variantStyles = {
-  default: "bg-white shadow-soft",
-  elevated: "bg-white shadow-medium",
-  outline: "bg-white border border-sand-200",
+  default: "bg-white shadow-soft dark:bg-night-800 dark:shadow-lg",
+  elevated: "bg-white shadow-medium dark:bg-night-700 dark:shadow-xl",
+  outline: "bg-white border border-sand-200 dark:bg-night-800 dark:border-night-600",
   ghost: "bg-transparent",
 };
 
@@ -49,7 +49,7 @@ const aspectRatioStyles = {
 };
 
 const hoverStyles =
-  "hover:-translate-y-1 hover:shadow-elevated cursor-pointer";
+  "hover:-translate-y-1 hover:shadow-elevated cursor-pointer dark:hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] dark:hover:border-lagoon-500/30";
 
 // =============================================================================
 // Component
@@ -166,7 +166,7 @@ export function CardTitle({
   return (
     <Component
       className={cn(
-        "font-heading font-semibold text-sand-900",
+        "font-heading font-semibold text-sand-900 dark:text-white",
         Component === "h2" && "text-2xl",
         Component === "h3" && "text-xl",
         Component === "h4" && "text-lg",
@@ -189,7 +189,7 @@ export function CardDescription({
   ...props
 }: CardDescriptionProps) {
   return (
-    <p className={cn("mt-2 text-sand-600", className)} {...props}>
+    <p className={cn("mt-2 text-sand-600 dark:text-sand-400", className)} {...props}>
       {children}
     </p>
   );

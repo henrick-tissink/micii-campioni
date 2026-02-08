@@ -1,4 +1,8 @@
+"use client";
+
 import { Section } from "@/components/ui/Section";
+import { MotionSection, MotionItem } from "@/components/motion/MotionSection";
+import { FloatingElements } from "@/components/decorative/FloatingElements";
 
 // =============================================================================
 // Types
@@ -55,26 +59,26 @@ export function StatsSection({
       <Section
         background="lagoon"
         spacing="lg"
-        className="relative bg-gradient-to-br from-lagoon-600 to-lagoon-700 overflow-hidden"
+        className="relative bg-gradient-to-br from-lagoon-600 to-lagoon-700 dark:from-night-800 dark:to-night-900 overflow-hidden"
       >
-        {/* Coral-tinted decorative circles */}
-        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-coral-400/10" aria-hidden="true" />
-        <div className="absolute -left-8 -bottom-8 h-32 w-32 rounded-full bg-coral-500/10" aria-hidden="true" />
-        <div className="absolute left-1/3 -top-6 h-20 w-20 rounded-full bg-coral-300/10" aria-hidden="true" />
+        {/* Floating decorative elements */}
+        <FloatingElements count={8} color="mixed" />
 
-        <div className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="font-heading text-4xl font-bold text-white md:text-5xl">
-                {stat.value}
-              </p>
-              <p className="mt-2 font-semibold text-lagoon-100">{stat.label}</p>
-              {stat.description && (
-                <p className="mt-1 text-sm text-lagoon-200">{stat.description}</p>
-              )}
-            </div>
+        <MotionSection animation="stagger" className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, index) => (
+            <MotionItem key={stat.label}>
+              <div className="text-center">
+                <p className="font-heading text-4xl font-bold text-white md:text-5xl dark:drop-shadow-[0_0_10px_rgba(32,178,170,0.3)]">
+                  {stat.value}
+                </p>
+                <p className="mt-2 font-semibold text-lagoon-100">{stat.label}</p>
+                {stat.description && (
+                  <p className="mt-1 text-sm text-lagoon-200">{stat.description}</p>
+                )}
+              </div>
+            </MotionItem>
           ))}
-        </div>
+        </MotionSection>
       </Section>
     );
   }
@@ -82,22 +86,21 @@ export function StatsSection({
   if (variant === "cards") {
     return (
       <Section background="white" spacing="lg">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <MotionSection animation="stagger" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl bg-sand-50 p-6 text-center"
-            >
-              <p className="font-heading text-3xl font-bold text-lagoon-600 md:text-4xl">
-                {stat.value}
-              </p>
-              <p className="mt-2 font-semibold text-sand-900">{stat.label}</p>
-              {stat.description && (
-                <p className="mt-1 text-sm text-sand-600">{stat.description}</p>
-              )}
-            </div>
+            <MotionItem key={stat.label}>
+              <div className="rounded-2xl bg-sand-50 dark:bg-night-800 p-6 text-center transition-all duration-300 hover:shadow-lg dark:hover:shadow-[0_0_20px_rgba(32,178,170,0.2)]">
+                <p className="font-heading text-3xl font-bold text-lagoon-600 dark:text-lagoon-400 md:text-4xl">
+                  {stat.value}
+                </p>
+                <p className="mt-2 font-semibold text-sand-900 dark:text-white">{stat.label}</p>
+                {stat.description && (
+                  <p className="mt-1 text-sm text-sand-600 dark:text-sand-400">{stat.description}</p>
+                )}
+              </div>
+            </MotionItem>
           ))}
-        </div>
+        </MotionSection>
       </Section>
     );
   }
@@ -105,16 +108,18 @@ export function StatsSection({
   // Default variant
   return (
     <Section background="sand" spacing="lg">
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <MotionSection animation="stagger" className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="text-center">
-            <p className="font-heading text-4xl font-bold text-lagoon-600 md:text-5xl">
-              {stat.value}
-            </p>
-            <p className="mt-2 font-semibold text-sand-900">{stat.label}</p>
-          </div>
+          <MotionItem key={stat.label}>
+            <div className="text-center">
+              <p className="font-heading text-4xl font-bold text-lagoon-600 dark:text-lagoon-400 md:text-5xl">
+                {stat.value}
+              </p>
+              <p className="mt-2 font-semibold text-sand-900 dark:text-white">{stat.label}</p>
+            </div>
+          </MotionItem>
         ))}
-      </div>
+      </MotionSection>
     </Section>
   );
 }

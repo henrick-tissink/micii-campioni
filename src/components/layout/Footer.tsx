@@ -26,7 +26,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
   const secondaryLinks = navItems.slice(Math.ceil(navItems.length / 2));
 
   return (
-    <footer className="bg-sand-900 text-sand-300">
+    <footer className="bg-sand-900 text-sand-300 dark:bg-night-900 dark:border-t dark:border-night-800">
       {/* Main footer content */}
       <Container>
         <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
@@ -183,7 +183,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
       </Container>
 
       {/* Bottom bar */}
-      <div className="border-t border-sand-800">
+      <div className="border-t border-sand-800 dark:border-night-800">
         <Container>
           <div className="flex flex-col items-center justify-between gap-4 py-6 text-sm md:flex-row">
             <p>
