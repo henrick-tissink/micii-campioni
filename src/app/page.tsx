@@ -48,7 +48,7 @@ export default async function HomePage() {
       {/* CTA Section */}
       <CTASection
         title="Pregătit să începi aventura acvatică?"
-        description="Înscrie-ți copilul astăzi și oferă-i șansa de a deveni un mic campion al apei. Prima lecție este gratuită!"
+        description="Înscrie-ți copilul astăzi și oferă-i șansa de a deveni un mic campion al apei."
         primaryButton={{ label: "Programeaza o vizită", href: "/contact" }}
         secondaryButton={{ label: "Vezi Programul", href: "/servicii" }}
         variant="gradient"
