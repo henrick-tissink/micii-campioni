@@ -110,9 +110,9 @@ export default async function ConceptPage() {
 
       {/* CTA */}
       <CTASection
-        title="Descoperă Serviciile Noastre"
+        title="Descoperă Cursurile Noastre"
         description="Aplică conceptul nostru în practică - explorează programele de educație acvatică."
-        primaryButton={{ label: "Vezi Serviciile", href: "/servicii" }}
+        primaryButton={{ label: "Vezi Cursurile", href: "/servicii" }}
         secondaryButton={{ label: "Contactează-ne", href: "/contact" }}
         variant="gradient"
       />

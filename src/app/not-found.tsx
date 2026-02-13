@@ -39,7 +39,7 @@ export default function NotFound() {
                 href="/servicii"
                 className="text-lagoon-600 hover:text-lagoon-700"
               >
-                Servicii
+                Cursuri
               </Link>
               <Link
                 href="/despre-noi"

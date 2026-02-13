@@ -83,7 +83,7 @@ export function PageLayout({
               alt={heroImageAlt || heroImage.title || title}
               fill
               sizes="100vw"
-              className="object-cover opacity-40"
+              className="object-cover object-top opacity-40"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/60 to-lagoon-800/30" />
@@ -189,7 +189,7 @@ export function SectionHero({
             alt={heroImage.title || title}
             fill
             sizes="100vw"
-            className="object-cover opacity-40"
+            className="object-cover object-top opacity-40"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/60 to-lagoon-800/30" />

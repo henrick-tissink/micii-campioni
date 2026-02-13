@@ -285,7 +285,7 @@ export default async function ServicePage({ params }: Props) {
               {otherServices.length > 0 && (
                 <CompactServices
                   services={otherServices}
-                  title="Alte Servicii"
+                  title="Alte Cursuri"
                 />
               )}
             </div>

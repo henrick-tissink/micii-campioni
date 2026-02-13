@@ -27,7 +27,7 @@ export interface ServicesSectionProps {
 
 export function ServicesSection({
   services,
-  title = "Serviciile Noastre",
+  title = "Cursurile Noastre",
   subtitle = "Ce Oferim",
   description = "Descoperă programele noastre de educație acvatică, create special pentru fiecare etapă de dezvoltare a copilului tău.",
 }: ServicesSectionProps) {
@@ -146,7 +146,7 @@ export interface CompactServicesProps {
 
 export function CompactServices({
   services,
-  title = "Alte Servicii",
+  title = "Alte Cursuri",
 }: CompactServicesProps) {
   if (services.length === 0) return null;
 

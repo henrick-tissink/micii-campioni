@@ -62,7 +62,7 @@ const siteStructure = [
     ],
   },
   {
-    title: "Servicii",
+    title: "Cursuri",
     href: "/servicii",
     icon: Briefcase,
     description: "Programele noastre de educație acvatică",
@@ -184,7 +184,7 @@ export default async function SitemapPage() {
               href="/servicii"
               className="rounded-full bg-white px-6 py-2 text-sand-700 shadow-soft transition-colors hover:bg-sand-50"
             >
-              Vezi Serviciile
+              Vezi Cursurile
             </Link>
             <Link
               href="/galerie"
