@@ -36,8 +36,11 @@ yarn-error.log*
 # vercel
 .vercel
 
-# old WordPress files
-docs/mcmp_files/
+# docs and planning files
+docs/
+
+# Claude Code
+.claude/
 
 # typescript
 *.tsbuildinfo
