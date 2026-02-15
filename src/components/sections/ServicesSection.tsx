@@ -31,7 +31,10 @@ export function ServicesSection({
   subtitle = "Ce Oferim",
   description = "Descoperă programele noastre de educație acvatică, create special pentru fiecare etapă de dezvoltare a copilului tău.",
 }: ServicesSectionProps) {
-  if (services.length === 0) return null;
+  // Filter out FAQ page from services listing
+  const filteredServices = services.filter((s) => s.slug !== "intrebari-frecvente");
+
+  if (filteredServices.length === 0) return null;
 
   // Only show header if title is provided
   const showHeader = title && title.length > 0;

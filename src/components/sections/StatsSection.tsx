@@ -25,24 +25,24 @@ export interface StatsSectionProps {
 
 const defaultStats: Stat[] = [
   {
-    value: "15+",
+    value: "25+",
     label: "Ani de Experiență",
-    description: "De peste 15 ani formăm micii campioni ai apei",
+    description: "De peste 25 ani formăm mici campioni ai educației acvatice",
   },
   {
-    value: "10.000+",
-    label: "Copii Absolvenți",
-    description: "Mii de copii au învățat să înoate cu noi",
+    value: "7.900+",
+    label: "Mici Campioni",
+    description: "Mii de copii au absolvit cursurile noastre de educație acvatică",
   },
   {
     value: "50+",
     label: "Instructori Certificați",
-    description: "Echipa noastră de profesioniști dedicați",
+    description: "Instructori certificați în educație acvatică pentru copii. Echipa noastră urmează singurele cursuri de profil acreditate (cod COR: 342215)",
   },
   {
     value: "98%",
-    label: "Părinți Mulțumiți",
-    description: "Rata de satisfacție a familiilor noastre",
+    label: "Copii & Părinți mulțumiți",
+    description: "Perfecționăm permanent metodele și exercițiile de educație acvatică",
   },
 ];
 

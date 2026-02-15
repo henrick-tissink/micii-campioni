@@ -278,7 +278,7 @@ export async function POST(request: Request) {
 
     // --- Send email via Resend ---
     const to = process.env.CONTACT_EMAIL_TO || "info@miciicampioni.ro";
-    const from = process.env.CONTACT_EMAIL_FROM || "website@miciicampioni.ro";
+    const from = process.env.CONTACT_EMAIL_FROM || "noreply@launchinto.space";
 
     const { data: sendResult, error: sendError } = await resend.emails.send({
       from: `Micii Campioni Website <${from}>`,
