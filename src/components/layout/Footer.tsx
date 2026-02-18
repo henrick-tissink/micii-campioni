@@ -21,9 +21,8 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const navItems = navigation?.items || [];
 
-  // Group navigation items for footer columns
-  const mainLinks = navItems.slice(0, Math.ceil(navItems.length / 2));
-  const secondaryLinks = navItems.slice(Math.ceil(navItems.length / 2));
+  // Navigation items for footer
+  const mainLinks = navItems;
 
   return (
     <footer className="bg-sand-900 text-sand-300 dark:bg-night-900 dark:border-t dark:border-night-800">
@@ -111,19 +110,41 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
 
           <div>
             <h3 className="mb-4 font-heading font-semibold text-white">
-              Informații
+              Despre
             </h3>
             <ul className="space-y-2">
-              {secondaryLinks.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className="text-sm transition-colors hover:text-white"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link
+                  href="/despre-noi"
+                  className="text-sm transition-colors hover:text-white"
+                >
+                  Despre Noi
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/concept"
+                  className="text-sm transition-colors hover:text-white"
+                >
+                  Conceptul Nostru
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/galerie"
+                  className="text-sm transition-colors hover:text-white"
+                >
+                  Galerie Foto
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/asociatia"
+                  className="text-sm transition-colors hover:text-white"
+                >
+                  Asociația
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/termeni-conditii"
