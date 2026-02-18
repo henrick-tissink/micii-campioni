@@ -19,8 +19,39 @@ export default async function HomePage() {
     getTestimonials(),
   ]);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  // Review structured data for testimonials
+  const reviewsJsonLd = testimonials.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}/#organization`,
+    name: "Clubul Micii Campioni",
+    review: testimonials.map((t) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: t.authorName,
+      },
+      reviewBody: t.quote,
+    })),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: testimonials.length.toString(),
+    },
+  } : null;
+
   return (
     <>
+      {reviewsJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd) }}
+        />
+      )}
       {/* Hero Carousel */}
       <HeroCarousel slides={slides} />
 

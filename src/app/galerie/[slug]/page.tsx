@@ -84,8 +84,25 @@ export default async function GalleryDetailPage({ params }: Props) {
       })
     : null;
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  // Breadcrumb structured data
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Galerie", item: `${siteUrl}/galerie` },
+      { "@type": "ListItem", position: 3, name: gallery.title, item: `${siteUrl}/galerie/${slug}` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Hero */}
       <section className="bg-gradient-to-br from-lagoon-600 to-lagoon-700 py-12 md:py-16">
         <Container>

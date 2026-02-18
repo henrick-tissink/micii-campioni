@@ -24,8 +24,23 @@ export default async function GaleriePage() {
   const featuredGalleries = galleries.filter((g) => g.featured);
   const regularGalleries = galleries.filter((g) => !g.featured);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Galerie", item: `${siteUrl}/galerie` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Hero */}
       <SectionHero
         title="Galerie Foto"

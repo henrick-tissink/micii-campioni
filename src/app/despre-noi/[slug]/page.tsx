@@ -89,8 +89,43 @@ export default async function DespreNoiSubPage({ params }: Props) {
     isPressPage ? getPressClippings() : Promise.resolve([]),
   ]);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  // Person structured data for team members
+  const teamJsonLd = isTeamPage && teamMembers.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${siteUrl}/#organization`,
+    name: "Clubul Micii Campioni",
+    employee: teamMembers.map((member) => ({
+      "@type": "Person",
+      name: member.name,
+      jobTitle: member.role,
+      description: member.shortBio,
+      image: member.photo?.url?.startsWith("//")
+        ? `https:${member.photo.url}`
+        : member.photo?.url,
+      ...(member.certifications && member.certifications.length > 0 && {
+        hasCredential: member.certifications.map((cert) => ({
+          "@type": "EducationalOccupationalCredential",
+          name: cert,
+        })),
+      }),
+      worksFor: {
+        "@type": "Organization",
+        name: "Clubul Micii Campioni",
+      },
+    })),
+  } : null;
+
   return (
     <>
+      {teamJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(teamJsonLd) }}
+        />
+      )}
       <PageLayout
         title={page.title}
         heroImage={page.heroImage}

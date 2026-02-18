@@ -21,8 +21,23 @@ export const metadata: Metadata = {
 export default async function ServicesListPage() {
   const services = await getServices();
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Cursuri", item: `${siteUrl}/servicii` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-lagoon-600 to-lagoon-700 py-16 md:py-24">
         <Container>

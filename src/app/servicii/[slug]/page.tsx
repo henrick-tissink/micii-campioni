@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
+import { ChevronRight } from "lucide-react";
 import { getServiceBySlug, getServices, getFAQs } from "@/lib/contentful/queries";
 import { RichText } from "@/lib/contentful/rich-text";
 import { Markdown } from "@/lib/contentful/markdown";
@@ -85,6 +87,48 @@ export default async function ServicePage({ params }: Props) {
   // Get first age group's age range if available
   const primaryAgeRange = service.ageGroups?.[0]?.ageRange;
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+  // Breadcrumb structured data
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Cursuri", item: `${siteUrl}/servicii` },
+      { "@type": "ListItem", position: 3, name: service.title, item: `${siteUrl}/servicii/${slug}` },
+    ],
+  };
+
+  // Course structured data for rich results
+  const heroImageUrl = service.heroImage?.url?.startsWith("//")
+    ? `https:${service.heroImage.url}`
+    : service.heroImage?.url;
+
+  const courseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: service.title,
+    description: service.shortDescription || service.metaDescription,
+    url: `${siteUrl}/servicii/${slug}`,
+    provider: {
+      "@type": "Organization",
+      name: "Clubul Micii Campioni",
+      url: siteUrl,
+    },
+    image: heroImageUrl,
+    inLanguage: "ro",
+    ...(primaryAgeRange && { coursePrerequisites: `Vârstă: ${primaryAgeRange}` }),
+    ...(service.ageGroups && service.ageGroups.length > 0 && {
+      hasCourseInstance: service.ageGroups.map((group) => ({
+        "@type": "CourseInstance",
+        name: group.name,
+        description: group.description,
+        ...(group.duration && { duration: group.duration }),
+      })),
+    }),
+  };
+
   // FAQ structured data for rich results
   const faqJsonLd =
     isFAQPage && faqs.length > 0
@@ -104,6 +148,14 @@ export default async function ServicePage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
       {faqJsonLd && (
         <script
           type="application/ld+json"
@@ -124,7 +176,28 @@ export default async function ServicePage({ params }: Props) {
             <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/80 to-lagoon-800/50" />
           </>
         )}
-        <Container className="relative z-10 flex min-h-[400px] items-center py-16">
+        <Container className="relative z-10 flex min-h-[400px] flex-col justify-center py-16">
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-4">
+            <ol className="flex flex-wrap items-center gap-1 text-sm text-lagoon-200">
+              <li>
+                <Link href="/" className="transition-colors hover:text-white">
+                  Acasă
+                </Link>
+              </li>
+              <li className="flex items-center gap-1">
+                <ChevronRight className="h-4 w-4" />
+                <Link href="/servicii" className="transition-colors hover:text-white">
+                  Cursuri
+                </Link>
+              </li>
+              <li className="flex items-center gap-1">
+                <ChevronRight className="h-4 w-4" />
+                <span className="text-white">{service.title}</span>
+              </li>
+            </ol>
+          </nav>
+
           <div className="max-w-3xl">
             {primaryAgeRange && (
               <Badge variant="lagoon" size="lg" className="mb-4 bg-white/20 text-white">
