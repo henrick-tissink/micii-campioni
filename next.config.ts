@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
         hostname: "images.ctfassets.net",
       },
     ],
+    // Serve modern image formats for better compression
+    formats: ["image/avif", "image/webp"],
   },
   async headers() {
     return [

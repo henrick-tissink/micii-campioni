@@ -115,6 +115,11 @@ export default async function RootLayout({
 
   return (
     <html lang="ro" suppressHydrationWarning>
+      <head>
+        {/* Preconnect to Contentful CDN for faster image loading */}
+        <link rel="preconnect" href="https://images.ctfassets.net" />
+        <link rel="dns-prefetch" href="https://images.ctfassets.net" />
+      </head>
       <body
         className={`${plusJakarta.variable} ${inter.variable} antialiased`}
       >
