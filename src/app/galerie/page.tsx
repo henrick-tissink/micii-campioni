@@ -6,14 +6,14 @@ import { GalleryCard } from "@/components/content/ImageGallery";
 import { CTASection } from "@/components/sections/CTASection";
 
 export const metadata: Metadata = {
-  title: "Galerie Foto",
+  title: "Galerie Foto - Momente din Cursuri",
   description:
-    "Galerie foto cu activitățile Clubului Micii Campioni - momente speciale din cursurile noastre de educație acvatică.",
+    "Galerie foto cu activitățile Clubului Micii Campioni - momente speciale din cursurile de educație acvatică pentru bebeluși și copii. Vezi bucuria micilor campioni!",
   alternates: { canonical: "/galerie" },
   openGraph: {
-    title: "Galerie Foto - Micii Campioni",
+    title: "Galerie Foto - Momente din Cursuri | Micii Campioni",
     description:
-      "Galerie foto cu activitățile Clubului Micii Campioni - momente speciale din cursurile noastre de educație acvatică.",
+      "Galerie foto cu activitățile Clubului Micii Campioni - momente speciale din cursurile de educație acvatică pentru bebeluși și copii. Vezi bucuria micilor campioni!",
   },
 };
 

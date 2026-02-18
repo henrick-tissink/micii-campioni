@@ -10,14 +10,14 @@ import { PartnersStrip } from "@/components/content/PartnersStrip";
 import { CTASection } from "@/components/sections/CTASection";
 
 export const metadata: Metadata = {
-  title: "Conceptul Nostru",
+  title: "Conceptul și Metodologia Noastră",
   description:
-    "Descoperă conceptul și filosofia din spatele Clubului Micii Campioni - educație acvatică bazată pe încredere, siguranță și bucurie.",
+    "Descoperă conceptul și metodologia Clubului Micii Campioni - educație acvatică bazată pe încredere, siguranță și bucurie. Partener FAAEL internațional.",
   alternates: { canonical: "/concept" },
   openGraph: {
-    title: "Conceptul Micii Campioni",
+    title: "Conceptul și Metodologia Noastră | Micii Campioni",
     description:
-      "Descoperă conceptul și filosofia din spatele Clubului Micii Campioni - educație acvatică bazată pe încredere, siguranță și bucurie.",
+      "Descoperă conceptul și metodologia Clubului Micii Campioni - educație acvatică bazată pe încredere, siguranță și bucurie. Partener FAAEL internațional.",
   },
 };
 

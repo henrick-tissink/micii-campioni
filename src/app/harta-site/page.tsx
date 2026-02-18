@@ -9,12 +9,12 @@ import { Card } from "@/components/ui/Card";
 export const metadata: Metadata = {
   title: "Harta Site-ului",
   description:
-    "Navigare completă prin site-ul Clubului Micii Campioni - găsește rapid informațiile de care ai nevoie.",
+    "Navigare completă prin site-ul Clubului Micii Campioni - explorează toate paginile, cursurile de înot și informațiile despre educația acvatică pentru copii.",
   alternates: { canonical: "/harta-site" },
   openGraph: {
-    title: "Harta Site-ului Micii Campioni",
+    title: "Harta Site-ului | Micii Campioni",
     description:
-      "Navigare completă prin site-ul Clubului Micii Campioni - găsește rapid informațiile de care ai nevoie.",
+      "Navigare completă prin site-ul Clubului Micii Campioni - explorează toate paginile, cursurile de înot și informațiile despre educația acvatică pentru copii.",
   },
 };
 

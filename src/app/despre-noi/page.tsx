@@ -17,14 +17,14 @@ import { CompactTeamList } from "@/components/content/TeamGrid";
 import { CTASection } from "@/components/sections/CTASection";
 
 export const metadata: Metadata = {
-  title: "Despre Noi",
+  title: "Despre Noi - Povestea și Echipa Noastră",
   description:
-    "Descoperiți povestea Clubului Micii Campioni, primul club de educație acvatică din România, fondat în 2001 de Georgeta Sultana.",
+    "Descoperiți povestea Clubului Micii Campioni, primul club de educație acvatică din România, fondat în 2001 de Georgeta Sultana. Echipă dedicată, metodă unică.",
   alternates: { canonical: "/despre-noi" },
   openGraph: {
-    title: "Despre Noi - Clubul Micii Campioni",
+    title: "Despre Noi - Povestea și Echipa Noastră | Micii Campioni",
     description:
-      "Descoperiți povestea Clubului Micii Campioni, primul club de educație acvatică din România, fondat în 2001 de Georgeta Sultana.",
+      "Descoperiți povestea Clubului Micii Campioni, primul club de educație acvatică din România, fondat în 2001 de Georgeta Sultana. Echipă dedicată, metodă unică.",
   },
 };
 

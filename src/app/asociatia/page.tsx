@@ -11,14 +11,14 @@ import { Markdown } from "@/lib/contentful/markdown";
 import { CTASection } from "@/components/sections/CTASection";
 
 export const metadata: Metadata = {
-  title: "Asociația",
+  title: "Asociația - Misiune și Proiecte Sociale",
   description:
-    "Asociația Clubul Micii Campioni - misiunea noastră de a promova educația acvatică în România și proiectele sociale pe care le derulăm.",
+    "Asociația Clubul Micii Campioni - organizație non-profit dedicată promovării educației acvatice în România. Descoperă misiunea și proiectele noastre sociale.",
   alternates: { canonical: "/asociatia" },
   openGraph: {
-    title: "Asociația Clubul Micii Campioni",
+    title: "Asociația - Misiune și Proiecte Sociale | Micii Campioni",
     description:
-      "Asociația Clubul Micii Campioni - misiunea noastră de a promova educația acvatică în România și proiectele sociale pe care le derulăm.",
+      "Asociația Clubul Micii Campioni - organizație non-profit dedicată promovării educației acvatice în România. Descoperă misiunea și proiectele noastre sociale.",
   },
 };
 
