@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
@@ -142,6 +143,7 @@ export default async function RootLayout({
             )}
           </LenisProvider>
         </ThemeProvider>
+        <GoogleAnalytics gaId="G-0KMB46E5XF" />
       </body>
     </html>
   );
