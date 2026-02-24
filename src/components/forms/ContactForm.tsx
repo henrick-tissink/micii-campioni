@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea, Select } from "@/components/ui/Input";
+import { fbLead, generateEventId } from "@/components/analytics/FacebookPixel";
 
 // =============================================================================
 // Types
@@ -17,6 +18,16 @@ interface FormState {
 }
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
+
+interface UTMParams {
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  fbc?: string; // Facebook click ID
+  fbp?: string; // Facebook browser ID
+}
 
 // =============================================================================
 // Service Options
@@ -45,6 +56,35 @@ export function ContactForm() {
   });
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [utmParams, setUtmParams] = useState<UTMParams>({});
+
+  // Capture UTM parameters and Facebook cookies on mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const params: UTMParams = {};
+
+    // Capture UTM parameters
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach((key) => {
+      const value = searchParams.get(key);
+      if (value) {
+        params[key as keyof UTMParams] = value;
+      }
+    });
+
+    // Capture Facebook cookies for Conversions API
+    const cookies = document.cookie.split(";").reduce((acc, cookie) => {
+      const [key, value] = cookie.trim().split("=");
+      acc[key] = value;
+      return acc;
+    }, {} as Record<string, string>);
+
+    if (cookies._fbc) params.fbc = cookies._fbc;
+    if (cookies._fbp) params.fbp = cookies._fbp;
+
+    setUtmParams(params);
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -63,12 +103,21 @@ export function ContactForm() {
       const form = e.target as HTMLFormElement;
       const honeypot = (form.elements.namedItem("website") as HTMLInputElement)?.value || "";
 
+      // Generate event ID for deduplication between client and server
+      const eventId = generateEventId("Lead");
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, website: honeypot }),
+        body: JSON.stringify({
+          ...formData,
+          website: honeypot,
+          ...utmParams,
+          pageUrl: window.location.href,
+          eventId, // Pass to server for CAPI deduplication
+        }),
       });
 
       if (!response.ok) {
@@ -79,6 +128,13 @@ export function ContactForm() {
       }
 
       setStatus("success");
+
+      // Fire Facebook Lead event (client-side) with same eventId for deduplication
+      fbLead({
+        content_name: formData.service || "Contact Form",
+        eventId,
+      });
+
       setFormData({
         name: "",
         email: "",

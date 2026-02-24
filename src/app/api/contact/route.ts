@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
+import { trackLead } from "@/lib/facebook/conversions-api";
 
 // =============================================================================
 // Types
@@ -12,6 +13,16 @@ interface ContactFormData {
   service?: string;
   message: string;
   website?: string; // honeypot
+  // UTM and Facebook tracking params
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  fbc?: string;
+  fbp?: string;
+  pageUrl?: string;
+  eventId?: string; // For Facebook event deduplication
 }
 
 // =============================================================================
@@ -303,7 +314,32 @@ export async function POST(request: Request) {
       phone: redact(sanitized.phone),
       service: sanitized.service,
       messageLength: sanitized.message.length,
+      utm_source: body.utm_source,
+      utm_campaign: body.utm_campaign,
     });
+
+    // Send server-side Facebook Conversions API event (non-blocking)
+    // Using after() ensures the event completes even after response is sent
+    const userAgent = request.headers.get("user-agent") || undefined;
+    const sourceUrl = body.pageUrl || process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+
+    after(
+      trackLead({
+        email: sanitized.email,
+        phone: sanitized.phone,
+        name: sanitized.name,
+        service: sanitized.service,
+        sourceUrl,
+        clientIp: ip !== "unknown" ? ip : undefined,
+        userAgent,
+        fbc: body.fbc,
+        fbp: body.fbp,
+        eventId: body.eventId, // Same ID as client-side for deduplication
+      }).catch((err) => {
+        // Log but don't fail the request
+        console.error("Facebook CAPI error:", err);
+      })
+    );
 
     return NextResponse.json(
       { success: true, message: "Mesajul a fost trimis cu succes!" },

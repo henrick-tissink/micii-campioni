@@ -14,6 +14,7 @@ import { Tabs, TabList, TabTrigger, TabContent } from "@/components/ui/Tabs";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/Accordion";
 import { CompactServices } from "@/components/sections/ServicesSection";
 import { CTASection } from "@/components/sections/CTASection";
+import { ViewContentTracker } from "@/components/analytics/ViewContentTracker";
 
 // =============================================================================
 // Metadata
@@ -148,6 +149,12 @@ export default async function ServicePage({ params }: Props) {
 
   return (
     <>
+      {/* Facebook ViewContent tracking */}
+      <ViewContentTracker
+        contentName={service.title}
+        contentCategory="Servicii"
+        contentId={slug}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}

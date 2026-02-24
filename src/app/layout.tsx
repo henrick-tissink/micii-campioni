@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { FacebookPixel } from "@/components/analytics/FacebookPixel";
 import { getNavigation, getSiteSettings } from "@/lib/contentful/queries";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import { LenisProvider } from "@/lib/scroll/LenisProvider";
@@ -120,6 +121,11 @@ export default async function RootLayout({
         {/* Preconnect to Contentful CDN for faster image loading */}
         <link rel="preconnect" href="https://images.ctfassets.net" />
         <link rel="dns-prefetch" href="https://images.ctfassets.net" />
+        {/* Facebook Domain Verification - replace with your verification code from Meta Business Suite */}
+        <meta
+          name="facebook-domain-verification"
+          content={process.env.NEXT_PUBLIC_FB_DOMAIN_VERIFICATION || "YOUR_VERIFICATION_CODE"}
+        />
       </head>
       <body
         className={`${plusJakarta.variable} ${inter.variable} antialiased`}
@@ -144,6 +150,7 @@ export default async function RootLayout({
           </LenisProvider>
         </ThemeProvider>
         <GoogleAnalytics gaId="G-0KMB46E5XF" />
+        <FacebookPixel />
       </body>
     </html>
   );
