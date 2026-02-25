@@ -27,7 +27,7 @@ export interface CTASectionProps {
 
 export function CTASection({
   title = "Pregătit să începi aventura acvatică?",
-  description = "Înscrie-ți copilul astăzi și oferă-i șansa de a deveni un mic campion al apei. Prima lecție este gratuită!",
+  description = "Înscrie-ți copilul astăzi și oferă-i șansa de a deveni un mic campion al apei.",
   primaryButton = { label: "Programează o lecție", href: "/contact" },
   secondaryButton,
   backgroundImage,
@@ -36,12 +36,7 @@ export function CTASection({
   if (variant === "image" && backgroundImage) {
     return (
       <section className="relative min-h-[400px] overflow-hidden">
-        <Image
-          src={backgroundImage}
-          alt=""
-          fill
-          className="object-cover"
-        />
+        <Image src={backgroundImage} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/90 to-lagoon-800/70" />
         <div className="relative z-10 flex min-h-[400px] items-center px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">

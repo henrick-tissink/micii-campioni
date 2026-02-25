@@ -3,7 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ChevronRight } from "lucide-react";
-import { getServiceBySlug, getServices, getFAQs } from "@/lib/contentful/queries";
+import {
+  getServiceBySlug,
+  getServices,
+  getFAQs,
+} from "@/lib/contentful/queries";
 import { RichText } from "@/lib/contentful/rich-text";
 import { Markdown } from "@/lib/contentful/markdown";
 import { Section } from "@/components/ui/Section";
@@ -11,7 +15,12 @@ import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabList, TabTrigger, TabContent } from "@/components/ui/Tabs";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/Accordion";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/Accordion";
 import { CompactServices } from "@/components/sections/ServicesSection";
 import { CTASection } from "@/components/sections/CTASection";
 import { ViewContentTracker } from "@/components/analytics/ViewContentTracker";
@@ -88,7 +97,8 @@ export default async function ServicePage({ params }: Props) {
   // Get first age group's age range if available
   const primaryAgeRange = service.ageGroups?.[0]?.ageRange;
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
 
   // Breadcrumb structured data
   const breadcrumbJsonLd = {
@@ -96,8 +106,18 @@ export default async function ServicePage({ params }: Props) {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Acasă", item: siteUrl },
-      { "@type": "ListItem", position: 2, name: "Cursuri", item: `${siteUrl}/servicii` },
-      { "@type": "ListItem", position: 3, name: service.title, item: `${siteUrl}/servicii/${slug}` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Cursuri",
+        item: `${siteUrl}/servicii`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: service.title,
+        item: `${siteUrl}/servicii/${slug}`,
+      },
     ],
   };
 
@@ -119,15 +139,18 @@ export default async function ServicePage({ params }: Props) {
     },
     image: heroImageUrl,
     inLanguage: "ro",
-    ...(primaryAgeRange && { coursePrerequisites: `Vârstă: ${primaryAgeRange}` }),
-    ...(service.ageGroups && service.ageGroups.length > 0 && {
-      hasCourseInstance: service.ageGroups.map((group) => ({
-        "@type": "CourseInstance",
-        name: group.name,
-        description: group.description,
-        ...(group.duration && { duration: group.duration }),
-      })),
+    ...(primaryAgeRange && {
+      coursePrerequisites: `Vârstă: ${primaryAgeRange}`,
     }),
+    ...(service.ageGroups &&
+      service.ageGroups.length > 0 && {
+        hasCourseInstance: service.ageGroups.map((group) => ({
+          "@type": "CourseInstance",
+          name: group.name,
+          description: group.description,
+          ...(group.duration && { duration: group.duration }),
+        })),
+      }),
   };
 
   // FAQ structured data for rich results
@@ -194,7 +217,10 @@ export default async function ServicePage({ params }: Props) {
               </li>
               <li className="flex items-center gap-1">
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/servicii" className="transition-colors hover:text-white">
+                <Link
+                  href="/servicii"
+                  className="transition-colors hover:text-white"
+                >
                   Cursuri
                 </Link>
               </li>
@@ -207,7 +233,11 @@ export default async function ServicePage({ params }: Props) {
 
           <div className="max-w-3xl">
             {primaryAgeRange && (
-              <Badge variant="lagoon" size="lg" className="mb-4 bg-white/20 text-white">
+              <Badge
+                variant="lagoon"
+                size="lg"
+                className="mb-4 bg-white/20 text-white"
+              >
                 {primaryAgeRange}
               </Badge>
             )}
@@ -267,7 +297,10 @@ export default async function ServicePage({ params }: Props) {
                 <TabList>
                   <TabTrigger id="descriere">Descriere</TabTrigger>
                   {service.tabs.map((tab) => (
-                    <TabTrigger key={tab.title} id={tab.title.toLowerCase().replace(/\s+/g, "-")}>
+                    <TabTrigger
+                      key={tab.title}
+                      id={tab.title.toLowerCase().replace(/\s+/g, "-")}
+                    >
                       {tab.title}
                     </TabTrigger>
                   ))}
@@ -280,7 +313,10 @@ export default async function ServicePage({ params }: Props) {
                 </TabContent>
 
                 {service.tabs.map((tab) => (
-                  <TabContent key={tab.title} id={tab.title.toLowerCase().replace(/\s+/g, "-")}>
+                  <TabContent
+                    key={tab.title}
+                    id={tab.title.toLowerCase().replace(/\s+/g, "-")}
+                  >
                     <div className="prose max-w-none">
                       <Markdown content={tab.content} />
                     </div>
@@ -353,8 +389,8 @@ export default async function ServicePage({ params }: Props) {
                   Înscrie-te Acum
                 </h3>
                 <p className="mb-4 text-sand-600">
-                  Prima lecție este gratuită! Programează o întâlnire pentru a
-                  discuta despre nevoile copilului tău.
+                  Programează o întâlnire pentru a discuta despre nevoile
+                  copilului tău.
                 </p>
                 <Button href="/contact" fullWidth>
                   Programează o Lecție
