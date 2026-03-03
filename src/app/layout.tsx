@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { FacebookPixel } from "@/components/analytics/FacebookPixel";
+import { GoogleAds } from "@/components/analytics/GoogleAds";
 import { getNavigation, getSiteSettings } from "@/lib/contentful/queries";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import { LenisProvider } from "@/lib/scroll/LenisProvider";
@@ -152,19 +152,7 @@ export default async function RootLayout({
         </ThemeProvider>
         <GoogleAnalytics gaId="G-0KMB46E5XF" />
         <FacebookPixel />
-        {/* Google Ads */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17962168369"
-          strategy="afterInteractive"
-        />
-        <Script id="google-ads" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-17962168369');
-          `}
-        </Script>
+        <GoogleAds />
       </body>
     </html>
   );

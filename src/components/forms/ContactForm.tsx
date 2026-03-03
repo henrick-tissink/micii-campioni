@@ -4,6 +4,7 @@ import { useState, useEffect, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea, Select } from "@/components/ui/Input";
 import { fbLead, generateEventId } from "@/components/analytics/FacebookPixel";
+import { gtagLead, gtagSetUserData } from "@/components/analytics/GoogleAds";
 
 // =============================================================================
 // Types
@@ -134,6 +135,25 @@ export function ContactForm() {
         content_name: formData.service || "Contact Form",
         eventId,
       });
+
+      // Fire Google Ads conversion with enhanced conversion data
+      // Split name into first/last for enhanced conversions
+      const nameParts = formData.name.trim().split(/\s+/);
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      // Set enhanced conversion data before firing conversion
+      gtagSetUserData({
+        email: formData.email,
+        phone: formData.phone || undefined,
+        firstName,
+        lastName,
+        city: "Bucuresti",
+        country: "RO",
+      });
+
+      // Fire Google Ads Lead conversion (uses eventId for deduplication)
+      gtagLead(eventId);
 
       setFormData({
         name: "",
