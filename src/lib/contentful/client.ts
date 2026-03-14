@@ -1,5 +1,5 @@
 import { createClient, type ContentfulClientApi } from "contentful";
-import type { ContentfulImage } from "@/types/contentful";
+import type { ContentfulImage, ContentfulMedia } from "@/types/contentful";
 import type { Asset } from "contentful";
 
 // =============================================================================
@@ -91,6 +91,32 @@ export function parseAssets(assets: Asset[] | undefined): ContentfulImage[] {
   return assets
     .map((asset) => parseAsset(asset))
     .filter((img): img is ContentfulImage => img !== undefined);
+}
+
+/**
+ * Parse a Contentful Asset into our ContentfulMedia type (includes contentType for video detection)
+ */
+export function parseMedia(asset: Asset | undefined): ContentfulMedia | undefined {
+  if (!asset?.fields?.file) {
+    return undefined;
+  }
+
+  const file = asset.fields.file as {
+    url?: string;
+    contentType?: string;
+    details?: { image?: { width?: number; height?: number } };
+  } | undefined;
+  const fileUrl = typeof file?.url === "string" ? file.url : "";
+  const url = fileUrl.startsWith("//") ? `https:${fileUrl}` : fileUrl;
+
+  return {
+    url: url || "",
+    width: file?.details?.image?.width,
+    height: file?.details?.image?.height,
+    title: (asset.fields.title as string) || "",
+    description: asset.fields.description as string | undefined,
+    contentType: (file?.contentType as string) || "",
+  };
 }
 
 /**

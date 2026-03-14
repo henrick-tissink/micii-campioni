@@ -8,6 +8,7 @@ import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { MotionSection } from "@/components/motion/MotionSection";
 import { MagneticButton } from "@/components/motion/MagneticButton";
+import type { ContentfulMedia } from "@/types/contentful";
 
 // =============================================================================
 // Types
@@ -18,10 +19,7 @@ export interface AboutSectionProps {
   subtitle?: string;
   description?: string;
   features?: string[];
-  image?: {
-    url: string;
-    alt?: string;
-  };
+  media?: ContentfulMedia;
   ctaButton?: {
     label: string;
     href: string;
@@ -51,10 +49,11 @@ export function AboutSection({
   subtitle = "Despre Noi",
   description = "Suntem primul club de educație acvatică din România, dedicat formării copiilor într-un mediu sigur și prietenos. De peste 15 ani, transformăm frica de apă în pasiune pentru înot.",
   features = defaultFeatures,
-  image,
+  media,
   ctaButton = { label: "Află Mai Multe", href: "/despre-noi" },
   reverse = false,
 }: AboutSectionProps) {
+  const isVideo = media?.contentType?.startsWith("video/");
   return (
     <Section background="white" spacing="xl">
       <div
@@ -66,14 +65,25 @@ export function AboutSection({
             reverse ? "lg:order-2" : ""
           }`}
         >
-          <div className="aspect-[4/3] overflow-hidden rounded-3xl">
-            {image ? (
-              <Image
-                src={image.url}
-                alt={image.alt || title}
-                fill
-                className="object-cover"
-              />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
+            {media ? (
+              isVideo ? (
+                <video
+                  src={media.url}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={media.url}
+                  alt={media.title || title}
+                  fill
+                  className="object-cover"
+                />
+              )
             ) : (
               <div className="relative flex h-full items-center justify-center overflow-hidden bg-gradient-to-br from-lagoon-100 to-lagoon-200">
                 {/* Layered wave SVGs */}
@@ -119,7 +129,7 @@ export function AboutSection({
             transition={{ delay: 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="font-heading text-2xl font-bold text-white lg:text-3xl">
-              15+
+              25+
             </p>
             <p className="text-sm text-coral-100">Ani Experiență</p>
           </motion.div>

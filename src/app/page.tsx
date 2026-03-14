@@ -2,6 +2,7 @@ import {
   getCarouselSlides,
   getServices,
   getTestimonials,
+  getHomepageContent,
 } from "@/lib/contentful/queries";
 import { HeroCarousel } from "@/components/sections/HeroCarousel";
 import { ServicesSection } from "@/components/sections/ServicesSection";
@@ -13,10 +14,11 @@ import { WaveDivider } from "@/components/ui/WaveDivider";
 import { AnimatedSection } from "./HomePageSections";
 
 export default async function HomePage() {
-  const [slides, services, testimonials] = await Promise.all([
+  const [slides, services, testimonials, homepageContent] = await Promise.all([
     getCarouselSlides(),
     getServices(),
     getTestimonials(),
+    getHomepageContent(),
   ]);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
@@ -61,7 +63,13 @@ export default async function HomePage() {
 
       {/* About Section */}
       <AnimatedSection>
-        <AboutSection />
+        <AboutSection
+          media={homepageContent?.aboutMedia}
+          title={homepageContent?.aboutTitle}
+          subtitle={homepageContent?.aboutSubtitle}
+          description={homepageContent?.aboutDescription}
+          features={homepageContent?.aboutFeatures}
+        />
       </AnimatedSection>
       <WaveDivider color="sand" />
 

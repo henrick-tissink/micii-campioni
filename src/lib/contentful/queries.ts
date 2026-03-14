@@ -1,4 +1,4 @@
-import { getClient, parseAsset, parseAssets } from "./client";
+import { getClient, parseAsset, parseAssets, parseMedia } from "./client";
 import type {
   SiteSettings,
   SiteSettingsSkeleton,
@@ -38,6 +38,8 @@ import type {
   ProjectSkeleton,
   CourseModule,
   CourseModuleSkeleton,
+  HomepageContent,
+  HomepageContentSkeleton,
 } from "@/types/contentful";
 import type { Entry, Asset } from "contentful";
 import type { Document } from "@contentful/rich-text-types";
@@ -833,5 +835,40 @@ export async function getCourseModules(
   } catch (error) {
     console.error("Error fetching course modules:", error);
     return [];
+  }
+}
+
+// =============================================================================
+// Homepage Content
+// =============================================================================
+
+export async function getHomepageContent(
+  preview = false
+): Promise<HomepageContent | null> {
+  const client = getClient(preview);
+  if (!client) return null;
+
+  try {
+    const entries = await client.getEntries<HomepageContentSkeleton>({
+      content_type: "homepageContent",
+      limit: 1,
+      include: 2,
+    });
+
+    if (!entries.items.length) return null;
+
+    const item = entries.items[0];
+    const fields = item.fields;
+
+    return {
+      aboutMedia: parseMedia(fields.aboutMedia as Asset | undefined),
+      aboutTitle: fields.aboutTitle,
+      aboutSubtitle: fields.aboutSubtitle,
+      aboutDescription: fields.aboutDescription,
+      aboutFeatures: fields.aboutFeatures,
+    };
+  } catch (error) {
+    console.error("Error fetching homepage content:", error);
+    return null;
   }
 }

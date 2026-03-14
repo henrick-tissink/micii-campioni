@@ -13,6 +13,15 @@ export type ContentfulImage = {
   description?: string;
 };
 
+export type ContentfulMedia = {
+  url: string;
+  width?: number;
+  height?: number;
+  title: string;
+  description?: string;
+  contentType: string; // e.g., "image/jpeg", "video/mp4"
+};
+
 export type ContentfulLink = {
   label: string;
   href: string;
@@ -560,4 +569,28 @@ export type Partner = {
   description?: string;
   active: boolean;
   order: number;
+};
+
+// =============================================================================
+// Homepage Content
+// =============================================================================
+
+export interface HomepageContentSkeleton extends EntrySkeletonType {
+  contentTypeId: "homepageContent";
+  fields: {
+    internalName: string;
+    aboutMedia?: Asset;
+    aboutTitle?: string;
+    aboutSubtitle?: string;
+    aboutDescription?: string;
+    aboutFeatures?: string[];
+  };
+}
+
+export type HomepageContent = {
+  aboutMedia?: ContentfulMedia;
+  aboutTitle?: string;
+  aboutSubtitle?: string;
+  aboutDescription?: string;
+  aboutFeatures?: string[];
 };
