@@ -58,7 +58,7 @@ export default async function HomePage() {
       <HeroCarousel slides={slides} />
 
       {/* Stats Section */}
-      <StatsSection variant="lagoon" />
+      <StatsSection variant="foundation-deep" />
       <WaveDivider color="white" />
 
       {/* About Section */}
