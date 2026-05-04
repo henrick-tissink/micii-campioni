@@ -55,14 +55,14 @@
 
   /* B-REFRESH TYPOGRAPHY */
   --tracking-display: -0.025em;
-  --tracking-tight: -0.018em;
-  --tracking-mono: 0.10em;
+  --tracking-section: -0.018em;
+  --tracking-mono: 0.10em; /* same as --tracking-widest; semantic alias for mono/credential contexts */
   --text-hero: clamp(2.5rem, 6vw, 5rem);
   --text-section: clamp(1.75rem, 3vw, 2.75rem);
 
   /* B-REFRESH SPACING */
-  --space-section-tight: 4rem;
-  --space-section-normal: 6rem;
+  --space-section-tight: var(--space-16);
+  --space-section-normal: var(--space-24);
   --space-section-loose: 9rem;
 
   /* B-REFRESH MOTION */
