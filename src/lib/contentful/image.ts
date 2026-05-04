@@ -35,8 +35,8 @@ export function cmsImage(url: string, opts: CmsImageOpts = {}): string {
   const base = ensureProtocol(url);
   const params = new URLSearchParams();
 
-  if (opts.w) params.set("w", String(opts.w));
-  if (opts.h) params.set("h", String(opts.h));
+  if (opts.w != null) params.set("w", String(opts.w));
+  if (opts.h != null) params.set("h", String(opts.h));
 
   if (opts.crop === "face") {
     params.set("fit", "fill");
@@ -44,6 +44,7 @@ export function cmsImage(url: string, opts: CmsImageOpts = {}): string {
   } else if (opts.crop === "top") {
     params.set("f", "top");
   }
+  // "center" is the Contentful default focus; no parameter needed
 
   params.set("fm", opts.format ?? DEFAULT_FORMAT);
   params.set("q", String(opts.quality ?? DEFAULT_QUALITY));
@@ -55,9 +56,11 @@ export function cmsImage(url: string, opts: CmsImageOpts = {}): string {
 
 /**
  * Returns a tiny blur placeholder URL for use with next/image's placeholder="blur".
+ * Returns a 10×10 square (tiny enough that aspect-ratio differences are invisible
+ * after CSS scaling and blurring).
  */
 export function cmsBlurUrl(url: string): string {
-  return cmsImage(url, { w: BLUR_WIDTH, quality: BLUR_QUALITY });
+  return cmsImage(url, { w: BLUR_WIDTH, h: BLUR_WIDTH, quality: BLUR_QUALITY });
 }
 
 /**
