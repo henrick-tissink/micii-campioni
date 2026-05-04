@@ -1,11 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import { Carousel, CarouselSlide } from "@/components/ui/Carousel";
 import { Container } from "@/components/ui/Container";
+import { TreatedImage } from "@/components/ui/TreatedImage";
 import { MagneticButton } from "@/components/motion/MagneticButton";
+import { SIZES } from "@/lib/contentful/image";
 import type { CarouselSlide as CarouselSlideType } from "@/types/contentful";
 
 // =============================================================================
@@ -25,74 +27,108 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
     return <HeroFallback />;
   }
 
+  const totalSlides = slides.length;
+
   return (
     <section className="relative">
       <Carousel
         autoplay
-        autoplayInterval={6000}
+        autoplayInterval={8000}
         loop
         showArrows={slides.length > 1}
-        showDots={slides.length > 1}
+        showDots={false}
         slideClassName="w-full"
       >
         {slides.map((slide, index) => (
           <CarouselSlide key={slide.title} className="px-0">
-            <div className="relative min-h-[500px] md:min-h-[600px] lg:min-h-[700px]">
+            <div className="relative min-h-[560px] md:min-h-[680px] lg:min-h-[760px]">
               {/* Background image */}
               {slide.backgroundImage && (
-                <Image
+                <TreatedImage
                   src={slide.backgroundImage.url}
                   alt={slide.backgroundImage.title || slide.title}
                   fill
-                  sizes="100vw"
+                  sizes={SIZES.hero}
                   className="object-cover"
                   priority={index === 0}
                 />
               )}
 
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-sand-900/80 via-sand-900/50 to-transparent" />
+              {/* Unified hero overlay */}
+              <div className="hero-overlay" />
+
+              {/* COR credential chip — pinned top-right */}
+              <div className="absolute right-6 top-6 z-20 md:right-10 md:top-10">
+                <Badge variant="credential">COR · 342215</Badge>
+              </div>
+
+              {/* Mono progress counter — pinned bottom-right */}
+              {slides.length > 1 && (
+                <div className="absolute bottom-6 right-6 z-20 font-mono text-[11px] tracking-[0.14em] text-white/70 md:bottom-10 md:right-10">
+                  {String(index + 1).padStart(2, "0")} / {String(totalSlides).padStart(2, "0")}
+                </div>
+              )}
 
               {/* Content */}
-              <Container className="relative z-10 flex h-full min-h-[500px] items-center md:min-h-[600px] lg:min-h-[700px]">
+              <Container className="relative z-10 flex h-full min-h-[560px] items-center md:min-h-[680px] lg:min-h-[760px]">
                 <motion.div
-                  className="max-w-2xl py-16"
+                  className="max-w-3xl py-20"
                   initial="hidden"
                   animate="visible"
                   variants={{
                     hidden: { opacity: 0 },
                     visible: {
                       opacity: 1,
-                      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+                      transition: {
+                        staggerChildren: 0.2,
+                        delayChildren: 0.1,
+                      },
                     },
                   }}
                 >
                   {slide.badge && (
                     <motion.span
-                      className="mb-4 inline-block rounded-full bg-lagoon-500/20 px-4 py-1.5 text-sm font-semibold text-lagoon-300"
+                      className="mb-6 inline-block rounded-full border border-white/20 bg-white/8 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/85 backdrop-blur"
                       variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                        hidden: { opacity: 0, y: 16 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                        },
                       }}
                     >
                       {slide.badge}
                     </motion.span>
                   )}
                   <motion.h1
-                    className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl"
+                    className="font-heading font-bold text-white"
+                    style={{
+                      fontSize: "var(--text-hero)",
+                      letterSpacing: "var(--tracking-display)",
+                      lineHeight: 1.02,
+                    }}
                     variants={{
-                      hidden: { opacity: 0, y: 30 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                      hidden: { opacity: 0, y: 28 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                      },
                     }}
                   >
                     {slide.title}
                   </motion.h1>
                   {slide.subtitle && (
                     <motion.p
-                      className="mt-6 text-lg text-sand-200 md:text-xl"
+                      className="mt-6 max-w-xl text-lg text-lagoon-100 md:text-xl"
                       variants={{
                         hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                        },
                       }}
                     >
                       {slide.subtitle}
@@ -100,17 +136,24 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   )}
                   {slide.ctaText && slide.ctaLink && (
                     <motion.div
-                      className="mt-8 flex flex-wrap gap-4"
+                      className="mt-10 flex flex-wrap items-center gap-4"
                       variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                        hidden: { opacity: 0, y: 16 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                        },
                       }}
                     >
-                      <MagneticButton>
+                      <MagneticButton strength={0.15}>
                         <Button href={slide.ctaLink} size="lg">
-                          {slide.ctaText}
+                          {slide.ctaText} &nbsp;→
                         </Button>
                       </MagneticButton>
+                      <Button href="/servicii" variant="outline-on-dark" size="lg">
+                        Vezi cursurile
+                      </Button>
                     </motion.div>
                   )}
                 </motion.div>
@@ -129,50 +172,35 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
 function HeroFallback() {
   return (
-    <section className="relative min-h-[500px] bg-gradient-to-br from-lagoon-600 to-lagoon-800 md:min-h-[600px]">
-      {/* Decorative waves */}
-      <div className="absolute inset-0 opacity-10">
-        <svg
-          className="h-full w-full"
-          viewBox="0 0 1440 800"
-          fill="none"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <path
-            d="M0 400C240 300 480 500 720 400C960 300 1200 500 1440 400V800H0V400Z"
-            fill="currentColor"
-          />
-          <path
-            d="M0 500C240 400 480 600 720 500C960 400 1200 600 1440 500V800H0V500Z"
-            fill="currentColor"
-            opacity="0.5"
-          />
-        </svg>
+    <section className="relative min-h-[560px] bg-lagoon-foundation md:min-h-[680px]">
+      <div className="hero-overlay" />
+      <div className="absolute right-6 top-6 z-20 md:right-10 md:top-10">
+        <Badge variant="credential">COR · 342215</Badge>
       </div>
-
-      <Container className="relative z-10 flex h-full min-h-[500px] items-center md:min-h-[600px]">
-        <div className="max-w-2xl py-16">
-          <span className="mb-4 inline-block rounded-full bg-white/20 px-4 py-1.5 text-sm font-semibold text-white">
-            Primul Club de Educație Acvatică din România
+      <Container className="relative z-10 flex h-full min-h-[560px] items-center md:min-h-[680px]">
+        <div className="max-w-3xl py-20">
+          <span className="mb-6 inline-block rounded-full border border-white/20 bg-white/8 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/85">
+            Primul club · din 2001
           </span>
-          <h1 className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-            Învățăm copiii să înoate cu bucurie și încredere
+          <h1
+            className="font-heading font-bold text-white"
+            style={{
+              fontSize: "var(--text-hero)",
+              letterSpacing: "var(--tracking-display)",
+              lineHeight: 1.02,
+            }}
+          >
+            Educație acvatică, de 25 de ani.
           </h1>
-          <p className="mt-6 text-lg text-lagoon-100 md:text-xl">
-            De peste 15 ani formăm micii campioni ai apei, cu metode certificate
-            și instructori dedicați.
+          <p className="mt-6 max-w-xl text-lg text-lagoon-100 md:text-xl">
+            Metoda Sultana — singura metodologie românească acreditată pentru educație acvatică timpurie.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button href="/servicii" size="lg">
-              Descoperă Cursurile
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Button href="/contact" size="lg">
+              Programează o vizită &nbsp;→
             </Button>
-            <Button
-              href="/contact"
-              variant="outline"
-              size="lg"
-              className="border-white/60 text-white hover:bg-white/20"
-            >
-              Contactează-ne
+            <Button href="/servicii" variant="outline-on-dark" size="lg">
+              Vezi cursurile
             </Button>
           </div>
         </div>
