@@ -12,7 +12,8 @@ export type BadgeVariant =
   | "sand"
   | "success"
   | "warning"
-  | "error";
+  | "error"
+  | "credential";
 
 export type BadgeSize = "sm" | "md" | "lg";
 
@@ -36,12 +37,21 @@ const variantStyles: Record<BadgeVariant, string> = {
   success: "bg-emerald-100 text-emerald-700",
   warning: "bg-amber-100 text-amber-700",
   error: "bg-red-100 text-red-700",
+  credential:
+    "bg-transparent border border-amber-credential/40 text-amber-credential font-mono uppercase tracking-[0.10em]",
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
   sm: "px-2 py-0.5 text-xs",
   md: "px-3 py-1 text-sm",
   lg: "px-4 py-1.5 text-base",
+};
+
+// `credential` ignores the size scale and uses its own tighter sizing
+const credentialSizeStyles: Record<BadgeSize, string> = {
+  sm: "px-2.5 py-0.5 text-[10px]",
+  md: "px-3 py-1 text-[11px]",
+  lg: "px-3.5 py-1.5 text-xs",
 };
 
 // =============================================================================
@@ -55,14 +65,12 @@ export function Badge({
   children,
   ...props
 }: BadgeProps) {
+  const sizeClass =
+    variant === "credential" ? credentialSizeStyles[size] : sizeStyles[size];
+
   return (
     <span
-      className={cn(
-        baseStyles,
-        variantStyles[variant],
-        sizeStyles[size],
-        className
-      )}
+      className={cn(baseStyles, variantStyles[variant], sizeClass, className)}
       {...props}
     >
       {children}
