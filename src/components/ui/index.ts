@@ -113,3 +113,6 @@ export {
   type TabContentProps,
   type VerticalTabsProps,
 } from "./Tabs";
+
+// TreatedImage
+export { TreatedImage, type TreatedImageProps } from "./TreatedImage";
