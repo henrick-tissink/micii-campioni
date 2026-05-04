@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils/cn";
 // Types
 // =============================================================================
 
-export type ButtonVariant = "primary" | "outline" | "ghost" | "credential";
+export type ButtonVariant = "primary" | "outline" | "outline-on-dark" | "ghost" | "credential";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -30,6 +30,8 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary:
     "bg-coral-refined text-white hover:-translate-y-0.5 hover:shadow-cinematic focus-visible:ring-2 focus-visible:ring-coral-refined focus-visible:ring-offset-2 dark:focus-visible:ring-offset-night-900",
   outline:
+    "bg-transparent border-lagoon-foundation text-lagoon-foundation hover:bg-lagoon-50 focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2 dark:border-lagoon-accent dark:text-lagoon-accent dark:hover:bg-night-800 dark:focus-visible:ring-offset-night-900",
+  "outline-on-dark":
     "bg-transparent border-white/60 text-white hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-night-900",
   ghost:
     "bg-transparent text-lagoon-foundation hover:bg-lagoon-50 focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2 dark:text-lagoon-accent dark:hover:bg-night-800",
