@@ -41,20 +41,17 @@
   /* B-REFRESH FOUNDATION (added 2026-05-04) */
   /* Chassis foundation — replaces lagoon-500/600 as primary chassis */
   --color-lagoon-foundation: #07332f;
-  --color-lagoon-deep: #042f2e;
-  --color-lagoon-accent: #5eeadb;
+  --color-lagoon-deep: var(--color-lagoon-950);
+  --color-lagoon-accent: var(--color-lagoon-300);
 
   /* Refined CTA */
-  --color-coral-refined: #ea580c;
+  --color-coral-refined: var(--color-coral-600);
 
   /* Cream paper for warmth breaks */
   --color-cream: #fbf6ee;
 
   /* Used only for credentials and editorial flourishes */
   --color-amber-credential: #d4a437;
-
-  /* Mono caption color */
-  --text-mono: #5b5440;
 
   /* SAND - Neutral Warm */
   --color-sand-50: #f5f0eb;
@@ -88,6 +85,7 @@
   --text-muted: var(--color-sand-400);
   --text-inverse: var(--color-sand-50);
   --text-brand: var(--color-lagoon-600);
+  --text-mono: #5b5440;
 
   /* Interactive Colors */
   --interactive-primary: var(--color-lagoon-500);
