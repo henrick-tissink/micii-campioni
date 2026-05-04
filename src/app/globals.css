@@ -53,6 +53,25 @@
   /* Used only for credentials and editorial flourishes */
   --color-amber-credential: #d4a437;
 
+  /* B-REFRESH TYPOGRAPHY */
+  --tracking-display: -0.025em;
+  --tracking-tight: -0.018em;
+  --tracking-mono: 0.10em;
+  --text-hero: clamp(2.5rem, 6vw, 5rem);
+  --text-section: clamp(1.75rem, 3vw, 2.75rem);
+
+  /* B-REFRESH SPACING */
+  --space-section-tight: 4rem;
+  --space-section-normal: 6rem;
+  --space-section-loose: 9rem;
+
+  /* B-REFRESH MOTION */
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-slow: 700ms;
+
+  /* B-REFRESH SHADOWS */
+  --shadow-cinematic: 0 24px 48px -16px rgba(7, 51, 47, 0.40);
+
   /* SAND - Neutral Warm */
   --color-sand-50: #f5f0eb;
   --color-sand-100: #f5f5f4;
@@ -299,6 +318,7 @@
   --shadow-elevated: var(--shadow-elevated);
   --shadow-lagoon: var(--shadow-lagoon);
   --shadow-coral: var(--shadow-coral);
+  --shadow-cinematic: var(--shadow-cinematic);
 
   /* Border Radius */
   --radius-2xl: 1.5rem;
