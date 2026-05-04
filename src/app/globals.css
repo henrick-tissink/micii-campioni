@@ -401,6 +401,45 @@ body {
 }
 
 /* --------------------------------------------------------------------------
+   B-Refresh Utility Classes
+   -------------------------------------------------------------------------- */
+
+.photo-graded {
+  filter: saturate(0.92) contrast(1.04);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(7, 51, 47, 0.92) 0%,
+    rgba(7, 51, 47, 0.55) 35%,
+    rgba(7, 51, 47, 0.15) 65%,
+    rgba(7, 51, 47, 0.50) 100%
+  );
+}
+
+.texture-grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.texture-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/textures/grain.svg");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
    Typography Utilities
    -------------------------------------------------------------------------- */
 
