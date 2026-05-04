@@ -41,6 +41,13 @@ docs/
 
 # Claude Code
 .claude/
+.superpowers/
+.worktrees/
+.playwright-mcp/
+
+# Local screenshots from QA / brainstorming
+/home-*.jpeg
+/home-*.png
 
 # typescript
 *.tsbuildinfo
