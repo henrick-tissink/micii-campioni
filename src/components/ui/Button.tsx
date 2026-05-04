@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils/cn";
 // Types
 // =============================================================================
 
-export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
+export type ButtonVariant = "primary" | "outline" | "ghost" | "credential";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -24,23 +24,29 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 // =============================================================================
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 font-heading font-semibold leading-none rounded-full border-2 border-transparent cursor-pointer transition-all duration-150 ease-out active:translate-y-0 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none";
+  "inline-flex items-center justify-center gap-2 font-heading font-semibold leading-none rounded-full border-2 border-transparent cursor-pointer transition-all duration-300 ease-out active:translate-y-0 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-lagoon-500 text-white hover:bg-lagoon-600 hover:-translate-y-0.5 hover:shadow-lagoon focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2 dark:bg-night-glow dark:hover:bg-night-bright dark:hover:shadow-[0_0_20px_rgba(32,178,170,0.4)] dark:focus-visible:ring-offset-night-900",
-  secondary:
-    "bg-coral-500 text-white hover:bg-coral-600 hover:-translate-y-0.5 hover:shadow-coral focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-night-900",
+    "bg-coral-refined text-white hover:-translate-y-0.5 hover:shadow-cinematic focus-visible:ring-2 focus-visible:ring-coral-refined focus-visible:ring-offset-2 dark:focus-visible:ring-offset-night-900",
   outline:
-    "bg-transparent border-lagoon-500 text-lagoon-600 hover:bg-lagoon-100 focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2 dark:border-lagoon-400 dark:text-lagoon-400 dark:hover:bg-night-800 dark:hover:text-lagoon-300 dark:focus-visible:ring-offset-night-900",
+    "bg-transparent border-white/60 text-white hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-night-900",
   ghost:
-    "bg-transparent text-lagoon-600 hover:bg-lagoon-50 focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2 dark:text-lagoon-400 dark:hover:bg-night-800 dark:hover:text-lagoon-300 dark:focus-visible:ring-offset-night-900",
+    "bg-transparent text-lagoon-foundation hover:bg-lagoon-50 focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2 dark:text-lagoon-accent dark:hover:bg-night-800",
+  credential:
+    "bg-transparent border-amber-credential/40 text-amber-credential font-mono uppercase tracking-[0.10em] text-xs hover:bg-amber-credential/10 cursor-default",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
   sm: "px-5 py-2.5 text-sm",
   md: "px-6 py-3 text-sm",
-  lg: "px-8 py-4 text-base",
+  lg: "px-9 py-4 text-[15px]",
+};
+
+const credentialSizeOverride: Record<ButtonSize, string> = {
+  sm: "px-3 py-1.5 text-[10px]",
+  md: "px-3.5 py-1.5 text-[11px]",
+  lg: "px-4 py-2 text-xs",
 };
 
 // =============================================================================
@@ -64,10 +70,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    const isCredential = variant === "credential";
     const classes = cn(
       baseStyles,
       variantStyles[variant],
-      sizeStyles[size],
+      isCredential ? credentialSizeOverride[size] : sizeStyles[size],
       fullWidth && "w-full",
       isLoading && "relative text-transparent",
       className
@@ -86,7 +93,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       </>
     );
 
-    // Render as link if href is provided
     if (href && !disabled) {
       const isExternal = href.startsWith("http");
 
