@@ -295,8 +295,9 @@
   --color-error: var(--color-error);
 
   /* Fonts */
-  --font-heading: var(--font-plus-jakarta);
+  --font-heading: var(--font-inter);
   --font-body: var(--font-inter);
+  --font-mono: var(--font-dm-mono);
 
   /* Z-Index Scale */
   --z-below: -1;
@@ -480,7 +481,7 @@ body {
 .prose h2,
 .prose h3,
 .prose h4 {
-  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   color: var(--text-primary);
   line-height: 1.25;
 }
