@@ -109,7 +109,7 @@ export interface FeaturedTestimonialProps {
 
 export function FeaturedTestimonial({ testimonial }: FeaturedTestimonialProps) {
   return (
-    <Section background="lagoon" spacing="lg">
+    <Section background="foundation" spacing="lg">
       <div className="mx-auto max-w-4xl text-center">
         <Quote className="mx-auto mb-6 h-12 w-12 text-lagoon-300" />
         <blockquote className="font-heading text-2xl font-medium text-white md:text-3xl">

@@ -57,7 +57,7 @@ export function StatsSection({
   if (variant === "lagoon") {
     return (
       <Section
-        background="lagoon"
+        background="foundation"
         spacing="lg"
         className="relative bg-gradient-to-br from-lagoon-600 to-lagoon-700 dark:from-night-800 dark:to-night-900 overflow-hidden"
       >

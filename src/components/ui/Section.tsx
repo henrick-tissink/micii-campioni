@@ -6,12 +6,20 @@ import { Container, type ContainerSize } from "./Container";
 // Types
 // =============================================================================
 
-export type SectionSpacing = "none" | "sm" | "md" | "lg" | "xl";
-export type SectionBackground = "white" | "sand" | "lagoon" | "gradient";
+export type SectionSpacing = "none" | "sm" | "md" | "lg" | "xl" | "loose";
+export type SectionBackground =
+  | "white"
+  | "sand"
+  | "cream"
+  | "foundation"
+  | "deep"
+  | "gradient";
+export type SectionTexture = "grain";
 
 export interface SectionProps extends HTMLAttributes<HTMLElement> {
   spacing?: SectionSpacing;
   background?: SectionBackground;
+  texture?: SectionTexture;
   containerSize?: ContainerSize;
   noContainer?: boolean;
   children: ReactNode;
@@ -27,13 +35,21 @@ const spacingStyles: Record<SectionSpacing, string> = {
   md: "py-10 md:py-14",
   lg: "py-12 md:py-16",
   xl: "py-16 md:py-24",
+  loose: "py-24 md:py-36",
 };
 
 const backgroundStyles: Record<SectionBackground, string> = {
   white: "bg-white dark:bg-night-900",
   sand: "bg-sand-50 dark:bg-night-800",
-  lagoon: "bg-lagoon-50 dark:bg-night-800/50",
-  gradient: "bg-gradient-to-b from-white to-sand-50 dark:from-night-900 dark:to-night-800",
+  cream: "bg-cream dark:bg-night-800",
+  foundation: "bg-lagoon-foundation text-white dark:bg-lagoon-foundation",
+  deep: "bg-lagoon-deep text-white dark:bg-lagoon-deep",
+  gradient:
+    "bg-gradient-to-b from-white to-sand-50 dark:from-night-900 dark:to-night-800",
+};
+
+const textureStyles: Record<SectionTexture, string> = {
+  grain: "texture-grain",
 };
 
 // =============================================================================
@@ -43,6 +59,7 @@ const backgroundStyles: Record<SectionBackground, string> = {
 export function Section({
   spacing = "lg",
   background = "white",
+  texture,
   containerSize = "xl",
   noContainer = false,
   className,
@@ -52,8 +69,10 @@ export function Section({
   return (
     <section
       className={cn(
+        "relative",
         spacingStyles[spacing],
         backgroundStyles[background],
+        texture && textureStyles[texture],
         className
       )}
       {...props}
@@ -100,10 +119,14 @@ export function SectionHeader({
       {...props}
     >
       {subtitle && (
-        <span className={cn(
-          "mb-2 inline-block font-heading text-sm font-semibold uppercase tracking-wider",
-          accent === "coral" ? "text-coral-600 dark:text-coral-400" : "text-lagoon-600 dark:text-lagoon-400"
-        )}>
+        <span
+          className={cn(
+            "mb-2 inline-block font-heading text-sm font-semibold uppercase tracking-wider",
+            accent === "coral"
+              ? "text-coral-600 dark:text-coral-400"
+              : "text-lagoon-600 dark:text-lagoon-400"
+          )}
+        >
           {subtitle}
         </span>
       )}
