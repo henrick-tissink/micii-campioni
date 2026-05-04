@@ -67,7 +67,7 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
   return (
     <>
       {/* Top bar with contact info */}
-      <div className="hidden bg-lagoon-600 py-2 text-sm text-white lg:block dark:bg-night-800 dark:border-b dark:border-night-700">
+      <div className="hidden bg-lagoon-foundation py-2 text-sm text-white lg:block dark:bg-night-800 dark:border-b dark:border-night-700">
         <Container>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
@@ -139,10 +139,10 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
                     <Link
                       href={item.href}
                       className={cn(
-                        "relative font-medium transition-colors hover:text-lagoon-600 dark:hover:text-lagoon-400",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2",
+                        "relative font-medium transition-colors hover:text-lagoon-foundation dark:hover:text-lagoon-accent",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2",
                         isActive(item.href)
-                          ? "text-lagoon-600 dark:text-lagoon-400 after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:rounded-full after:bg-lagoon-500 dark:after:bg-lagoon-400"
+                          ? "text-lagoon-foundation dark:text-lagoon-accent after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:h-1.5 after:w-1.5 after:rounded-full after:bg-coral-refined"
                           : "text-sand-700 dark:text-sand-300"
                       )}
                     >
