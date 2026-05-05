@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils/cn";
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "elevated" | "outline" | "ghost";
-  padding?: "none" | "sm" | "md" | "lg";
+  padding?: "none" | "sm" | "md" | "lg" | "cinematic";
   href?: string;
   image?: {
     src: string;
@@ -25,7 +25,7 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 // Styles
 // =============================================================================
 
-const baseStyles = "rounded-2xl overflow-hidden transition-all duration-200";
+const baseStyles = "rounded-2xl overflow-hidden transition-all duration-300";
 
 const variantStyles = {
   default: "bg-white shadow-soft dark:bg-night-800 dark:shadow-lg",
@@ -39,6 +39,7 @@ const paddingStyles = {
   sm: "p-4",
   md: "p-6",
   lg: "p-8",
+  cinematic: "p-6 md:p-8",
 };
 
 const aspectRatioStyles = {
@@ -49,7 +50,7 @@ const aspectRatioStyles = {
 };
 
 const hoverStyles =
-  "hover:-translate-y-1 hover:shadow-elevated cursor-pointer dark:hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] dark:hover:border-lagoon-500/30";
+  "hover:-translate-y-1 hover:shadow-cinematic cursor-pointer dark:hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] dark:hover:border-lagoon-accent/30";
 
 // =============================================================================
 // Component
@@ -166,7 +167,7 @@ export function CardTitle({
   return (
     <Component
       className={cn(
-        "font-heading font-semibold text-sand-900 dark:text-white",
+        "font-heading font-semibold text-sand-900 dark:text-white tracking-[var(--tracking-section)]",
         Component === "h2" && "text-2xl",
         Component === "h3" && "text-xl",
         Component === "h4" && "text-lg",
@@ -189,7 +190,7 @@ export function CardDescription({
   ...props
 }: CardDescriptionProps) {
   return (
-    <p className={cn("mt-2 text-sand-600 dark:text-sand-400", className)} {...props}>
+    <p className={cn("mt-2 leading-relaxed text-sand-600 dark:text-sand-400", className)} {...props}>
       {children}
     </p>
   );
