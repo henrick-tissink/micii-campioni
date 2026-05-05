@@ -82,7 +82,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
           src={testimonial.photo?.url}
           alt={testimonial.authorName}
           size="lg"
-          className="ring-1 ring-lagoon-accent"
+          className="ring-2 ring-lagoon-500 dark:ring-lagoon-accent"
         />
         <div>
           <p className="font-semibold text-sand-900 dark:text-white">{testimonial.authorName}</p>
