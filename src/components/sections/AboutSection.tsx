@@ -81,7 +81,7 @@ export function AboutSection({
               ) : (
                 <TreatedImage
                   src={media.url}
-                  alt={media.title || title}
+                  alt={media.title || "Micii Campioni"}
                   fill
                   sizes={SIZES.about}
                   className="object-cover"
@@ -89,15 +89,15 @@ export function AboutSection({
                 />
               )
             ) : (
-              <div className="relative flex h-full items-center justify-center overflow-hidden bg-gradient-to-br from-lagoon-100 to-lagoon-200">
+              <div className="relative flex h-full items-center justify-center overflow-hidden bg-gradient-to-br from-lagoon-100 to-lagoon-200 dark:from-night-700 dark:to-night-800">
                 <svg className="absolute bottom-0 left-0 right-0 h-24 text-lagoon-300/40" viewBox="0 0 1440 96" fill="none" preserveAspectRatio="none" aria-hidden="true">
                   <path d="M0 48C240 16 480 80 720 48C960 16 1200 80 1440 48V96H0V48Z" fill="currentColor" />
                 </svg>
                 <div className="relative z-10 text-center">
-                  <p className="font-heading text-lg font-semibold text-lagoon-foundation">
+                  <p className="font-heading text-lg font-semibold text-lagoon-foundation dark:text-lagoon-accent">
                     Micii Campioni
                   </p>
-                  <p className="text-sm text-lagoon-600">Educație Acvatică</p>
+                  <p className="text-sm text-lagoon-700 dark:text-lagoon-200">Educație Acvatică</p>
                 </div>
               </div>
             )}
@@ -111,7 +111,7 @@ export function AboutSection({
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Badge variant="credential" size="lg" className="bg-white/95 backdrop-blur shadow-cinematic">
+            <Badge variant="credential" size="lg" className="bg-white/95 backdrop-blur shadow-cinematic text-sand-900 dark:text-sand-900">
               25+ ani · primul club
             </Badge>
           </motion.div>
