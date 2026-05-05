@@ -84,13 +84,15 @@ export function FounderStrip({
             }}
           >
             {quote}
+            <footer className="mt-6">
+              <cite
+                className="font-mono not-italic text-[11px] uppercase text-sand-700 dark:text-sand-300"
+                style={{ letterSpacing: "var(--tracking-mono)" }}
+              >
+                {attribution}
+              </cite>
+            </footer>
           </blockquote>
-          <p
-            className="mt-6 font-mono text-[11px] uppercase text-sand-700 dark:text-sand-300"
-            style={{ letterSpacing: "var(--tracking-mono)" }}
-          >
-            {attribution}
-          </p>
           <Link
             href={ctaHref}
             className="group mt-6 inline-flex items-center gap-2 font-medium text-lagoon-foundation transition-colors hover:text-lagoon-deep dark:text-lagoon-accent dark:hover:text-white"
