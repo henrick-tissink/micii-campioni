@@ -11,6 +11,7 @@ import { StatsSection } from "@/components/sections/StatsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { CTASection } from "@/components/sections/CTASection";
 import { WaveDivider } from "@/components/ui/WaveDivider";
+import { FounderStrip } from "@/components/sections/FounderStrip";
 import { AnimatedSection } from "./HomePageSections";
 
 export default async function HomePage() {
@@ -59,7 +60,6 @@ export default async function HomePage() {
 
       {/* Stats Section */}
       <StatsSection variant="foundation-deep" />
-      <WaveDivider color="white" />
 
       {/* About Section */}
       <AnimatedSection>
@@ -71,18 +71,28 @@ export default async function HomePage() {
           features={homepageContent?.aboutFeatures}
         />
       </AnimatedSection>
-      <WaveDivider color="sand" />
 
-      {/* Services Section */}
+      {/* Continuous cream block: Services + Testimonials (no divider between) */}
       <AnimatedSection delay={100}>
         <ServicesSection services={services} />
       </AnimatedSection>
-      <WaveDivider color="white" />
 
-      {/* Testimonials Section */}
       <AnimatedSection delay={100}>
         <TestimonialsSection testimonials={testimonials} />
       </AnimatedSection>
+
+      {/* Founder Strip — anchors the brand to Georgeta Sultana */}
+      <AnimatedSection>
+        <FounderStrip
+          imageUrl="/images/team/georgeta-sultana.png"
+          imageAlt="Georgeta Sultana, fondatoarea Clubului Micii Campioni"
+          quote="Cred că apa nu se cucerește — se înțelege. Iar fiecare copil învață în ritmul lui."
+          attribution="Georgeta Sultana — Fondatoare, Clubul Micii Campioni"
+        />
+      </AnimatedSection>
+
+      {/* Subtle wave divider before the dark CTA */}
+      <WaveDivider color="foundation" variant="subtle" />
 
       {/* CTA Section */}
       <CTASection
