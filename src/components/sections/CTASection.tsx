@@ -51,9 +51,8 @@ export function CTASection({
               {secondaryButton && (
                 <Button
                   href={secondaryButton.href}
-                  variant="outline"
+                  variant="outline-on-dark"
                   size="lg"
-                  className="border-white/60 text-white hover:bg-white/20"
                 >
                   {secondaryButton.label}
                 </Button>
@@ -67,46 +66,41 @@ export function CTASection({
 
   if (variant === "gradient") {
     return (
-      <section className="relative overflow-hidden bg-gradient-to-br from-coral-500 to-coral-600">
-        {/* Decorative elements */}
-        <div className="absolute -left-20 -top-20 h-60 w-60 rounded-full bg-white/10" />
-        <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/10" />
-        <div className="absolute left-1/4 top-1/4 h-16 w-16 rounded-full bg-white/5" />
-        <div className="absolute right-1/3 bottom-1/4 h-12 w-12 rounded-full bg-white/5" />
-        <div className="absolute left-1/2 -top-6 h-24 w-24 rounded-full bg-white/5" />
-
-        <div className="relative z-10 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-heading text-3xl font-bold text-white md:text-4xl">
-              {title}
-            </h2>
-            <p className="mt-4 text-lg text-coral-100">{description}</p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
+      <Section background="foundation" spacing="xl" texture="grain" className="text-white">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2
+            className="font-heading font-bold text-white"
+            style={{
+              fontSize: "var(--text-section)",
+              letterSpacing: "var(--tracking-section)",
+              lineHeight: 1.1,
+            }}
+          >
+            {title}
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-lagoon-100/90">
+            {description}
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+            <Button href={primaryButton.href} variant="primary" size="lg">
+              {primaryButton.label}
+            </Button>
+            {secondaryButton && (
               <Button
-                href={primaryButton.href}
+                href={secondaryButton.href}
+                variant="outline-on-dark"
                 size="lg"
-                className="bg-white text-coral-600 hover:bg-coral-50"
               >
-                {primaryButton.label}
+                {secondaryButton.label}
               </Button>
-              {secondaryButton && (
-                <Button
-                  href={secondaryButton.href}
-                  variant="outline"
-                  size="lg"
-                  className="border-white/60 text-white hover:bg-white/20"
-                >
-                  {secondaryButton.label}
-                </Button>
-              )}
-            </div>
+            )}
           </div>
         </div>
-      </section>
+      </Section>
     );
   }
 
-  // Default variant (sand background)
+  // Default variant (sand background) — unchanged from prior implementation
   return (
     <Section background="sand" spacing="xl">
       <div className="mx-auto max-w-3xl text-center">
