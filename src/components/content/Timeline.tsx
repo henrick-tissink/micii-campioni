@@ -160,7 +160,7 @@ export function CompactTimeline({
 
             {/* Content */}
             <div>
-              <span className="font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-amber-credential">
+              <span className="font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation">
                 {event.year}
               </span>
               {event.title && (
