@@ -9,6 +9,7 @@ import { GoogleAds } from "@/components/analytics/GoogleAds";
 import { getNavigation, getSiteSettings } from "@/lib/contentful/queries";
 import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import { LenisProvider } from "@/lib/scroll/LenisProvider";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 
 const inter = Inter({
@@ -140,15 +141,17 @@ export default async function RootLayout({
         />
         <ThemeProvider>
           <LenisProvider>
-            <a href="#main-content" className="skip-link">
-              Salt la conținut principal
-            </a>
-            <Header navigation={headerNav} siteSettings={siteSettings} />
-            <main id="main-content">{children}</main>
-            <Footer navigation={headerNav} siteSettings={siteSettings} />
-            {siteSettings?.phone && (
-              <WhatsAppButton phone={siteSettings.phone} />
-            )}
+            <MotionConfig reducedMotion="user">
+              <a href="#main-content" className="skip-link">
+                Salt la conținut principal
+              </a>
+              <Header navigation={headerNav} siteSettings={siteSettings} />
+              <main id="main-content">{children}</main>
+              <Footer navigation={headerNav} siteSettings={siteSettings} />
+              {siteSettings?.phone && (
+                <WhatsAppButton phone={siteSettings.phone} />
+              )}
+            </MotionConfig>
           </LenisProvider>
         </ThemeProvider>
         <GoogleAnalytics gaId="G-0KMB46E5XF" />
