@@ -217,7 +217,7 @@ export default async function ServicePage({ params }: Props) {
                 </Link>
               </li>
               <li className="flex items-center gap-1">
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
                 <Link
                   href="/servicii"
                   className="transition-colors hover:text-white"
@@ -226,8 +226,8 @@ export default async function ServicePage({ params }: Props) {
                 </Link>
               </li>
               <li className="flex items-center gap-1">
-                <ChevronRight className="h-4 w-4" />
-                <span className="text-white">{service.title}</span>
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                <span aria-current="page" className="text-white">{service.title}</span>
               </li>
             </ol>
           </nav>

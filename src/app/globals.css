@@ -565,6 +565,23 @@ body {
   border-top: 1px solid var(--color-sand-200);
 }
 
+/* Prose large — 18px editorial body */
+.prose-lg p,
+.prose-lg ul,
+.prose-lg ol,
+.prose-lg li {
+  font-size: 1.125rem;
+  line-height: 1.778;
+}
+
+.prose-lg h2 {
+  font-size: 1.6875rem; /* 1.5rem × (18/16) */
+}
+
+.prose-lg h3 {
+  font-size: 1.40625rem; /* 1.25rem × (18/16) */
+}
+
 /* Dark mode prose */
 .dark .prose {
   color: #a0aec0;
