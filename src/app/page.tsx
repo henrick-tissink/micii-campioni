@@ -10,7 +10,6 @@ import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { CTASection } from "@/components/sections/CTASection";
-import { WaveDivider } from "@/components/ui/WaveDivider";
 import { FounderStrip } from "@/components/sections/FounderStrip";
 import { AnimatedSection } from "./HomePageSections";
 
@@ -90,9 +89,6 @@ export default async function HomePage() {
           attribution="Georgeta Sultana — Fondatoare, Clubul Micii Campioni"
         />
       </AnimatedSection>
-
-      {/* Subtle wave divider before the dark CTA */}
-      <WaveDivider color="foundation" variant="subtle" />
 
       {/* CTA Section */}
       <CTASection
