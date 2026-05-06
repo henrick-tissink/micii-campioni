@@ -123,7 +123,7 @@ export function PageLayout({
 
           <div className="max-w-3xl">
             <h1
-              className="font-heading font-bold text-white"
+              className="font-heading font-bold text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]"
               style={{
                 fontSize: "var(--text-section)",
                 letterSpacing: "var(--tracking-section)",
@@ -133,7 +133,7 @@ export function PageLayout({
               {title}
             </h1>
             {subtitle && (
-              <p className="mt-4 max-w-2xl text-xl leading-relaxed text-lagoon-100/90">
+              <p className="mt-4 max-w-2xl text-xl leading-relaxed text-lagoon-100/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]">
                 {subtitle}
               </p>
             )}
@@ -199,7 +199,7 @@ export function SectionHero({
       <div className="absolute inset-0 hero-overlay" />
       <Container className="relative z-10 flex min-h-[400px] flex-col items-center justify-center py-16 text-center md:min-h-[440px]">
         <h1
-          className="font-heading font-bold text-white"
+          className="font-heading font-bold text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]"
           style={{
             fontSize: "var(--text-section)",
             letterSpacing: "var(--tracking-section)",
@@ -209,7 +209,7 @@ export function SectionHero({
           {title}
         </h1>
         {subtitle && (
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-lagoon-100/90 md:text-xl">
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-lagoon-100/90 md:text-xl [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]">
             {subtitle}
           </p>
         )}
