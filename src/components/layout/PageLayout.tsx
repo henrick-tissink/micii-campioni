@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { WaveDivider } from "@/components/ui/WaveDivider";
+import { TreatedImage } from "@/components/ui/TreatedImage";
+import { SIZES } from "@/lib/contentful/image";
 import { Sidebar } from "./Sidebar";
 import type { Widget, ContentfulImage } from "@/types/contentful";
 
@@ -74,26 +74,24 @@ export function PageLayout({
         />
       )}
 
-      {/* Hero Section */}
-      <section className="relative min-h-[280px] overflow-hidden bg-gradient-to-br from-lagoon-600 to-lagoon-700">
+      {/* Hero Section — TreatedImage + .hero-overlay */}
+      <section className="relative min-h-[400px] overflow-hidden bg-lagoon-foundation">
         {heroImage && (
-          <>
-            <Image
-              src={heroImage.url}
-              alt={heroImageAlt || heroImage.title || title}
-              fill
-              sizes="100vw"
-              className="object-cover object-top opacity-40"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/60 to-lagoon-800/30" />
-          </>
+          <TreatedImage
+            src={heroImage.url}
+            alt={heroImageAlt || heroImage.title || title}
+            fill
+            sizes={SIZES.hero}
+            className="object-cover"
+            priority
+          />
         )}
-        <Container className="relative z-10 flex min-h-[280px] flex-col justify-center py-12">
+        <div className="absolute inset-0 hero-overlay" />
+        <Container className="relative z-10 flex min-h-[400px] flex-col justify-center py-16">
           {/* Breadcrumbs */}
           {breadcrumbs && breadcrumbs.length > 0 && (
             <nav aria-label="Breadcrumb" className="mb-4">
-              <ol className="flex flex-wrap items-center gap-1 text-sm text-lagoon-200">
+              <ol className="flex flex-wrap items-center gap-1 text-sm text-lagoon-100/80">
                 <li>
                   <Link
                     href="/"
@@ -104,9 +102,11 @@ export function PageLayout({
                 </li>
                 {breadcrumbs.map((crumb, index) => (
                   <li key={crumb.href} className="flex items-center gap-1">
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRight className="h-4 w-4" aria-hidden="true" />
                     {index === breadcrumbs.length - 1 ? (
-                      <span className="text-white">{crumb.label}</span>
+                      <span aria-current="page" className="text-white">
+                        {crumb.label}
+                      </span>
                     ) : (
                       <Link
                         href={crumb.href}
@@ -122,19 +122,23 @@ export function PageLayout({
           )}
 
           <div className="max-w-3xl">
-            <h1 className="font-heading text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+            <h1
+              className="font-heading font-bold text-white"
+              style={{
+                fontSize: "var(--text-section)",
+                letterSpacing: "var(--tracking-section)",
+                lineHeight: 1.1,
+              }}
+            >
               {title}
             </h1>
             {subtitle && (
-              <p className="mt-4 text-lg text-lagoon-100 md:text-xl">
+              <p className="mt-4 max-w-2xl text-xl leading-relaxed text-lagoon-100/90">
                 {subtitle}
               </p>
             )}
           </div>
         </Container>
-        <div className="absolute bottom-0 left-0 right-0">
-          <WaveDivider color="white" />
-        </div>
       </section>
 
       {/* Main Content */}
@@ -181,34 +185,36 @@ export function SectionHero({
   children,
 }: SectionHeroProps) {
   return (
-    <section className="relative min-h-[300px] overflow-hidden bg-gradient-to-br from-lagoon-600 to-lagoon-700 md:min-h-[350px]">
+    <section className="relative min-h-[400px] overflow-hidden bg-lagoon-foundation md:min-h-[440px]">
       {heroImage && (
-        <>
-          <Image
-            src={heroImage.url}
-            alt={heroImage.title || title}
-            fill
-            sizes="100vw"
-            className="object-cover object-top opacity-40"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/60 to-lagoon-800/30" />
-        </>
+        <TreatedImage
+          src={heroImage.url}
+          alt={heroImage.title || title}
+          fill
+          sizes={SIZES.hero}
+          className="object-cover"
+          priority
+        />
       )}
-      <Container className="relative z-10 flex min-h-[300px] flex-col items-center justify-center py-16 text-center md:min-h-[350px]">
-        <h1 className="font-heading text-4xl font-bold text-white md:text-5xl">
+      <div className="absolute inset-0 hero-overlay" />
+      <Container className="relative z-10 flex min-h-[400px] flex-col items-center justify-center py-16 text-center md:min-h-[440px]">
+        <h1
+          className="font-heading font-bold text-white"
+          style={{
+            fontSize: "var(--text-section)",
+            letterSpacing: "var(--tracking-section)",
+            lineHeight: 1.1,
+          }}
+        >
           {title}
         </h1>
         {subtitle && (
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-lagoon-100 md:text-xl">
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-lagoon-100/90 md:text-xl">
             {subtitle}
           </p>
         )}
         {children}
       </Container>
-      <div className="absolute bottom-0 left-0 right-0">
-        <WaveDivider color="white" />
-      </div>
     </section>
   );
 }
