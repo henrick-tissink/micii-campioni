@@ -25,8 +25,8 @@ export function Timeline({ events, className }: TimelineProps) {
 
   return (
     <div className={cn("relative", className)}>
-      {/* Vertical line */}
-      <div className="absolute left-6 top-0 h-full w-0.5 bg-gradient-to-b from-lagoon-400 via-lagoon-500 to-lagoon-600 md:left-1/2 md:-translate-x-1/2" />
+      {/* Vertical line — foundation tone, alpha-faded at top and bottom */}
+      <div className="absolute left-6 top-0 h-full w-0.5 bg-gradient-to-b from-lagoon-foundation/30 via-lagoon-foundation to-lagoon-foundation/30 md:left-1/2 md:-translate-x-1/2" />
 
       <div className="space-y-8 md:space-y-12">
         {events.map((event, index) => (
@@ -66,10 +66,10 @@ function TimelineItem({ event, index, isExpanded, onToggle }: TimelineItemProps)
         isEven ? "md:flex-row" : "md:flex-row-reverse"
       )}
     >
-      {/* Year badge */}
+      {/* Year badge — mono uppercase amber-credential on lagoon-foundation circle */}
       <div
         className={cn(
-          "relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-lagoon-500 font-heading text-sm font-bold text-white shadow-lg md:absolute md:left-1/2 md:-translate-x-1/2"
+          "relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-lagoon-foundation font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-amber-credential shadow-cinematic md:absolute md:left-1/2 md:-translate-x-1/2"
         )}
       >
         {event.year}
@@ -85,9 +85,9 @@ function TimelineItem({ event, index, isExpanded, onToggle }: TimelineItemProps)
         <button
           onClick={onToggle}
           className={cn(
-            "w-full rounded-2xl bg-white p-6 text-left shadow-soft transition-all duration-300 hover:shadow-medium",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2",
-            isExpanded && "ring-2 ring-lagoon-200"
+            "w-full rounded-2xl bg-white p-6 text-left shadow-soft transition-all duration-300 hover:shadow-cinematic",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2",
+            isExpanded && "ring-2 ring-amber-credential/40"
           )}
         >
           {/* Title */}
@@ -121,7 +121,7 @@ function TimelineItem({ event, index, isExpanded, onToggle }: TimelineItemProps)
           )}
 
           {/* Expand indicator */}
-          <span className="mt-3 inline-block text-sm font-medium text-lagoon-600">
+          <span className="mt-3 inline-block text-sm font-medium text-lagoon-foundation">
             {isExpanded ? "Arată mai puțin" : "Citește mai mult"}
           </span>
         </button>
@@ -131,7 +131,7 @@ function TimelineItem({ event, index, isExpanded, onToggle }: TimelineItemProps)
 }
 
 // =============================================================================
-// Compact Timeline (for sidebars)
+// Compact Timeline (for sidebars / preview)
 // =============================================================================
 
 interface CompactTimelineProps {
@@ -149,22 +149,22 @@ export function CompactTimeline({
 
   return (
     <div className={cn("relative pl-6", className)}>
-      {/* Vertical line */}
-      <div className="absolute left-2 top-2 h-[calc(100%-1rem)] w-0.5 bg-lagoon-200" />
+      {/* Vertical line — foundation tone */}
+      <div className="absolute left-2 top-2 h-[calc(100%-1rem)] w-0.5 bg-lagoon-foundation/40" />
 
       <div className="space-y-4">
         {displayedEvents.map((event, index) => (
           <div key={`${event.year}-${index}`} className="relative">
-            {/* Dot */}
-            <div className="absolute -left-6 top-1.5 h-4 w-4 rounded-full border-2 border-lagoon-500 bg-white" />
+            {/* Dot — amber-credential brand mark */}
+            <div className="absolute -left-6 top-1.5 h-3 w-3 rounded-full border-2 border-amber-credential bg-white" />
 
             {/* Content */}
             <div>
-              <span className="font-heading text-sm font-semibold text-lagoon-600">
+              <span className="font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-amber-credential">
                 {event.year}
               </span>
               {event.title && (
-                <h4 className="font-medium text-sand-900">{event.title}</h4>
+                <h4 className="mt-1 font-medium text-sand-900">{event.title}</h4>
               )}
               <p className="line-clamp-2 text-sm text-sand-600">
                 {event.description}
