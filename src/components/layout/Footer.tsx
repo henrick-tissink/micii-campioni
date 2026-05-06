@@ -25,7 +25,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
   const mainLinks = navItems;
 
   return (
-    <footer className="bg-sand-900 text-sand-300 dark:bg-night-900 dark:border-t dark:border-night-800">
+    <footer className="bg-lagoon-deep text-lagoon-100 dark:bg-lagoon-deep">
       {/* Main footer content */}
       <Container>
         <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
@@ -58,7 +58,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
                   href={siteSettings.facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-sand-400 transition-colors hover:bg-sand-800 hover:text-white"
+                  className="rounded-lg p-2 text-lagoon-100 transition-colors hover:bg-lagoon-foundation hover:text-white"
                   aria-label="Facebook"
                 >
                   <Facebook className="h-5 w-5" />
@@ -69,7 +69,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
                   href={siteSettings.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-sand-400 transition-colors hover:bg-sand-800 hover:text-white"
+                  className="rounded-lg p-2 text-lagoon-100 transition-colors hover:bg-lagoon-foundation hover:text-white"
                   aria-label="Instagram"
                 >
                   <Instagram className="h-5 w-5" />
@@ -80,7 +80,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
                   href={siteSettings.twitterUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-sand-400 transition-colors hover:bg-sand-800 hover:text-white"
+                  className="rounded-lg p-2 text-lagoon-100 transition-colors hover:bg-lagoon-foundation hover:text-white"
                   aria-label="Twitter"
                 >
                   <Twitter className="h-5 w-5" />
@@ -176,7 +176,7 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
                     href={`tel:${siteSettings.phone}`}
                     className="flex items-start gap-3 text-sm transition-colors hover:text-white"
                   >
-                    <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-400" />
+                    <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-accent" />
                     {siteSettings.phone}
                   </a>
                 </li>
@@ -187,14 +187,14 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
                     href={`mailto:${siteSettings.email}`}
                     className="flex items-start gap-3 text-sm transition-colors hover:text-white"
                   >
-                    <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-400" />
+                    <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-accent" />
                     {siteSettings.email}
                   </a>
                 </li>
               )}
               {siteSettings?.address && (
                 <li className="flex items-start gap-3 text-sm">
-                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-400" />
+                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-accent" />
                   <span>{siteSettings.address}</span>
                 </li>
               )}
@@ -204,13 +204,13 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
       </Container>
 
       {/* Bottom bar */}
-      <div className="border-t border-sand-800 dark:border-night-800">
+      <div className="border-t border-lagoon-foundation/30">
         <Container>
           <div className="flex flex-col items-center justify-between gap-4 py-6 text-sm md:flex-row">
             <p>
               © {currentYear} Micii Campioni. Toate drepturile rezervate.
             </p>
-            <p className="text-sand-500">
+            <p className="text-lagoon-200">
               Designed with ❤️ for little swimmers
             </p>
           </div>
