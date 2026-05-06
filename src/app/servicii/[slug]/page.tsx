@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ChevronRight } from "lucide-react";
@@ -14,6 +13,7 @@ import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { TreatedImage } from "@/components/ui/TreatedImage";
 import { Tabs, TabList, TabTrigger, TabContent } from "@/components/ui/Tabs";
 import {
   Accordion,
@@ -24,6 +24,7 @@ import {
 import { CompactServices } from "@/components/sections/ServicesSection";
 import { CTASection } from "@/components/sections/CTASection";
 import { ViewContentTracker } from "@/components/analytics/ViewContentTracker";
+import { SIZES } from "@/lib/contentful/image";
 
 // =============================================================================
 // Metadata
@@ -192,24 +193,24 @@ export default async function ServicePage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
-      {/* Hero Section */}
-      <section className="relative min-h-[400px] overflow-hidden bg-gradient-to-br from-lagoon-600 to-lagoon-800">
+
+      {/* Hero Section — TreatedImage + .hero-overlay */}
+      <section className="relative min-h-[480px] overflow-hidden bg-lagoon-foundation">
         {service.heroImage && (
-          <>
-            <Image
-              src={service.heroImage.url}
-              alt={service.heroImage.title || service.title}
-              fill
-              className="object-cover opacity-30"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/80 to-lagoon-800/50" />
-          </>
+          <TreatedImage
+            src={service.heroImage.url}
+            alt={service.heroImage.title || service.title}
+            fill
+            sizes={SIZES.hero}
+            className="object-cover"
+            priority
+          />
         )}
-        <Container className="relative z-10 flex min-h-[400px] flex-col justify-center py-16">
+        <div className="absolute inset-0 hero-overlay" />
+        <Container className="relative z-10 flex min-h-[480px] flex-col justify-center py-16">
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumb" className="mb-4">
-            <ol className="flex flex-wrap items-center gap-1 text-sm text-lagoon-200">
+            <ol className="flex flex-wrap items-center gap-1 text-sm text-lagoon-100/80">
               <li>
                 <Link href="/" className="transition-colors hover:text-white">
                   Acasă
@@ -234,46 +235,45 @@ export default async function ServicePage({ params }: Props) {
           <div className="max-w-3xl">
             {primaryAgeRange && (
               <Badge
-                variant="lagoon"
+                variant="credential"
                 size="lg"
-                className="mb-4 bg-white/20 text-white"
+                className="mb-4 bg-white/95 backdrop-blur text-sand-900"
               >
                 {primaryAgeRange}
               </Badge>
             )}
-            <h1 className="font-heading text-4xl font-bold text-white md:text-5xl">
+            <h1
+              className="font-heading font-bold text-white"
+              style={{
+                fontSize: "var(--text-section)",
+                letterSpacing: "var(--tracking-section)",
+                lineHeight: 1.1,
+              }}
+            >
               {service.title}
             </h1>
             {service.shortDescription && (
-              <p className="mt-4 text-xl text-lagoon-100">
+              <p className="mt-4 max-w-2xl text-xl leading-relaxed text-lagoon-100/90">
                 {service.shortDescription}
               </p>
             )}
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button href="/contact" size="lg">
-                Programează o Lecție
-              </Button>
-              <Button
-                href="#detalii"
-                variant="outline"
-                size="lg"
-                className="border-white/30 text-white hover:bg-white/10"
-              >
-                Vezi Detalii
+            <div className="mt-8">
+              <Button href="/contact" variant="primary" size="lg">
+                Programează o vizită
               </Button>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Age Groups Info Bar */}
+      {/* Age Groups Info Bar — light refresh: amber-credential dot */}
       {service.ageGroups && service.ageGroups.length > 0 && (
         <div className="border-b border-sand-200 bg-white">
           <Container>
             <div className="flex flex-wrap justify-center gap-6 py-6 md:justify-start md:gap-8">
               {service.ageGroups.map((ageGroup) => (
                 <div key={ageGroup.name} className="flex items-center gap-3">
-                  <div className="h-3 w-3 rounded-full bg-lagoon-500" />
+                  <div className="h-2 w-2 rounded-full bg-amber-credential" />
                   <span className="text-sand-700">
                     <strong className="text-sand-900">{ageGroup.name}:</strong>{" "}
                     {ageGroup.ageRange}
@@ -286,136 +286,113 @@ export default async function ServicePage({ params }: Props) {
         </div>
       )}
 
-      {/* Main Content */}
+      {/* Main Content — single 720px reading column */}
       <Section id="detalii" background="white" spacing="xl">
-        <div className="grid gap-12 lg:grid-cols-3">
-          {/* Main Content Column */}
-          <div className="lg:col-span-2">
-            {/* Tabs for different sections */}
-            {service.tabs && service.tabs.length > 0 ? (
-              <Tabs defaultTab="descriere">
-                <TabList>
-                  <TabTrigger id="descriere">Descriere</TabTrigger>
-                  {service.tabs.map((tab) => (
-                    <TabTrigger
-                      key={tab.title}
-                      id={tab.title.toLowerCase().replace(/\s+/g, "-")}
-                    >
-                      {tab.title}
-                    </TabTrigger>
-                  ))}
-                </TabList>
-
-                <TabContent id="descriere">
-                  <div className="prose max-w-none">
-                    <RichText content={service.content} />
-                  </div>
-                </TabContent>
-
+        <div className="mx-auto max-w-[720px]">
+          {/* Tabs for different sections */}
+          {service.tabs && service.tabs.length > 0 ? (
+            <Tabs defaultTab="descriere">
+              <TabList>
+                <TabTrigger id="descriere">Descriere</TabTrigger>
                 {service.tabs.map((tab) => (
-                  <TabContent
+                  <TabTrigger
                     key={tab.title}
                     id={tab.title.toLowerCase().replace(/\s+/g, "-")}
                   >
-                    <div className="prose max-w-none">
-                      <Markdown content={tab.content} />
-                    </div>
-                  </TabContent>
+                    {tab.title}
+                  </TabTrigger>
                 ))}
-              </Tabs>
-            ) : (
-              <div className="prose max-w-none">
-                <RichText content={service.content} />
-              </div>
-            )}
+              </TabList>
 
-            {/* FAQ Accordion */}
-            {isFAQPage && faqs.length > 0 && (
-              <div className="mt-12">
-                <Accordion allowMultiple>
-                  {faqs.map((faq, index) => (
-                    <AccordionItem key={index} id={`faq-${index}`}>
-                      <AccordionTrigger>{faq.question}</AccordionTrigger>
-                      <AccordionContent>
-                        <Markdown content={faq.answer} />
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            )}
-
-            {/* Age Groups Detail */}
-            {service.ageGroups && service.ageGroups.length > 0 && (
-              <div className="mt-12">
-                <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
-                  Grupele de Vârstă
-                </h2>
-                <div className="space-y-6">
-                  {service.ageGroups.map((ageGroup) => (
-                    <div
-                      key={ageGroup.name}
-                      className="rounded-2xl border border-sand-200 p-6"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3 className="font-heading text-lg font-semibold text-sand-900">
-                            {ageGroup.name}
-                          </h3>
-                          <p className="text-lagoon-600">{ageGroup.ageRange}</p>
-                        </div>
-                        {ageGroup.duration && (
-                          <Badge variant="sand">{ageGroup.duration}</Badge>
-                        )}
-                      </div>
-                      {ageGroup.description && (
-                        <div className="mt-4 text-sand-600">
-                          <Markdown content={ageGroup.description} />
-                        </div>
-                      )}
-                    </div>
-                  ))}
+              <TabContent id="descriere">
+                <div className="prose prose-lg max-w-none">
+                  <RichText content={service.content} />
                 </div>
-              </div>
-            )}
-          </div>
+              </TabContent>
 
-          {/* Sidebar */}
-          <aside className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
-              {/* CTA Card */}
-              <div className="rounded-2xl bg-lagoon-50 p-6">
-                <h3 className="mb-2 font-heading text-lg font-semibold text-sand-900">
-                  Înscrie-te Acum
-                </h3>
-                <p className="mb-4 text-sand-600">
-                  Programează o întâlnire pentru a discuta despre nevoile
-                  copilului tău.
-                </p>
-                <Button href="/contact" fullWidth>
-                  Programează o Lecție
-                </Button>
-              </div>
-
-              {/* Other Services */}
-              {otherServices.length > 0 && (
-                <CompactServices
-                  services={otherServices}
-                  title="Alte Cursuri"
-                />
-              )}
+              {service.tabs.map((tab) => (
+                <TabContent
+                  key={tab.title}
+                  id={tab.title.toLowerCase().replace(/\s+/g, "-")}
+                >
+                  <div className="prose prose-lg max-w-none">
+                    <Markdown content={tab.content} />
+                  </div>
+                </TabContent>
+              ))}
+            </Tabs>
+          ) : (
+            <div className="prose prose-lg max-w-none">
+              <RichText content={service.content} />
             </div>
-          </aside>
+          )}
+
+          {/* FAQ Accordion */}
+          {isFAQPage && faqs.length > 0 && (
+            <div className="mt-12">
+              <Accordion allowMultiple>
+                {faqs.map((faq, index) => (
+                  <AccordionItem key={index} id={`faq-${index}`}>
+                    <AccordionTrigger>{faq.question}</AccordionTrigger>
+                    <AccordionContent>
+                      <Markdown content={faq.answer} />
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
+
+          {/* Age Groups Detail — clean table format (hairline-divided rows) */}
+          {service.ageGroups && service.ageGroups.length > 0 && (
+            <div className="mt-12">
+              <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
+                Grupele de Vârstă
+              </h2>
+              <div className="border-t border-sand-100 dark:border-night-700">
+                {service.ageGroups.map((ageGroup) => (
+                  <div
+                    key={ageGroup.name}
+                    className="border-b border-sand-100 py-6 dark:border-night-700"
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                      <h3 className="font-heading text-lg font-medium text-sand-900 dark:text-white">
+                        {ageGroup.name}
+                      </h3>
+                      <p className="font-mono text-sm uppercase tracking-[var(--tracking-mono)] text-sand-500 dark:text-sand-400">
+                        {ageGroup.ageRange}
+                        {ageGroup.duration && ` · ${ageGroup.duration}`}
+                      </p>
+                    </div>
+                    {ageGroup.description && (
+                      <div className="mt-3 text-[15px] leading-relaxed text-sand-600 dark:text-sand-400">
+                        <Markdown content={ageGroup.description} />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </Section>
 
-      {/* CTA Section */}
+      {/* Other courses — soft visual differentiator from body white */}
+      {otherServices.length > 0 && (
+        <Section background="cream" spacing="lg">
+          <div className="mx-auto max-w-3xl">
+            <CompactServices services={otherServices} title="Alte Cursuri" />
+          </div>
+        </Section>
+      )}
+
+      {/* CTA Section — course-specific booking */}
       <CTASection
-        title="Ai întrebări despre acest curs?"
-        description="Echipa noastră este gata să te ajute. Contactează-ne pentru mai multe informații."
-        primaryButton={{ label: "Contactează-ne", href: "/contact" }}
+        title={`Pregătit pentru ${service.title}?`}
+        description="Programează o vizită și vino să cunoști echipa noastră."
+        primaryButton={{ label: "Programează o vizită", href: "/contact" }}
         secondaryButton={{ label: "Vezi Toate Cursurile", href: "/servicii" }}
-        variant="default"
+        variant="gradient"
       />
     </>
   );
