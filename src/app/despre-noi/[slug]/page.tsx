@@ -133,21 +133,23 @@ export default async function DespreNoiSubPage({ params }: Props) {
         breadcrumbs={breadcrumbs}
         sidebarWidgets={page.sidebarWidgets}
       >
-        {/* Main Content */}
+        {/* Main Content — RichText in 720px reading column */}
         {page.content && (
-          <div className="prose max-w-none">
-            <RichText content={page.content} />
+          <div className="mx-auto max-w-[720px]">
+            <div className="prose prose-lg max-w-none">
+              <RichText content={page.content} />
+            </div>
           </div>
         )}
 
-        {/* Team Grid */}
+        {/* Team Grid — full PageLayout width, no inner constraint */}
         {isTeamPage && teamMembers.length > 0 && (
           <div className="mt-12">
             <TeamGrid members={teamMembers} />
           </div>
         )}
 
-        {/* Timeline */}
+        {/* Timeline — full PageLayout width, no inner constraint */}
         {isHistoryPage && timelineEvents.length > 0 && (
           <div className="mt-12">
             <Timeline events={timelineEvents} />
@@ -157,7 +159,7 @@ export default async function DespreNoiSubPage({ params }: Props) {
         {/* Certificates Gallery */}
         {isCertificatesPage && certificates.length > 0 && (
           <div className="mt-12">
-            <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
+            <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
               Certificări și Distincții
             </h2>
             <ImageGallery
@@ -170,7 +172,7 @@ export default async function DespreNoiSubPage({ params }: Props) {
         {/* Press Clippings Gallery */}
         {isPressPage && pressClippings.length > 0 && (
           <div className="mt-12">
-            <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
+            <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
               Apariții în Presă
             </h2>
             <ImageGallery
@@ -181,12 +183,12 @@ export default async function DespreNoiSubPage({ params }: Props) {
         )}
       </PageLayout>
 
-      {/* CTA */}
+      {/* CTA — gradient (foundation+grain post-M3) */}
       <CTASection
         title="Ai întrebări?"
         description="Suntem aici să te ajutăm. Contactează-ne pentru mai multe informații."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="default"
+        variant="gradient"
       />
     </>
   );
