@@ -80,10 +80,12 @@ export default async function ConceptSubPage({ params }: Props) {
         breadcrumbs={breadcrumbs}
         sidebarWidgets={page.sidebarWidgets}
       >
-        {/* Main Content */}
+        {/* Main Content — RichText in 720px reading column (matches M5a despre-noi pattern) */}
         {page.content && (
-          <div className="prose max-w-none">
-            <RichText content={page.content} />
+          <div className="mx-auto max-w-[720px]">
+            <div className="prose prose-lg max-w-none">
+              <RichText content={page.content} />
+            </div>
           </div>
         )}
 
@@ -100,7 +102,7 @@ export default async function ConceptSubPage({ params }: Props) {
         title="Interesat de programele noastre?"
         description="Descoperă cum putem ajuta copilul tău să devină un mic campion."
         primaryButton={{ label: "Vezi Cursurile", href: "/servicii" }}
-        variant="default"
+        variant="gradient"
       />
     </>
   );
