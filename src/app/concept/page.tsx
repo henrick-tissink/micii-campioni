@@ -5,9 +5,16 @@ import { getPageBySlug, getPartners } from "@/lib/contentful/queries";
 import { SectionHero } from "@/components/layout/PageLayout";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
-import { RichText } from "@/lib/contentful/rich-text";
 import { PartnersStrip } from "@/components/content/PartnersStrip";
 import { CTASection } from "@/components/sections/CTASection";
+import { MethodologyPrinciples } from "@/components/sections/MethodologyPrinciples";
+import { AgeGroups } from "@/components/sections/AgeGroups";
+
+// NOTE: The Contentful body (`page.content`) for /concept is intentionally
+// NOT rendered. The methodology principles and age groups now live as
+// hardcoded structured data in MethodologyPrinciples.tsx and AgeGroups.tsx.
+// The CMS body field can stay populated in Contentful — it just won't
+// appear on the page. Future cleanup can clear it via the Contentful UI.
 
 export const metadata: Metadata = {
   title: "Conceptul și Metodologia Noastră",
@@ -21,12 +28,13 @@ export const metadata: Metadata = {
   },
 };
 
-// Section navigation cards
+// Section navigation cards (sub-pages under /concept)
 const sectionCards = [
   {
     slug: "micii-campioni-si-faael",
     title: "Micii Campioni și FAAEL",
-    description: "Parteneriatul nostru cu Federația Internațională de Activități Acvatice",
+    description:
+      "Parteneriatul nostru cu Federația Internațională de Activități Acvatice",
     icon: Globe,
   },
   {
@@ -43,38 +51,59 @@ export default async function ConceptPage() {
     getPartners(),
   ]);
 
-  // Filter for partner type endorsements (international orgs)
-  const endorsements = partners.filter((p) => p.partnerType === "endorsement" || p.partnerType === "partner");
+  // International endorsements/partners only (filter out commercial sponsors)
+  const endorsements = partners.filter(
+    (p) => p.partnerType === "endorsement" || p.partnerType === "partner",
+  );
 
   return (
     <>
-      {/* Hero */}
+      {/* 1. Hero — cascade-refreshed via M5a.1 */}
       <SectionHero
         title="Conceptul Nostru"
         subtitle="Educație acvatică bazată pe încredere, siguranță și bucurie - fundamentele metodei noastre recunoscute internațional."
         heroImage={page?.heroImage}
       />
 
-      {/* Main Content */}
-      {page?.content && (
-        <Section background="white" spacing="xl">
-          <div className="mx-auto max-w-4xl">
-            <div className="prose max-w-none">
-              <RichText content={page.content} />
-            </div>
-          </div>
-        </Section>
-      )}
-
-      {/* Navigation Cards */}
-      <Section background="sand" spacing="xl">
-        <div className="mb-8 text-center">
-          <h2 className="font-heading text-3xl font-bold text-sand-900">
-            Explorează Mai Mult
+      {/* 2. Editorial intro + Principles — continuous block on white, 640px column */}
+      <Section background="white" spacing="xl">
+        <div className="mx-auto max-w-[640px]">
+          <p className="font-mono text-[11px] font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation">
+            Principii fundamentale
+          </p>
+          <h2
+            className="mt-3 font-heading font-semibold text-sand-900 tracking-[var(--tracking-section)]"
+            style={{ fontSize: "var(--text-section)" }}
+          >
+            Metoda Sultana
           </h2>
+          <p className="mt-6 text-base leading-relaxed text-sand-700">
+            Conceptul nostru reprezintă o interferență unică între standardele
+            europene de educație acvatică promovate de FAAEL (Federația Franceză
+            de Activități Acvatice) și experiența de peste 40 de ani a
+            specialiștilor noștri. Suntem primul centru de educație acvatică din
+            România și oferim o metodă inovatoare de fortificare a organismului
+            nou-născutului și copilului, bazată pe cercetări științifice și o
+            practică recunoscută internațional.
+          </p>
+          <MethodologyPrinciples className="mt-12" />
         </div>
+      </Section>
 
-        <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
+      {/* 3. Age groups — cream, full-width 4-col journey */}
+      <AgeGroups />
+
+      {/* 4. Partners strip + sub-page nav — combined section on white */}
+      <Section background="white" spacing="xl">
+        {endorsements.length > 0 && (
+          <PartnersStrip
+            partners={endorsements}
+            title="Recunoaștere internațională"
+          />
+        )}
+        <div
+          className={`mx-auto grid max-w-3xl gap-6 sm:grid-cols-2 ${endorsements.length > 0 ? "mt-16" : ""}`}
+        >
           {sectionCards.map((card) => (
             <Link
               key={card.slug}
@@ -83,17 +112,18 @@ export default async function ConceptPage() {
             >
               <Card
                 variant="default"
-                padding="lg"
-                className="h-full transition-all duration-300 group-hover:shadow-medium group-hover:-translate-y-1"
+                padding="cinematic"
+                className="h-full transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-cinematic"
               >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-lagoon-100 transition-colors group-hover:bg-lagoon-500">
-                  <card.icon className="h-6 w-6 text-lagoon-600 transition-colors group-hover:text-white" />
-                </div>
-                <h3 className="font-heading text-xl font-semibold text-sand-900">
+                <card.icon
+                  className="mb-4 h-8 w-8 text-lagoon-foundation"
+                  aria-hidden="true"
+                />
+                <h3 className="font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
                   {card.title}
                 </h3>
                 <p className="mt-2 text-sand-600">{card.description}</p>
-                <span className="mt-4 inline-flex items-center text-sm font-medium text-lagoon-600 group-hover:text-lagoon-700">
+                <span className="mt-4 inline-flex items-center text-sm font-medium text-lagoon-foundation transition-colors group-hover:text-lagoon-deep">
                   Citește mai mult
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
@@ -103,16 +133,11 @@ export default async function ConceptPage() {
         </div>
       </Section>
 
-      {/* Partners */}
-      {endorsements.length > 0 && (
-        <PartnersStrip partners={endorsements} title="Recunoaștere Internațională" />
-      )}
-
-      {/* CTA */}
+      {/* 5. CTA — foundation+grain gradient */}
       <CTASection
-        title="Descoperă Cursurile Noastre"
-        description="Aplică conceptul nostru în practică - explorează programele de educație acvatică."
-        primaryButton={{ label: "Vezi Cursurile", href: "/servicii" }}
+        title="Aplică metoda în practică"
+        description="Descoperă programele noastre de educație acvatică, structurate pe etape de vârstă."
+        primaryButton={{ label: "Vezi cursurile", href: "/servicii" }}
         secondaryButton={{ label: "Contactează-ne", href: "/contact" }}
         variant="gradient"
       />
