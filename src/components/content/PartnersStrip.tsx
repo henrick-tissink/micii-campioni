@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
-import { Container } from "@/components/ui/Container";
 import type { Partner } from "@/types/contentful";
 
 // =============================================================================
@@ -25,20 +24,18 @@ export function PartnersStrip({
   if (!partners || partners.length === 0) return null;
 
   return (
-    <section className={cn("border-t border-sand-200 bg-white py-12", className)}>
-      <Container>
-        {title && (
-          <h2 className="mb-8 text-center font-heading text-sm font-semibold uppercase tracking-wider text-sand-500">
-            {title}
-          </h2>
-        )}
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-          {partners.map((partner) => (
-            <PartnerLogo key={partner.name} partner={partner} />
-          ))}
-        </div>
-      </Container>
-    </section>
+    <div className={className}>
+      {title && (
+        <h2 className="mb-8 text-center font-mono text-[11px] font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
+          {title}
+        </h2>
+      )}
+      <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        {partners.map((partner) => (
+          <PartnerLogo key={partner.name} partner={partner} />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -106,7 +103,7 @@ export function PartnersSection({
       {/* Partners */}
       {allPartners.length > 0 && (
         <div>
-          <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
+          <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
             Parteneri
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -120,7 +117,7 @@ export function PartnersSection({
       {/* Sponsors */}
       {allSponsors.length > 0 && (
         <div>
-          <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
+          <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
             Sponsori
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -134,7 +131,7 @@ export function PartnersSection({
       {/* Endorsements */}
       {allEndorsements.length > 0 && (
         <div>
-          <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
+          <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
             Recomandări și Avizuri
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -158,7 +155,7 @@ interface PartnerCardProps {
 
 function PartnerCard({ partner }: PartnerCardProps) {
   const content = (
-    <div className="flex items-center gap-4 rounded-xl border border-sand-200 bg-white p-6 transition-shadow hover:shadow-soft">
+    <div className="flex items-center gap-4 rounded-xl border border-sand-300 bg-white p-6 transition-shadow hover:shadow-cinematic">
       <div className="relative h-16 w-16 flex-shrink-0">
         <Image
           src={partner.logo.url}
