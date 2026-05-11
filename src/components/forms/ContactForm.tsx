@@ -283,7 +283,7 @@ export function ContactForm() {
         * Câmpuri obligatorii. Datele tale sunt protejate conform{" "}
         <a
           href="/politica-confidentialitate"
-          className="text-lagoon-600 underline hover:text-lagoon-700"
+          className="text-lagoon-foundation underline transition-colors hover:text-lagoon-deep"
         >
           Politicii de Confidențialitate
         </a>
