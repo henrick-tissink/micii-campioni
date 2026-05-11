@@ -13,6 +13,7 @@ import { Markdown } from "@/lib/contentful/markdown";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { PartnersSection } from "@/components/content/PartnersStrip";
+import { ConferenceList } from "@/components/sections/ConferenceList";
 import { CTASection } from "@/components/sections/CTASection";
 
 // =============================================================================
@@ -96,126 +97,66 @@ export default async function AsociatiaSubPage({ params }: Props) {
         breadcrumbs={breadcrumbs}
         sidebarWidgets={page.sidebarWidgets}
       >
-        {/* Main Content */}
+        {/* Main Content — RichText in 720px reading column */}
         {page.content && (
-          <div className="prose max-w-none">
-            <RichText content={page.content} />
+          <div className="mx-auto max-w-[720px]">
+            <div className="prose prose-lg max-w-none">
+              <RichText content={page.content} />
+            </div>
           </div>
         )}
 
-        {/* Projects List */}
+        {/* Projects List — full PageLayout width, outside the 720px wrapper */}
         {isProjectsPage && projects.length > 0 && (
-          <div className="mt-12 space-y-8">
-            <h2 className="font-heading text-2xl font-semibold text-sand-900">
-              Proiectele Noastre
+          <div className="mt-12">
+            <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
+              PROIECTELE NOASTRE
             </h2>
-            {projects.map((project) => (
-              <Card key={project.title} variant="default" padding="lg">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="font-heading text-xl font-semibold text-sand-900">
-                      {project.title}
-                    </h3>
-                    <div className="mt-2 text-sand-600">
-                      <Markdown content={project.description} />
+            <div className="space-y-6">
+              {projects.map((project) => (
+                <Card key={project.slug ?? `${project.title}-${project.order}`} variant="default" padding="cinematic">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
+                        {project.title}
+                      </h3>
+                      <div className="mt-2 text-sand-600">
+                        <Markdown content={project.description} />
+                      </div>
+                      {project.objectives && (
+                        <div className="mt-4">
+                          <h4 className="font-semibold text-sand-800">Obiective:</h4>
+                          <div className="text-sand-600">
+                            <Markdown content={project.objectives} />
+                          </div>
+                        </div>
+                      )}
+                      {project.results && (
+                        <div className="mt-4">
+                          <h4 className="font-semibold text-sand-800">Rezultate:</h4>
+                          <div className="text-sand-600">
+                            <Markdown content={project.results} />
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    {project.objectives && (
-                      <div className="mt-4">
-                        <h4 className="font-semibold text-sand-800">Obiective:</h4>
-                        <div className="text-sand-600">
-                          <Markdown content={project.objectives} />
-                        </div>
-                      </div>
-                    )}
-                    {project.results && (
-                      <div className="mt-4">
-                        <h4 className="font-semibold text-sand-800">Rezultate:</h4>
-                        <div className="text-sand-600">
-                          <Markdown content={project.results} />
-                        </div>
-                      </div>
-                    )}
+                    <Badge
+                      variant={project.status === "active" ? "lagoon" : "sand"}
+                      className="flex-shrink-0"
+                    >
+                      {project.status === "active" ? "Activ" : project.status === "completed" ? "Finalizat" : "Planificat"}
+                    </Badge>
                   </div>
-                  <Badge
-                    variant={project.status === "active" ? "lagoon" : "sand"}
-                    className="flex-shrink-0"
-                  >
-                    {project.status === "active" ? "Activ" : project.status === "completed" ? "Finalizat" : "Planificat"}
-                  </Badge>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 
-        {/* Conferences List */}
+        {/* Conferences List — full PageLayout width via sealed ConferenceList */}
         {isConferencesPage && conferences.length > 0 && (
           <div className="mt-12">
-            <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
-              Conferințe și Congrese
-            </h2>
-
-            {/* International Conferences */}
-            {conferences.filter((c) => c.isInternational).length > 0 && (
-              <div className="mb-8">
-                <h3 className="mb-4 font-heading text-lg font-semibold text-lagoon-700">
-                  Conferințe Internaționale
-                </h3>
-                <div className="space-y-4">
-                  {conferences
-                    .filter((c) => c.isInternational)
-                    .map((conf) => (
-                      <Card key={`${conf.title}-${conf.year}`} variant="default" padding="md">
-                        <div className="flex items-center gap-4">
-                          <span className="font-heading text-2xl font-bold text-lagoon-500">
-                            {conf.year}
-                          </span>
-                          <div>
-                            <h4 className="font-semibold text-sand-900">{conf.title}</h4>
-                            {conf.location && (
-                              <p className="text-sm text-sand-500">{conf.location}</p>
-                            )}
-                            {conf.description && (
-                              <p className="mt-1 text-sand-600">{conf.description}</p>
-                            )}
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
-                </div>
-              </div>
-            )}
-
-            {/* National Conferences */}
-            {conferences.filter((c) => !c.isInternational).length > 0 && (
-              <div>
-                <h3 className="mb-4 font-heading text-lg font-semibold text-coral-700">
-                  Conferințe Naționale
-                </h3>
-                <div className="space-y-4">
-                  {conferences
-                    .filter((c) => !c.isInternational)
-                    .map((conf) => (
-                      <Card key={`${conf.title}-${conf.year}`} variant="default" padding="md">
-                        <div className="flex items-center gap-4">
-                          <span className="font-heading text-2xl font-bold text-coral-500">
-                            {conf.year}
-                          </span>
-                          <div>
-                            <h4 className="font-semibold text-sand-900">{conf.title}</h4>
-                            {conf.location && (
-                              <p className="text-sm text-sand-500">{conf.location}</p>
-                            )}
-                            {conf.description && (
-                              <p className="mt-1 text-sand-600">{conf.description}</p>
-                            )}
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
-                </div>
-              </div>
-            )}
+            <ConferenceList conferences={conferences} />
           </div>
         )}
 
@@ -227,12 +168,12 @@ export default async function AsociatiaSubPage({ params }: Props) {
         )}
       </PageLayout>
 
-      {/* CTA */}
+      {/* CTA — gradient (foundation+grain post-M3) */}
       <CTASection
         title="Vrei să ne susții?"
         description="Contactează-ne pentru a afla cum poți contribui la misiunea noastră."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="default"
+        variant="gradient"
       />
     </>
   );
