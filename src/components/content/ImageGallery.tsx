@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import Image from "next/image";
+import { TreatedImage } from "@/components/ui/TreatedImage";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import type { ContentfulImage } from "@/types/contentful";
@@ -13,6 +13,7 @@ import type { ContentfulImage } from "@/types/contentful";
 export interface ImageGalleryProps {
   images: ContentfulImage[];
   columns?: 2 | 3 | 4;
+  layout?: "grid" | "masonry";
   className?: string;
 }
 
@@ -23,6 +24,7 @@ export interface ImageGalleryProps {
 export function ImageGallery({
   images,
   columns = 3,
+  layout = "grid",
   className,
 }: ImageGalleryProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -35,33 +37,65 @@ export function ImageGallery({
     4: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
   };
 
+  const masonryCols = {
+    2: "columns-1 sm:columns-2",
+    3: "columns-1 sm:columns-2 lg:columns-3",
+    4: "columns-2 sm:columns-3 lg:columns-4",
+  };
+
   return (
     <>
-      <div className={cn("grid gap-4", gridCols[columns], className)}>
-        {images.map((image, index) => (
-          <button
-            key={`${image.url}-${index}`}
-            onClick={() => setLightboxIndex(index)}
-            className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2"
-          >
-            <Image
-              src={image.url}
-              alt={image.description || image.title || `Fotografie din galerie ${index + 1}`}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-            <div className="absolute inset-0 bg-lagoon-900/0 transition-colors duration-300 group-hover:bg-lagoon-900/30" />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <div className="rounded-full bg-white/90 p-3">
-                <ZoomIn className="h-6 w-6 text-lagoon-600" />
+      {layout === "masonry" ? (
+        <div className={cn("gap-x-4", masonryCols[columns], className)}>
+          {images.map((image, index) => (
+            <button
+              key={`${image.url}-${index}`}
+              onClick={() => setLightboxIndex(index)}
+              className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-xl bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2"
+            >
+              <TreatedImage
+                src={image.url}
+                alt={image.description || image.title || `Fotografie din galerie ${index + 1}`}
+                width={image.width}
+                height={image.height}
+                className="h-auto w-full transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-lagoon-foundation/0 transition-colors duration-300 group-hover:bg-lagoon-foundation/30" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="rounded-full bg-white/90 p-3">
+                  <ZoomIn className="h-6 w-6 text-lagoon-foundation" />
+                </div>
               </div>
-            </div>
-          </button>
-        ))}
-      </div>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className={cn("grid gap-4", gridCols[columns], className)}>
+          {images.map((image, index) => (
+            <button
+              key={`${image.url}-${index}`}
+              onClick={() => setLightboxIndex(index)}
+              className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-sand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2"
+            >
+              <TreatedImage
+                src={image.url}
+                alt={image.description || image.title || `Fotografie din galerie ${index + 1}`}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-lagoon-foundation/0 transition-colors duration-300 group-hover:bg-lagoon-foundation/30" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="rounded-full bg-white/90 p-3">
+                  <ZoomIn className="h-6 w-6 text-lagoon-foundation" />
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
 
-      {/* Lightbox */}
       <Lightbox
         images={images}
         currentIndex={lightboxIndex}
@@ -174,7 +208,7 @@ export function Lightbox({
 
       {/* Image container */}
       <div className="relative max-h-[85vh] max-w-[90vw]">
-        <Image
+        <TreatedImage
           src={currentImage.url}
           alt={currentImage.description || currentImage.title || "Fotografie mărită"}
           width={currentImage.width}
@@ -187,8 +221,8 @@ export function Lightbox({
       {/* Counter and caption */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center">
         {images.length > 1 && (
-          <span className="mb-2 block text-sm text-white/70">
-            {(currentIndex ?? 0) + 1} / {images.length}
+          <span className="mb-2 block font-mono text-xs uppercase tracking-[var(--tracking-mono)] text-white/80">
+            {String((currentIndex ?? 0) + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
           </span>
         )}
         {currentImage.title && (
@@ -215,7 +249,7 @@ export function Lightbox({
                   : "opacity-50 hover:opacity-100"
               )}
             >
-              <Image
+              <TreatedImage
                 src={img.url}
                 alt={`Previzualizare ${index + 1}`}
                 fill
@@ -256,11 +290,11 @@ export function GalleryCard({
       href={href}
       className={cn(
         "group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-sand-100",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2",
         className
       )}
     >
-      <Image
+      <TreatedImage
         src={coverImage.url}
         alt={coverImage.title || title}
         fill
