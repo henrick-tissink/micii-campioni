@@ -173,7 +173,6 @@ export default async function AsociatiaSubPage({ params }: Props) {
         title="Vrei să ne susții?"
         description="Contactează-ne pentru a afla cum poți contribui la misiunea noastră."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="gradient"
       />
     </>
   );

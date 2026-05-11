@@ -139,7 +139,6 @@ export default async function ConceptPage() {
         description="Descoperă programele noastre de educație acvatică, structurate pe etape de vârstă."
         primaryButton={{ label: "Vezi cursurile", href: "/servicii" }}
         secondaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="gradient"
       />
     </>
   );

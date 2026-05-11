@@ -115,7 +115,6 @@ export default async function GaleriePage() {
         title="Vrei să vezi copilul tău aici?"
         description="Înscrie-l la cursurile noastre și surprinde momentele speciale din călătoria lui acvatică."
         primaryButton={{ label: "Înscrie-te Acum", href: "/contact" }}
-        variant="gradient"
       />
     </>
   );

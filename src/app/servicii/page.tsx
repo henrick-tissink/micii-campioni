@@ -77,7 +77,6 @@ export default async function ServicesListPage() {
         title="Nu știi ce curs să alegi?"
         description="Echipa noastră te poate ajuta să găsești programul potrivit pentru copilul tău. Contactează-ne pentru o consultație gratuită."
         primaryButton={{ label: "Programează o Consultație", href: "/contact" }}
-        variant="gradient"
       />
     </>
   );

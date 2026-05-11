@@ -188,7 +188,6 @@ export default async function GalleryDetailPage({ params }: Props) {
         title="Vrei să capturezi momente speciale?"
         description="Înscrie copilul tău la cursurile noastre și creează amintiri de neuitat."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="gradient"
       />
     </>
   );

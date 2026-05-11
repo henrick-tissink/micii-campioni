@@ -392,7 +392,6 @@ export default async function ServicePage({ params }: Props) {
         description="Programează o vizită și vino să cunoști echipa noastră."
         primaryButton={{ label: "Programează o vizită", href: "/contact" }}
         secondaryButton={{ label: "Vezi Toate Cursurile", href: "/servicii" }}
-        variant="gradient"
       />
     </>
   );

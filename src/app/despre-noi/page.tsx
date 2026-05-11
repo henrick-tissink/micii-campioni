@@ -174,7 +174,6 @@ export default async function DespreNoiPage() {
         title="Vrei să afli mai multe?"
         description="Contactează-ne pentru a programa o vizită sau pentru orice întrebări."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="gradient"
       />
     </>
   );

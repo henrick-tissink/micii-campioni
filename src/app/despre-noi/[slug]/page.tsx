@@ -188,7 +188,6 @@ export default async function DespreNoiSubPage({ params }: Props) {
         title="Ai întrebări?"
         description="Suntem aici să te ajutăm. Contactează-ne pentru mai multe informații."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="gradient"
       />
     </>
   );

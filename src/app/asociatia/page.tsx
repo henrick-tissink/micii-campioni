@@ -109,7 +109,6 @@ export default async function AsociatiaPage() {
         description="Află cum poți contribui la promovarea educației acvatice în România."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
         secondaryButton={{ label: "Sponsorizări", href: "/asociatia/sponsorizari" }}
-        variant="gradient"
       />
     </>
   );

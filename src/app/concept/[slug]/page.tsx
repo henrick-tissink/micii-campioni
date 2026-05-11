@@ -102,7 +102,6 @@ export default async function ConceptSubPage({ params }: Props) {
         title="Interesat de programele noastre?"
         description="Descoperă cum putem ajuta copilul tău să devină un mic campion."
         primaryButton={{ label: "Vezi Cursurile", href: "/servicii" }}
-        variant="gradient"
       />
     </>
   );
