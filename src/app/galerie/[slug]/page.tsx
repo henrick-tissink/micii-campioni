@@ -183,12 +183,12 @@ export default async function GalleryDetailPage({ params }: Props) {
         </Section>
       )}
 
-      {/* CTA */}
+      {/* CTA — gradient (foundation+grain post-M3) */}
       <CTASection
         title="Vrei să capturezi momente speciale?"
         description="Înscrie copilul tău la cursurile noastre și creează amintiri de neuitat."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="default"
+        variant="gradient"
       />
     </>
   );

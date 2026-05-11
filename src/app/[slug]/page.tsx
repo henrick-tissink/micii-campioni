@@ -82,11 +82,12 @@ export default async function GenericPage({ params }: Props) {
           )}
         </PageLayout>
 
+        {/* CTA — gradient (foundation+grain post-M3) */}
         <CTASection
           title="Ai întrebări?"
           description="Suntem aici să te ajutăm. Contactează-ne pentru mai multe informații."
           primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-          variant="default"
+          variant="gradient"
         />
       </>
     );
@@ -128,12 +129,12 @@ export default async function GenericPage({ params }: Props) {
         </div>
       </Section>
 
-      {/* CTA Section */}
+      {/* CTA — gradient (foundation+grain post-M3) */}
       <CTASection
         title="Ai întrebări?"
         description="Suntem aici să te ajutăm. Contactează-ne pentru mai multe informații."
         primaryButton={{ label: "Contactează-ne", href: "/contact" }}
-        variant="default"
+        variant="gradient"
       />
     </>
   );

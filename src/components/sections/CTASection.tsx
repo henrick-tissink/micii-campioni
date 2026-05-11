@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 
@@ -17,8 +16,7 @@ export interface CTASectionProps {
     label: string;
     href: string;
   };
-  backgroundImage?: string;
-  variant?: "default" | "gradient" | "image";
+  variant?: "default" | "gradient";
 }
 
 // =============================================================================
@@ -30,40 +28,8 @@ export function CTASection({
   description = "Înscrie-ți copilul astăzi și oferă-i șansa de a deveni un mic campion al apei.",
   primaryButton = { label: "Programează o lecție", href: "/contact" },
   secondaryButton,
-  backgroundImage,
   variant = "gradient",
 }: CTASectionProps) {
-  if (variant === "image" && backgroundImage) {
-    return (
-      <section className="relative min-h-[400px] overflow-hidden">
-        <Image src={backgroundImage} alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-lagoon-900/90 to-lagoon-800/70" />
-        <div className="relative z-10 flex min-h-[400px] items-center px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-heading text-3xl font-bold text-white md:text-4xl">
-              {title}
-            </h2>
-            <p className="mt-4 text-lg text-lagoon-100">{description}</p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button href={primaryButton.href} size="lg">
-                {primaryButton.label}
-              </Button>
-              {secondaryButton && (
-                <Button
-                  href={secondaryButton.href}
-                  variant="outline-on-dark"
-                  size="lg"
-                >
-                  {secondaryButton.label}
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   if (variant === "gradient") {
     return (
       <Section background="foundation" spacing="xl" texture="grain" className="text-white">
