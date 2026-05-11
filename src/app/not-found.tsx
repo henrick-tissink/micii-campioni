@@ -9,7 +9,7 @@ export default function NotFound() {
         <div className="mx-auto max-w-md">
           {/* Decorative 404 */}
           <div className="mb-8">
-            <span className="font-heading text-8xl font-bold text-lagoon-200 md:text-9xl">
+            <span className="font-heading text-8xl font-bold text-lagoon-foundation/20 md:text-9xl">
               404
             </span>
           </div>
@@ -37,19 +37,19 @@ export default function NotFound() {
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <Link
                 href="/servicii"
-                className="text-lagoon-600 hover:text-lagoon-700"
+                className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
               >
                 Cursuri
               </Link>
               <Link
                 href="/despre-noi"
-                className="text-lagoon-600 hover:text-lagoon-700"
+                className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
               >
                 Despre Noi
               </Link>
               <Link
                 href="/contact"
-                className="text-lagoon-600 hover:text-lagoon-700"
+                className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
               >
                 Contact
               </Link>
