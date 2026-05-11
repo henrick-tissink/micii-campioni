@@ -159,11 +159,11 @@ export default async function ContactPage() {
         heroImage={page?.heroImage}
       />
 
-      {/* Rich Text Content from Contentful */}
+      {/* Rich Text Content from Contentful — 720px reading column */}
       {page?.content && (
         <Section background="white" spacing="lg">
-          <div className="mx-auto max-w-4xl">
-            <div className="prose max-w-none">
+          <div className="mx-auto max-w-[720px]">
+            <div className="prose prose-lg max-w-none">
               <RichText content={page.content} />
             </div>
           </div>
@@ -175,8 +175,8 @@ export default async function ContactPage() {
         <div className="grid gap-12 lg:grid-cols-3">
           {/* Contact Information */}
           <div className="space-y-6 lg:col-span-1">
-            <h2 className="font-heading text-2xl font-semibold text-sand-900">
-              Informații Contact
+            <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
+              INFORMAȚII CONTACT
             </h2>
 
             {/* Phone */}
@@ -186,14 +186,12 @@ export default async function ContactPage() {
                 padding="md"
                 className="flex items-start gap-4"
               >
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-lagoon-100">
-                  <Phone className="h-6 w-6 text-lagoon-600" />
-                </div>
+                <Phone className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
                 <div>
                   <h3 className="font-semibold text-sand-900">Telefon</h3>
                   <a
                     href={`tel:${settings.phone}`}
-                    className="text-lagoon-600 hover:text-lagoon-700"
+                    className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
                   >
                     {settings.phone}
                   </a>
@@ -208,14 +206,12 @@ export default async function ContactPage() {
                 padding="md"
                 className="flex items-start gap-4"
               >
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-lagoon-100">
-                  <Mail className="h-6 w-6 text-lagoon-600" />
-                </div>
+                <Mail className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
                 <div>
                   <h3 className="font-semibold text-sand-900">Email</h3>
                   <a
                     href={`mailto:${settings.email}`}
-                    className="text-lagoon-600 hover:text-lagoon-700"
+                    className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
                   >
                     {settings.email}
                   </a>
@@ -230,9 +226,7 @@ export default async function ContactPage() {
                 padding="md"
                 className="flex items-start gap-4"
               >
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-lagoon-100">
-                  <MapPin className="h-6 w-6 text-lagoon-600" />
-                </div>
+                <MapPin className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
                 <div>
                   <h3 className="font-semibold text-sand-900">Adresă</h3>
                   <a
@@ -243,7 +237,7 @@ export default async function ContactPage() {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lagoon-600 hover:text-lagoon-700"
+                    className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
                   >
                     {settings.address}
                   </a>
@@ -257,9 +251,7 @@ export default async function ContactPage() {
               padding="md"
               className="flex items-start gap-4"
             >
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-lagoon-100">
-                <Clock className="h-6 w-6 text-lagoon-600" />
-              </div>
+              <Clock className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
               <div>
                 <h3 className="font-semibold text-sand-900">Program</h3>
                 <p className="text-sand-600">{scheduleWeekdays}</p>
@@ -272,7 +264,7 @@ export default async function ContactPage() {
           {/* Contact Form */}
           <div className="lg:col-span-2">
             <Card variant="default" padding="lg">
-              <h2 className="mb-6 font-heading text-2xl font-semibold text-sand-900">
+              <h2 className="mb-6 font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
                 Trimite-ne un mesaj
               </h2>
               <ContactForm />
