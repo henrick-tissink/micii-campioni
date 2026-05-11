@@ -5,7 +5,6 @@ import { ArrowLeft, Calendar, Images } from "lucide-react";
 import { getGalleryBySlug, getAllGallerySlugs, getGalleries } from "@/lib/contentful/queries";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
-import { Badge } from "@/components/ui/Badge";
 import { ImageGallery, GalleryCard } from "@/components/content/ImageGallery";
 import { CTASection } from "@/components/sections/CTASection";
 
@@ -103,65 +102,63 @@ export default async function GalleryDetailPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-lagoon-600 to-lagoon-700 py-12 md:py-16">
+      {/* Hero — foundation + grain treatment, M3.1-aligned */}
+      <Section background="foundation" spacing="lg" texture="grain" className="text-white">
         <Container>
-          {/* Back link */}
           <Link
             href="/galerie"
-            className="mb-6 inline-flex items-center text-lagoon-200 transition-colors hover:text-white"
+            className="mb-6 inline-flex items-center font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-white/70 transition-colors hover:text-white"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
+            <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
             Înapoi la Galerie
           </Link>
 
           <div className="max-w-3xl">
-            <h1 className="font-heading text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+            <h1
+              className="font-heading font-bold text-white"
+              style={{
+                fontSize: "var(--text-section)",
+                letterSpacing: "var(--tracking-section)",
+                lineHeight: 1.1,
+              }}
+            >
               {gallery.title}
             </h1>
 
-            {/* Meta info */}
-            <div className="mt-4 flex flex-wrap items-center gap-4">
+            {/* Meta chips — mono treatment */}
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               {formattedDate && (
-                <Badge
-                  variant="lagoon"
-                  size="lg"
-                  className="bg-white/20 text-white"
-                >
-                  <Calendar className="mr-1 h-4 w-4" />
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono text-xs uppercase tracking-[var(--tracking-mono)] text-white/90">
+                  <Calendar className="h-3 w-3" aria-hidden="true" />
                   {formattedDate}
-                </Badge>
+                </span>
               )}
-              <Badge
-                variant="lagoon"
-                size="lg"
-                className="bg-white/20 text-white"
-              >
-                <Images className="mr-1 h-4 w-4" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono text-xs uppercase tracking-[var(--tracking-mono)] text-white/90">
+                <Images className="h-3 w-3" aria-hidden="true" />
                 {gallery.images.length} fotografii
-              </Badge>
+              </span>
             </div>
 
             {/* Description */}
             {gallery.description && (
-              <p className="mt-6 text-lg text-lagoon-100">
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-lagoon-100/90">
                 {gallery.description}
               </p>
             )}
           </div>
         </Container>
-      </section>
+      </Section>
 
-      {/* Gallery Grid */}
+      {/* Gallery Grid — masonry preserves natural aspect ratios */}
       <Section background="white" spacing="xl">
-        <ImageGallery images={gallery.images} columns={3} />
+        <ImageGallery images={gallery.images} columns={3} layout="masonry" />
       </Section>
 
       {/* Other Galleries */}
       {otherGalleries.length > 0 && (
         <Section background="sand" spacing="xl">
           <div className="mb-8">
-            <h2 className="font-heading text-2xl font-semibold text-sand-900">
+            <h2 className="font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
               Alte Galerii
             </h2>
           </div>
