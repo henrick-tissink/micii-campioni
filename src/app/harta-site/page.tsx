@@ -5,6 +5,7 @@ import { getServices, getGalleries } from "@/lib/contentful/queries";
 import { SectionHero } from "@/components/layout/PageLayout";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Harta Site-ului",
@@ -129,33 +130,32 @@ export default async function SitemapPage() {
       <Section background="white" spacing="xl">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {structureWithDynamic.map((section) => (
-            <Card key={section.href} variant="default" padding="lg">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-lagoon-100">
-                  <section.icon className="h-5 w-5 text-lagoon-600" />
-                </div>
-                <div>
-                  <Link
-                    href={section.href}
-                    className="font-heading text-lg font-semibold text-sand-900 hover:text-lagoon-600"
-                  >
-                    {section.title}
-                  </Link>
-                  {section.description && (
-                    <p className="text-sm text-sand-500">{section.description}</p>
-                  )}
-                </div>
-              </div>
+            <Card key={section.href} variant="default" padding="cinematic" className="h-full">
+              <section.icon
+                className="mb-4 h-8 w-8 text-lagoon-foundation"
+                aria-hidden="true"
+              />
+              <h3 className="font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
+                <Link
+                  href={section.href}
+                  className="transition-colors hover:text-lagoon-foundation"
+                >
+                  {section.title}
+                </Link>
+              </h3>
+              {section.description && (
+                <p className="mt-1 text-sand-600">{section.description}</p>
+              )}
 
               {section.children && section.children.length > 0 && (
-                <ul className="space-y-2 border-t border-sand-100 pt-4">
+                <ul className="mt-4 space-y-2 border-t border-sand-200 pt-4">
                   {section.children.map((child) => (
                     <li key={child.href}>
                       <Link
                         href={child.href}
-                        className="flex items-center text-sand-600 transition-colors hover:text-lagoon-600"
+                        className="flex items-center text-sand-600 transition-colors hover:text-lagoon-foundation"
                       >
-                        <ChevronRight className="mr-2 h-4 w-4 text-sand-400" />
+                        <ChevronRight className="mr-2 h-4 w-4 text-lagoon-foundation" aria-hidden="true" />
                         {child.title}
                       </Link>
                     </li>
@@ -167,31 +167,16 @@ export default async function SitemapPage() {
         </div>
       </Section>
 
-      {/* Quick Links */}
+      {/* Quick Links — mono eyebrow + Button-component pills */}
       <Section background="sand" spacing="lg">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-4 font-heading text-2xl font-semibold text-sand-900">
-            Link-uri Rapide
+          <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
+            LINK-URI RAPIDE
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/contact"
-              className="rounded-full bg-lagoon-500 px-6 py-2 text-white transition-colors hover:bg-lagoon-600"
-            >
-              Contactează-ne
-            </Link>
-            <Link
-              href="/servicii"
-              className="rounded-full bg-white px-6 py-2 text-sand-700 shadow-soft transition-colors hover:bg-sand-50"
-            >
-              Vezi Cursurile
-            </Link>
-            <Link
-              href="/galerie"
-              className="rounded-full bg-white px-6 py-2 text-sand-700 shadow-soft transition-colors hover:bg-sand-50"
-            >
-              Galerie Foto
-            </Link>
+            <Button href="/contact" variant="primary">Contactează-ne</Button>
+            <Button href="/servicii" variant="outline">Vezi Cursurile</Button>
+            <Button href="/galerie" variant="outline">Galerie Foto</Button>
           </div>
         </div>
       </Section>
