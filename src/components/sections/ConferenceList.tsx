@@ -28,7 +28,7 @@ export function ConferenceList({ conferences, className }: Props) {
       className={cn("space-y-12", className)}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: "some" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
       {international.length > 0 && (
