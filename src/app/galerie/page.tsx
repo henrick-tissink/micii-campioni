@@ -51,7 +51,7 @@ export default async function GaleriePage() {
       {featuredGalleries.length > 0 && (
         <Section background="white" spacing="xl">
           <div className="mb-8">
-            <h2 className="font-heading text-2xl font-semibold text-sand-900">
+            <h2 className="font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
               Galerii Recomandate
             </h2>
           </div>
@@ -77,7 +77,7 @@ export default async function GaleriePage() {
       {regularGalleries.length > 0 && (
         <Section background="sand" spacing="xl">
           <div className="mb-8">
-            <h2 className="font-heading text-2xl font-semibold text-sand-900">
+            <h2 className="font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
               {featuredGalleries.length > 0 ? "Toate Galeriile" : "Galeriile Noastre"}
             </h2>
           </div>
