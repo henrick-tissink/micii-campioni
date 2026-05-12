@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getServices } from "@/lib/contentful/queries";
-import { Section } from "@/components/ui/Section";
+import { SectionHero } from "@/components/layout/PageLayout";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { CTASection } from "@/components/sections/CTASection";
 import { Badge } from "@/components/ui/Badge";
@@ -37,32 +37,17 @@ export default async function ServicesListPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* Hero — compact foundation shell */}
-      <Section background="foundation" spacing="lg" texture="grain">
-        <div className="mx-auto max-w-3xl text-center">
-          <Badge
-            variant="credential"
-            size="sm"
-            className="mb-6 bg-amber-credential/10"
-          >
+      {/* Hero — SectionHero with COR credential eyebrow + grain texture */}
+      <SectionHero
+        title="Cursurile Noastre"
+        subtitle="Programe de educație acvatică adaptate fiecărei etape de dezvoltare, de la bebeluși la copii de toate vârstele."
+        texture="grain"
+        eyebrow={
+          <Badge variant="credential" size="sm" className="bg-amber-credential/10">
             COR · 342215
           </Badge>
-          <h1
-            className="font-heading font-bold text-white"
-            style={{
-              fontSize: "var(--text-section)",
-              letterSpacing: "var(--tracking-section)",
-              lineHeight: 1.1,
-            }}
-          >
-            Cursurile Noastre
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-lagoon-100/90">
-            Programe de educație acvatică adaptate fiecărei etape de dezvoltare,
-            de la bebeluși la copii de toate vârstele.
-          </p>
-        </div>
-      </Section>
+        }
+      />
 
       {/* Services Grid */}
       <ServicesSection
