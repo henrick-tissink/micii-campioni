@@ -76,7 +76,7 @@ export default async function GenericPage({ params }: Props) {
           {page.content && (
             <div className="mx-auto max-w-[720px]">
               <div className="prose prose-lg max-w-none">
-                <RichText content={page.content} />
+                <RichText content={page.content} demoteH1 />
               </div>
             </div>
           )}
@@ -105,7 +105,7 @@ export default async function GenericPage({ params }: Props) {
         <Section background="white" spacing="xl">
           <div className="mx-auto max-w-[720px]">
             <div className="prose prose-lg max-w-none">
-              <RichText content={page.content} />
+              <RichText content={page.content} demoteH1 />
             </div>
           </div>
         </Section>

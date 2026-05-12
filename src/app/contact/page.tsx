@@ -164,7 +164,7 @@ export default async function ContactPage() {
         <Section background="white" spacing="lg">
           <div className="mx-auto max-w-[720px]">
             <div className="prose prose-lg max-w-none">
-              <RichText content={page.content} />
+              <RichText content={page.content} demoteH1 />
             </div>
           </div>
         </Section>

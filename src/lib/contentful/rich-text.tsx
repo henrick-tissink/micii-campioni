@@ -173,12 +173,29 @@ interface RichTextProps {
   content: Document;
   className?: string;
   options?: Options;
+  /** When true, render Contentful HEADING_1 nodes as h2 — use when the
+   * surrounding page already provides an h1 via SectionHero/PageLayout. */
+  demoteH1?: boolean;
 }
 
-export function RichText({ content, className, options }: RichTextProps) {
-  const mergedOptions = options
-    ? { ...defaultOptions, ...options }
+export function RichText({ content, className, options, demoteH1 }: RichTextProps) {
+  const baseOptions: Options = demoteH1
+    ? {
+        ...defaultOptions,
+        renderNode: {
+          ...defaultOptions.renderNode,
+          [BLOCKS.HEADING_1]: (_node, children) => (
+            <h2 className="mb-4 mt-6 font-heading text-2xl font-semibold text-sand-900 md:text-3xl">
+              {children}
+            </h2>
+          ),
+        },
+      }
     : defaultOptions;
+
+  const mergedOptions = options
+    ? { ...baseOptions, ...options }
+    : baseOptions;
 
   return (
     <div className={className}>

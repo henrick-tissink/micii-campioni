@@ -306,7 +306,7 @@ export default async function ServicePage({ params }: Props) {
 
               <TabContent id="descriere">
                 <div className="prose prose-lg max-w-none">
-                  <RichText content={service.content} />
+                  <RichText content={service.content} demoteH1 />
                 </div>
               </TabContent>
 
@@ -323,7 +323,7 @@ export default async function ServicePage({ params }: Props) {
             </Tabs>
           ) : (
             <div className="prose prose-lg max-w-none">
-              <RichText content={service.content} />
+              <RichText content={service.content} demoteH1 />
             </div>
           )}
 
