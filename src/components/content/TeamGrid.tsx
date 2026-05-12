@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image from "next/image"; // keep for CompactTeamList ≤96px avatars
+import { TreatedImage } from "@/components/ui/TreatedImage";
 import { Award, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { Card } from "@/components/ui/Card";
@@ -109,10 +110,11 @@ function TeamMemberCard({
         )}
       >
         {member.photo ? (
-          <Image
+          <TreatedImage
             src={member.photo.url}
             alt={member.name}
             fill
+            sizes={isFeatured ? "(max-width: 640px) 100vw, 50vw" : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
@@ -139,7 +141,7 @@ function TeamMemberCard({
         <h3 className="font-heading text-xl font-semibold text-sand-900">
           {member.name}
         </h3>
-        <p className="mt-1 text-lagoon-600">{member.role}</p>
+        <p className="mt-1 text-lagoon-foundation dark:text-lagoon-accent">{member.role}</p>
 
         {/* Short bio */}
         {member.shortBio && (
@@ -166,7 +168,7 @@ function TeamMemberCard({
         )}
 
         {/* View more */}
-        <span className="mt-4 inline-block text-sm font-medium text-lagoon-600 group-hover:text-lagoon-700">
+        <span className="mt-4 inline-block text-sm font-medium text-lagoon-foundation transition-colors group-hover:text-lagoon-deep dark:text-lagoon-accent dark:group-hover:text-lagoon-200">
           Vezi detalii →
         </span>
       </div>
@@ -189,10 +191,11 @@ function TeamMemberDetail({ member }: TeamMemberDetailProps) {
       <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
         {member.photo && (
           <div className="relative h-32 w-32 flex-shrink-0 overflow-hidden rounded-2xl">
-            <Image
+            <TreatedImage
               src={member.photo.url}
               alt={member.name}
               fill
+              sizes="128px"
               className="object-cover"
             />
           </div>
@@ -208,7 +211,7 @@ function TeamMemberDetail({ member }: TeamMemberDetailProps) {
               </Badge>
             )}
           </div>
-          <p className="mt-1 text-lg text-lagoon-600">{member.role}</p>
+          <p className="mt-1 text-lg text-lagoon-foundation dark:text-lagoon-accent">{member.role}</p>
         </div>
       </div>
 
