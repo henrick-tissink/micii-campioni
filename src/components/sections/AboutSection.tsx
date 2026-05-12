@@ -162,12 +162,15 @@ export function AboutSection({
                       visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
                     }}
                   >
-                    <span className={cn(
-                      "flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full",
-                      isCoral ? "bg-coral-100 dark:bg-coral-500/20" : "bg-lagoon-100 dark:bg-lagoon-accent/20"
-                    )}>
-                      <Check className={cn("h-4 w-4", isCoral ? "text-coral-600 dark:text-coral-400" : "text-lagoon-foundation dark:text-lagoon-accent")} />
-                    </span>
+                    <Check
+                      className={cn(
+                        "mt-0.5 h-5 w-5 flex-shrink-0",
+                        isCoral
+                          ? "text-coral-refined dark:text-coral-400"
+                          : "text-lagoon-foundation dark:text-lagoon-accent"
+                      )}
+                      aria-hidden="true"
+                    />
                     <span className="text-sand-700 dark:text-sand-300">{feature}</span>
                   </motion.li>
                 );
