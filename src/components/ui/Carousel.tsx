@@ -21,6 +21,7 @@ export interface CarouselProps {
   slidesToScroll?: number;
   className?: string;
   slideClassName?: string;
+  onSlideChange?: (index: number) => void;
 }
 
 // =============================================================================
@@ -37,6 +38,7 @@ export function Carousel({
   slidesToScroll = 1,
   className,
   slideClassName,
+  onSlideChange,
 }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop,
@@ -56,10 +58,12 @@ export function Carousel({
 
   const onSelect = useCallback((api: EmblaApi) => {
     if (!api) return;
-    setSelectedIndex(api.selectedScrollSnap());
+    const snap = api.selectedScrollSnap();
+    setSelectedIndex(snap);
     setCanScrollPrev(api.canScrollPrev());
     setCanScrollNext(api.canScrollNext());
-  }, []);
+    onSlideChange?.(snap);
+  }, [onSlideChange]);
 
   useEffect(() => {
     if (!emblaApi) return;

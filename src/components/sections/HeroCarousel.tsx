@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -23,6 +24,8 @@ export interface HeroCarouselProps {
 // =============================================================================
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   if (slides.length === 0) {
     return <HeroFallback />;
   }
@@ -38,10 +41,15 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         showArrows={slides.length > 1}
         showDots={false}
         slideClassName="w-full"
+        onSlideChange={setActiveIndex}
       >
         {slides.map((slide, index) => (
           <CarouselSlide key={slide.title} className="px-0">
-            <div className="relative min-h-[560px] md:min-h-[680px] lg:min-h-[760px]">
+            <div
+              className="relative min-h-[560px] md:min-h-[680px] lg:min-h-[760px]"
+              aria-hidden={index !== activeIndex}
+              inert={index !== activeIndex || undefined}
+            >
               {/* Background image */}
               {slide.backgroundImage && (
                 <TreatedImage
