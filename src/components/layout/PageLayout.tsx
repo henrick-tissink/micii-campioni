@@ -175,6 +175,8 @@ export interface SectionHeroProps {
   title: string;
   subtitle?: string;
   heroImage?: ContentfulImage;
+  eyebrow?: React.ReactNode;
+  texture?: "grain";
   children?: React.ReactNode;
 }
 
@@ -182,10 +184,17 @@ export function SectionHero({
   title,
   subtitle,
   heroImage,
+  eyebrow,
+  texture,
   children,
 }: SectionHeroProps) {
   return (
-    <section className="relative min-h-[400px] overflow-hidden bg-lagoon-foundation md:min-h-[440px]">
+    <section
+      className={cn(
+        "relative min-h-[400px] overflow-hidden bg-lagoon-foundation md:min-h-[440px]",
+        texture === "grain" && "texture-grain"
+      )}
+    >
       {heroImage && (
         <TreatedImage
           src={heroImage.url}
@@ -198,6 +207,7 @@ export function SectionHero({
       )}
       <div className="absolute inset-0 hero-overlay" />
       <Container className="relative z-10 flex min-h-[400px] flex-col items-center justify-center py-16 text-center md:min-h-[440px]">
+        {eyebrow && <div className="mb-6">{eyebrow}</div>}
         <h1
           className="font-heading font-bold text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]"
           style={{
