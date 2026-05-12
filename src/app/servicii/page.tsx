@@ -70,6 +70,7 @@ export default async function ServicesListPage() {
         title=""
         subtitle=""
         description=""
+        eyebrow="Toate Cursurile"
       />
 
       {/* CTA */}

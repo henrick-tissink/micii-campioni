@@ -164,7 +164,7 @@ export function CompactTimeline({
                 {event.year}
               </span>
               {event.title && (
-                <h4 className="mt-1 font-medium text-sand-900">{event.title}</h4>
+                <h3 className="mt-1 font-medium text-sand-900 dark:text-white">{event.title}</h3>
               )}
               <p className="line-clamp-2 text-sm text-sand-600">
                 {event.description}

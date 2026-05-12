@@ -128,6 +128,9 @@ export default async function SitemapPage() {
 
       {/* Sitemap Grid */}
       <Section background="white" spacing="xl">
+        <h2 className="mb-8 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
+          Structura Site-ului
+        </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {structureWithDynamic.map((section) => (
             <Card key={section.href} variant="default" padding="cinematic" className="h-full">

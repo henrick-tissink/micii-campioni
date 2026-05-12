@@ -19,6 +19,7 @@ export interface ServicesSectionProps {
   title?: string;
   subtitle?: string;
   description?: string;
+  eyebrow?: string;
 }
 
 // =============================================================================
@@ -30,6 +31,7 @@ export function ServicesSection({
   title = "Cursurile Noastre",
   subtitle = "Ce Oferim",
   description = "Descoperă programele noastre de educație acvatică, create special pentru fiecare etapă de dezvoltare a copilului tău.",
+  eyebrow,
 }: ServicesSectionProps) {
   const filteredServices = services.filter((s) => s.slug !== "intrebari-frecvente");
 
@@ -41,6 +43,11 @@ export function ServicesSection({
     <Section background="cream" spacing="xl">
       {showHeader && (
         <SectionHeader title={title} subtitle={subtitle} description={description} />
+      )}
+      {!showHeader && eyebrow && (
+        <h2 className="mb-10 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
+          {eyebrow}
+        </h2>
       )}
 
       <MotionSection animation="stagger" className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
