@@ -92,7 +92,7 @@ export function AgeGroups() {
                 lg:first:pl-0 lg:last:pr-0
               "
             >
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[var(--tracking-mono)] text-amber-credential">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
                 {g.ageRange}
               </p>
               <h3 className="mt-3 font-heading text-lg font-semibold text-sand-900 tracking-[var(--tracking-section)]">
