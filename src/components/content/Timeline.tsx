@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { TreatedImage } from "@/components/ui/TreatedImage";
 import { cn } from "@/lib/utils/cn";
 import type { TimelineEvent } from "@/types/contentful";
 
@@ -110,11 +110,12 @@ function TimelineItem({ event, index, isExpanded, onToggle }: TimelineItemProps)
           {/* Image */}
           {event.image && isExpanded && (
             <div className="mt-4 overflow-hidden rounded-xl">
-              <Image
+              <TreatedImage
                 src={event.image.url}
                 alt={event.image.title || event.title || event.year}
                 width={event.image.width}
                 height={event.image.height}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="h-auto w-full"
               />
             </div>

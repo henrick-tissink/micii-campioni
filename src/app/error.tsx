@@ -17,14 +17,21 @@ export default function Error({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-[60vh] items-center justify-center bg-sand-50">
+    <div className="flex min-h-[60vh] items-center justify-center bg-white dark:bg-night-900">
       <Container>
         <div className="mx-auto max-w-lg text-center">
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-coral-100">
             <AlertTriangle className="h-10 w-10 text-coral-600" />
           </div>
 
-          <h1 className="mb-4 font-heading text-3xl font-bold text-sand-900">
+          <h1
+            className="mb-4 font-heading font-bold text-sand-900 dark:text-white"
+            style={{
+              fontSize: "var(--text-section)",
+              letterSpacing: "var(--tracking-section)",
+              lineHeight: 1.1,
+            }}
+          >
             Oops! Ceva nu a mers bine
           </h1>
 

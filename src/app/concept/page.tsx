@@ -69,7 +69,7 @@ export default async function ConceptPage() {
       {/* 2. Editorial intro + Principles — continuous block on white, 640px column */}
       <Section background="white" spacing="xl">
         <div className="mx-auto max-w-[640px]">
-          <p className="font-mono text-[11px] font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation">
+          <p className="font-mono text-[11px] font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
             Principii fundamentale
           </p>
           <h2

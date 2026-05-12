@@ -58,7 +58,7 @@ export function AgeGroups() {
   return (
     <Section background="cream" spacing="xl">
       <div className="mx-auto max-w-5xl">
-        <p className="font-mono text-[11px] font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation">
+        <p className="font-mono text-[11px] font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
           Progresia
         </p>
         <h2
