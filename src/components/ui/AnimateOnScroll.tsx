@@ -2,6 +2,7 @@
 
 import { type ReactNode } from "react";
 import { useInView } from "@/lib/hooks/useInView";
+import { useReducedMotion } from "@/lib/motion/useReducedMotion";
 
 interface AnimateOnScrollProps {
   children: ReactNode;
@@ -15,6 +16,11 @@ export function AnimateOnScroll({
   className,
 }: AnimateOnScrollProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <div
