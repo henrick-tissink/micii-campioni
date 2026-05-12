@@ -119,24 +119,27 @@ export function SectionHeader({
       {...props}
     >
       {subtitle && (
-        <span
+        <p
           className={cn(
-            "mb-2 inline-block font-heading text-sm font-semibold uppercase tracking-wider",
+            "mb-3 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)]",
             accent === "coral"
-              ? "text-coral-600 dark:text-coral-400"
-              : "text-lagoon-600 dark:text-lagoon-400"
+              ? "text-coral-refined dark:text-coral-400"
+              : "text-lagoon-foundation dark:text-lagoon-accent"
           )}
         >
           {subtitle}
-        </span>
+        </p>
       )}
-      <h2 className="font-heading text-3xl font-bold text-sand-900 dark:text-white md:text-4xl">
+      <h2
+        className="font-heading font-semibold text-sand-900 dark:text-white tracking-[var(--tracking-section)]"
+        style={{ fontSize: "var(--text-section)" }}
+      >
         {title}
       </h2>
       {description && (
         <p
           className={cn(
-            "mt-4 text-lg text-sand-600 dark:text-sand-400",
+            "mt-4 text-base leading-relaxed text-sand-600 dark:text-sand-400",
             align === "center" && "mx-auto max-w-2xl"
           )}
         >
