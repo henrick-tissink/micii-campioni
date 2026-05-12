@@ -144,35 +144,31 @@ export function ContactWidget({ phone, email, className }: ContactWidgetProps) {
   if (!phone && !email) return null;
 
   return (
-    <Card variant="default" padding="md" className={cn("bg-lagoon-50", className)}>
-      <h3 className="mb-4 font-heading text-lg font-semibold text-sand-900">
+    <Card variant="default" padding="md" className={cn("bg-white dark:bg-night-800", className)}>
+      <p className="mb-4 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
         Contactează-ne
-      </h3>
-      <div className="space-y-3">
+      </p>
+      <div className="space-y-4">
         {phone && (
           <a
             href={`tel:${phone}`}
-            className="flex items-center gap-3 text-sand-600 transition-colors hover:text-lagoon-600"
+            className="flex items-center gap-3 text-sand-700 transition-colors hover:text-lagoon-foundation dark:text-sand-300 dark:hover:text-lagoon-accent"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-lagoon-100">
-              <Phone className="h-5 w-5 text-lagoon-600" />
-            </div>
+            <Phone className="h-5 w-5 flex-shrink-0 text-lagoon-foundation dark:text-lagoon-accent" aria-hidden="true" />
             <span>{phone}</span>
           </a>
         )}
         {email && (
           <a
             href={`mailto:${email}`}
-            className="flex items-center gap-3 text-sand-600 transition-colors hover:text-lagoon-600"
+            className="flex items-center gap-3 text-sand-700 transition-colors hover:text-lagoon-foundation dark:text-sand-300 dark:hover:text-lagoon-accent"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-lagoon-100">
-              <Mail className="h-5 w-5 text-lagoon-600" />
-            </div>
+            <Mail className="h-5 w-5 flex-shrink-0 text-lagoon-foundation dark:text-lagoon-accent" aria-hidden="true" />
             <span>{email}</span>
           </a>
         )}
       </div>
-      <div className="mt-4">
+      <div className="mt-6">
         <Button href="/contact" fullWidth>
           Trimite un mesaj
         </Button>
