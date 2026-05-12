@@ -31,17 +31,23 @@ const defaultOptions: Options = {
       <p className="mb-4 leading-relaxed">{children}</p>
     ),
     [BLOCKS.HEADING_1]: (node, children) => (
-      <h1 className="mb-4 mt-8 font-heading text-3xl font-bold text-sand-900 md:text-4xl">
+      <h1
+        className="mb-4 mt-8 font-heading font-bold text-sand-900 dark:text-white tracking-[var(--tracking-section)]"
+        style={{ fontSize: "var(--text-section)" }}
+      >
         {children}
       </h1>
     ),
     [BLOCKS.HEADING_2]: (node, children) => (
-      <h2 className="mb-4 mt-6 font-heading text-2xl font-semibold text-sand-900 md:text-3xl">
+      <h2
+        className="mb-4 mt-6 font-heading font-semibold text-sand-900 dark:text-white tracking-[var(--tracking-section)]"
+        style={{ fontSize: "var(--text-section)" }}
+      >
         {children}
       </h2>
     ),
     [BLOCKS.HEADING_3]: (node, children) => (
-      <h3 className="mb-3 mt-5 font-heading text-xl font-semibold text-sand-900 md:text-2xl">
+      <h3 className="mb-3 mt-5 font-heading text-xl font-semibold text-sand-900 dark:text-white tracking-[var(--tracking-section)]">
         {children}
       </h3>
     ),
@@ -61,12 +67,12 @@ const defaultOptions: Options = {
       </h6>
     ),
     [BLOCKS.UL_LIST]: (node, children) => (
-      <ul className="mb-4 ml-6 list-disc space-y-2 marker:text-lagoon-500">
+      <ul className="mb-4 ml-6 list-disc space-y-2 marker:text-lagoon-foundation dark:marker:text-lagoon-accent">
         {children}
       </ul>
     ),
     [BLOCKS.OL_LIST]: (node, children) => (
-      <ol className="mb-4 ml-6 list-decimal space-y-2 marker:font-semibold marker:text-lagoon-600">
+      <ol className="mb-4 ml-6 list-decimal space-y-2 marker:font-semibold marker:text-lagoon-foundation dark:marker:text-lagoon-accent">
         {children}
       </ol>
     ),
@@ -74,7 +80,7 @@ const defaultOptions: Options = {
       <li className="pl-1">{children}</li>
     ),
     [BLOCKS.QUOTE]: (node, children) => (
-      <blockquote className="my-6 rounded-r-xl border-l-4 border-lagoon-500 bg-lagoon-50 px-6 py-4 italic text-lagoon-800">
+      <blockquote className="my-6 border-l-2 border-lagoon-foundation pl-6 italic text-sand-700 dark:border-lagoon-accent dark:text-sand-300">
         {children}
       </blockquote>
     ),
@@ -133,7 +139,7 @@ const defaultOptions: Options = {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-lagoon-600 underline underline-offset-2 transition-colors hover:text-lagoon-700"
+            className="text-lagoon-foundation underline underline-offset-2 transition-colors hover:text-lagoon-deep dark:text-lagoon-accent dark:hover:text-lagoon-200"
           >
             {children}
           </a>
@@ -143,7 +149,7 @@ const defaultOptions: Options = {
       return (
         <Link
           href={href}
-          className="text-lagoon-600 underline underline-offset-2 transition-colors hover:text-lagoon-700"
+          className="text-lagoon-foundation underline underline-offset-2 transition-colors hover:text-lagoon-deep dark:text-lagoon-accent dark:hover:text-lagoon-200"
         >
           {children}
         </Link>
@@ -156,7 +162,7 @@ const defaultOptions: Options = {
       return (
         <Link
           href={`/${slug}`}
-          className="text-lagoon-600 underline underline-offset-2 transition-colors hover:text-lagoon-700"
+          className="text-lagoon-foundation underline underline-offset-2 transition-colors hover:text-lagoon-deep dark:text-lagoon-accent dark:hover:text-lagoon-200"
         >
           {children}
         </Link>
@@ -185,7 +191,10 @@ export function RichText({ content, className, options, demoteH1 }: RichTextProp
         renderNode: {
           ...defaultOptions.renderNode,
           [BLOCKS.HEADING_1]: (_node, children) => (
-            <h2 className="mb-4 mt-6 font-heading text-2xl font-semibold text-sand-900 md:text-3xl">
+            <h2
+              className="mb-4 mt-6 font-heading font-semibold text-sand-900 dark:text-white tracking-[var(--tracking-section)]"
+              style={{ fontSize: "var(--text-section)" }}
+            >
               {children}
             </h2>
           ),
