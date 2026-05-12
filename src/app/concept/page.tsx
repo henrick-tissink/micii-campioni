@@ -9,6 +9,7 @@ import { PartnersStrip } from "@/components/content/PartnersStrip";
 import { CTASection } from "@/components/sections/CTASection";
 import { MethodologyPrinciples } from "@/components/sections/MethodologyPrinciples";
 import { AgeGroups } from "@/components/sections/AgeGroups";
+import { Badge } from "@/components/ui/Badge";
 
 // NOTE: The Contentful body (`page.content`) for /concept is intentionally
 // NOT rendered. The methodology principles and age groups now live as
@@ -92,6 +93,28 @@ export default async function ConceptPage() {
 
       {/* 3. Age groups — cream, full-width 4-col journey */}
       <AgeGroups />
+
+      {/* 3.5. COR credential block — editorial framing per spec §5.5 */}
+      <Section background="foundation" spacing="lg" texture="grain">
+        <div className="mx-auto max-w-2xl text-center">
+          <Badge variant="credential" size="lg" className="bg-amber-credential/10">
+            COR · 342215
+          </Badge>
+          <p
+            className="mt-6 font-heading font-medium text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]"
+            style={{
+              fontSize: "var(--text-section)",
+              letterSpacing: "var(--tracking-section)",
+              lineHeight: 1.2,
+            }}
+          >
+            Singura metodologie românească acreditată pentru educație acvatică timpurie.
+          </p>
+          <p className="mt-4 text-sm leading-relaxed text-lagoon-100/85">
+            Codul Ocupațional Românesc 342215 — instructor educație acvatică pentru bebeluși și copii — recunoaște Metoda Sultana ca standard profesional în România.
+          </p>
+        </div>
+      </Section>
 
       {/* 4. Partners strip + sub-page nav — combined section on white */}
       <Section background="white" spacing="xl">
