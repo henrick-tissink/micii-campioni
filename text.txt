@@ -1,0 +1,21 @@
+Yes, absolutely. The shape I'd run it as:
+
+  4 parallel audit agents (dispatched at the same time, each writes findings to a structured report):
+
+  1. Cross-file consistency audit — every eyebrow uses identical className? Any text-lagoon-600 / bg-coral-100 (non-error) / text-lg text-sand-500 / pre-refresh token holdouts? Heading hierarchies
+  sensible per page?
+  2. Spec-conformance audit — page-by-page against master spec §5, §1.1's 8 concrete moves, §6 photography pipeline. What did we ship vs what was promised? Any quiet deviations to call out?
+  3. Visual + functional smoke — every page at desktop 1440×900 + mobile 390×844, capture screenshots, verify no console errors, no broken links, all routes static-generate, lint + tsc baseline holds.
+  Romanian diacritics intact.
+  4. A11y + reduced-motion audit — heading cascade across all pages, ARIA on interactive elements, focus-visible rings consistent, all motion.div whileInView reach final state with
+  prefers-reduced-motion: reduce, AA contrast on every text/background pair we ship.
+
+  I synthesize the four reports into one punch-list: what's solid + what to fix + what's a documented carry-forward (e.g. /contact CMS body field, Spinner refresh, Tabs a11y).
+
+  To kick off next session: just say "run the M1-M6c audit". My memory will load the milestone state, the spec + plan files are all saved locally, branch tip is 95dc7bf on main. I'll dispatch the four
+  agents in parallel and report back with the punch-list. Probably ~30-45min of agent runtime, modest controller overhead.
+
+  A natural follow-on: if the audit surfaces dark-mode gaps (likely), M3.5 becomes the obvious next milestone with concrete scope from the audit findings rather than open-ended exploration.
+
+  One alternative worth knowing: /ultrareview runs a multi-agent cloud review of the current branch. It's user-triggered and billed. For a 59-commit-across-many-milestones project on main (no single PR),
+   the in-session audit above will probably give you better milestone-aware findings than ultrareview's per-diff lens. Up to you.

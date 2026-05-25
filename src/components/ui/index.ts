@@ -51,6 +51,15 @@ export { Carousel, CarouselSlide, type CarouselProps, type CarouselSlideProps } 
 // Container
 export { Container, type ContainerProps, type ContainerSize } from "./Container";
 
+// Eyebrow
+export { Eyebrow, type EyebrowProps, type EyebrowColor } from "./Eyebrow";
+
+// GlassChip
+export { GlassChip, type GlassChipProps } from "./GlassChip";
+
+// SectionHead
+export { SectionHead, type SectionHeadProps } from "./SectionHead";
+
 // Icon
 export {
   Icon,

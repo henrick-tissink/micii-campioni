@@ -6,7 +6,14 @@ import { cn } from "@/lib/utils/cn";
 // Types
 // =============================================================================
 
-export type ButtonVariant = "primary" | "outline" | "outline-on-dark" | "ghost" | "credential";
+export type ButtonVariant =
+  | "primary"
+  | "dark"
+  | "white"
+  | "outline"
+  | "outline-on-dark"
+  | "ghost"
+  | "credential";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -29,6 +36,10 @@ const baseStyles =
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
     "bg-coral-refined text-white hover:-translate-y-0.5 hover:shadow-cinematic focus-visible:ring-2 focus-visible:ring-coral-refined focus-visible:ring-offset-2 dark:focus-visible:ring-offset-night-900",
+  dark:
+    "bg-lagoon-foundation text-white hover:-translate-y-0.5 hover:shadow-cinematic focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2 dark:bg-lagoon-accent dark:text-lagoon-foundation dark:focus-visible:ring-offset-night-900",
+  white:
+    "bg-white text-coral-refined hover:-translate-y-0.5 hover:shadow-cinematic focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-coral-refined",
   outline:
     "bg-transparent border-lagoon-foundation text-lagoon-foundation hover:bg-lagoon-50 focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2 dark:border-lagoon-accent dark:text-lagoon-accent dark:hover:bg-night-800 dark:focus-visible:ring-offset-night-900",
   "outline-on-dark":

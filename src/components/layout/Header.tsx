@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/components/ui/Button";
@@ -30,30 +30,30 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const isHome = pathname === "/";
+  // Transparent chrome only over the home hero, before the user scrolls.
+  const overHero = isHome && !isScrolled;
+
   const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + "/");
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
 
-  // Handle scroll for sticky header styling
+  // Flip chrome to the cream-blur look once the hero scrolls out of view.
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu on escape
+  // Close mobile menu on escape; lock body scroll while open.
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsMenuOpen(false);
     };
-
     if (isMenuOpen) {
       document.addEventListener("keydown", handleEscape);
       document.body.style.overflow = "hidden";
     }
-
     return () => {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "";
@@ -64,36 +64,32 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
     (item) => item.href !== "/contact"
   );
 
+  const phone = siteSettings?.phone || "+40 722 310 052";
+  const email = siteSettings?.email || "clubulmiciicampioni@yahoo.com";
+
   return (
     <>
-      {/* Top bar with contact info */}
-      <div className="hidden bg-lagoon-foundation py-2 text-sm text-white lg:block dark:bg-night-800 dark:border-b dark:border-night-700">
+      {/* Top contact strip */}
+      <div className="hidden bg-lagoon-foundation py-2.5 font-mono text-xs tracking-[0.04em] text-white/85 lg:block dark:bg-night-800 dark:border-b dark:border-night-700">
         <Container>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              {siteSettings?.phone && (
-                <a
-                  href={`tel:${siteSettings.phone}`}
-                  className="flex items-center gap-2 transition-colors hover:text-lagoon-100"
-                >
-                  <Phone className="h-4 w-4" />
-                  {siteSettings.phone}
-                </a>
-              )}
-              {siteSettings?.email && (
-                <a
-                  href={`mailto:${siteSettings.email}`}
-                  className="flex items-center gap-2 transition-colors hover:text-lagoon-100"
-                >
-                  <Mail className="h-4 w-4" />
-                  {siteSettings.email}
-                </a>
-              )}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-5">
+              <a
+                href={`tel:${phone.replace(/\s/g, "")}`}
+                className="whitespace-nowrap transition-colors hover:text-white"
+              >
+                {phone}
+              </a>
+              <span className="opacity-35">·</span>
+              <a
+                href={`mailto:${email}`}
+                className="whitespace-nowrap transition-colors hover:text-white"
+              >
+                {email}
+              </a>
             </div>
-            <div className="text-lagoon-100">
-              {siteSettings?.anniversaryActive && siteSettings?.anniversaryText
-                ? siteSettings.anniversaryText
-                : "Primul Club de Educație Acvatică din România"}
+            <div className="whitespace-nowrap text-amber-credential">
+              EST · 2001 — 25 ANI
             </div>
           </div>
         </Container>
@@ -102,10 +98,10 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
       {/* Main header */}
       <header
         className={cn(
-          "sticky top-0 z-300 w-full transition-all duration-200",
-          isScrolled
-            ? "bg-white/95 shadow-soft backdrop-blur-md dark:bg-night-900/95 dark:shadow-lg"
-            : "bg-white dark:bg-night-900"
+          "sticky top-0 z-300 w-full transition-[background-color,box-shadow] duration-300",
+          overHero
+            ? "bg-transparent"
+            : "bg-cream/95 shadow-[0_1px_0_rgba(7,51,47,0.08)] backdrop-blur-md backdrop-saturate-150 dark:bg-night-900/95 dark:shadow-lg"
         )}
       >
         <Container>
@@ -114,38 +110,46 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
             <Link
               href="/"
               className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500 focus-visible:ring-offset-2"
+              aria-label="Micii Campioni — Acasă"
             >
-              {siteSettings?.logo ? (
-                <Image
-                  src={siteSettings.logo.url}
-                  alt={siteSettings.logo.title || "Micii Campioni"}
-                  width={180}
-                  height={48}
-                  className="h-10 w-auto lg:h-12"
-                  priority
-                />
-              ) : (
-                <span className="font-heading text-xl font-bold text-lagoon-600">
-                  Micii Campioni
-                </span>
-              )}
+              <Image
+                src={
+                  overHero
+                    ? "/images/logos/logo-micii-campioni-white.png"
+                    : "/images/logos/logo-micii-campioni.png"
+                }
+                alt="Micii Campioni"
+                width={180}
+                height={48}
+                priority
+                className={cn(
+                  "h-10 w-auto transition-opacity duration-200 lg:h-11",
+                  !overHero && "dark:brightness-0 dark:invert"
+                )}
+              />
             </Link>
 
             {/* Desktop navigation */}
-            <div className="hidden items-center gap-8 lg:flex">
-              <ul className="flex items-center gap-6">
+            <div className="hidden items-center gap-9 lg:flex">
+              <ul className="flex items-center gap-9">
                 {navItems.map((item) => (
                   <li key={item.label}>
                     <Link
                       href={item.href}
                       className={cn(
-                        "relative font-medium transition-colors hover:text-lagoon-foundation dark:hover:text-lagoon-accent",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-foundation focus-visible:ring-offset-2",
-                        isActive(item.href)
-                          ? "text-lagoon-foundation dark:text-lagoon-accent after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:h-1.5 after:w-1.5 after:rounded-full after:bg-coral-refined"
-                          : "text-sand-700 dark:text-sand-300"
+                        "relative text-[13.5px] font-medium tracking-[0.01em] transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                        overHero
+                          ? "text-white [text-shadow:0_1px_8px_rgba(0,0,0,0.25)] hover:text-white focus-visible:ring-white"
+                          : "text-sand-800 hover:text-lagoon-foundation focus-visible:ring-lagoon-foundation dark:text-sand-200 dark:hover:text-lagoon-accent"
                       )}
                     >
+                      {isActive(item.href) && (
+                        <span
+                          aria-hidden="true"
+                          className="absolute left-[-14px] top-1/2 h-[5px] w-[5px] -translate-y-1/2 rounded-full bg-coral-refined"
+                        />
+                      )}
                       {item.label}
                     </Link>
                   </li>
@@ -153,8 +157,13 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
               </ul>
               <div className="flex items-center gap-3">
                 <ThemeToggle size="sm" />
-                <Button href="/contact" size="sm">
-                  Contact
+                <Button
+                  href="/contact"
+                  size="sm"
+                  variant={overHero ? "primary" : "dark"}
+                  rightIcon={<ArrowRight className="h-3.5 w-3.5" />}
+                >
+                  Programează
                 </Button>
               </div>
             </div>
@@ -166,35 +175,29 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
                 type="button"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className={cn(
-                  "rounded-lg p-2 text-sand-700 transition-colors hover:bg-sand-100 dark:text-sand-300 dark:hover:bg-night-800",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500"
+                  "rounded-lg p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500",
+                  overHero
+                    ? "text-white hover:bg-white/10"
+                    : "text-sand-700 hover:bg-sand-100 dark:text-sand-300 dark:hover:bg-night-800"
                 )}
                 aria-expanded={isMenuOpen}
-                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                aria-label={isMenuOpen ? "Închide meniul" : "Deschide meniul"}
               >
-                {isMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </nav>
         </Container>
-
       </header>
 
-      {/* Mobile navigation - outside header to avoid backdrop-filter containing block */}
+      {/* Mobile navigation — outside header to avoid backdrop-filter containing block */}
       <motion.div
-        className={cn(
-          "fixed inset-x-0 top-16 bottom-0 z-400 bg-white dark:bg-night-900 lg:hidden"
-        )}
+        className="fixed inset-x-0 top-16 bottom-0 z-400 bg-white dark:bg-night-900 lg:hidden"
         initial={false}
-        animate={{
-          x: isMenuOpen ? 0 : "100%",
-          opacity: isMenuOpen ? 1 : 0,
-        }}
+        animate={{ x: isMenuOpen ? 0 : "100%", opacity: isMenuOpen ? 1 : 0 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        aria-hidden={!isMenuOpen}
+        inert={!isMenuOpen || undefined}
       >
         <Container className="h-full overflow-y-auto py-6">
           <ul className="space-y-1">
@@ -212,8 +215,8 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
                     "block rounded-xl px-4 py-3 font-medium transition-colors",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lagoon-500",
                     isActive(item.href)
-                      ? "bg-lagoon-50 text-lagoon-600 font-semibold dark:bg-night-800 dark:text-lagoon-400"
-                      : "text-sand-700 hover:bg-sand-50 hover:text-lagoon-600 dark:text-sand-300 dark:hover:bg-night-800 dark:hover:text-lagoon-400"
+                      ? "bg-lagoon-50 font-semibold text-lagoon-foundation dark:bg-night-800 dark:text-lagoon-accent"
+                      : "text-sand-700 hover:bg-sand-50 hover:text-lagoon-foundation dark:text-sand-300 dark:hover:bg-night-800 dark:hover:text-lagoon-accent"
                   )}
                 >
                   {item.label}
@@ -223,35 +226,24 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
           </ul>
 
           <div className="mt-6 px-4">
-            <Button
-              href="/contact"
-              fullWidth
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
+            <Button href="/contact" fullWidth onClick={() => setIsMenuOpen(false)}>
+              Programează
             </Button>
           </div>
 
-          {/* Mobile contact info */}
-          <div className="mt-8 space-y-3 border-t border-sand-200 dark:border-night-700 px-4 pt-6">
-            {siteSettings?.phone && (
-              <a
-                href={`tel:${siteSettings.phone}`}
-                className="flex items-center gap-3 text-sand-600 dark:text-sand-400"
-              >
-                <Phone className="h-5 w-5 text-lagoon-500 dark:text-lagoon-400" />
-                {siteSettings.phone}
-              </a>
-            )}
-            {siteSettings?.email && (
-              <a
-                href={`mailto:${siteSettings.email}`}
-                className="flex items-center gap-3 text-sand-600 dark:text-sand-400"
-              >
-                <Mail className="h-5 w-5 text-lagoon-500 dark:text-lagoon-400" />
-                {siteSettings.email}
-              </a>
-            )}
+          <div className="mt-8 space-y-3 border-t border-sand-200 px-4 pt-6 dark:border-night-700">
+            <a
+              href={`tel:${phone.replace(/\s/g, "")}`}
+              className="block font-mono text-sm text-sand-600 dark:text-sand-400"
+            >
+              {phone}
+            </a>
+            <a
+              href={`mailto:${email}`}
+              className="block font-mono text-sm text-sand-600 dark:text-sand-400"
+            >
+              {email}
+            </a>
           </div>
         </Container>
       </motion.div>

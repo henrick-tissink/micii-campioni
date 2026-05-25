@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, DM_Mono } from "next/font/google";
+import { Inter, DM_Mono, Newsreader } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -25,6 +25,16 @@ const dmMono = DM_Mono({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500"],
+});
+
+// Editorial serif introduced by the home redesign — used via the `.display`
+// utility and `font-display` Tailwind class, scoped to editorial surfaces.
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -131,7 +141,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${dmMono.variable} antialiased`}
+        className={`${inter.variable} ${dmMono.variable} ${newsreader.variable} antialiased`}
       >
         <script
           type="application/ld+json"
