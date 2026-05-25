@@ -26,4 +26,3 @@ export {
   type FounderStripProps,
 } from "./FounderStrip";
 export { CTASection, type CTASectionProps } from "./CTASection";
-export { AboutSection, type AboutSectionProps } from "./AboutSection";

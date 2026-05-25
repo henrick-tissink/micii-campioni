@@ -119,12 +119,11 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
                     : "/images/logos/logo-micii-campioni.png"
                 }
                 alt="Micii Campioni"
-                width={180}
-                height={48}
+                width={203}
+                height={136}
                 priority
-                style={{ width: "auto" }}
                 className={cn(
-                  "h-10 transition-opacity duration-200 lg:h-11",
+                  "h-10 w-auto transition-opacity duration-200 lg:h-11",
                   !overHero && "dark:brightness-0 dark:invert"
                 )}
               />

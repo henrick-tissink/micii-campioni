@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -40,6 +40,26 @@ export function ContactFormEditorial() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [tracking, setTracking] = useState<Record<string, string>>({});
+
+  // Capture UTM params + Facebook cookies on mount (ad attribution / CAPI).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sp = new URLSearchParams(window.location.search);
+    const params: Record<string, string> = {};
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach((k) => {
+      const v = sp.get(k);
+      if (v) params[k] = v;
+    });
+    const cookies = document.cookie.split(";").reduce((acc, c) => {
+      const [k, v] = c.trim().split("=");
+      if (k) acc[k] = v;
+      return acc;
+    }, {} as Record<string, string>);
+    if (cookies._fbc) params.fbc = cookies._fbc;
+    if (cookies._fbp) params.fbp = cookies._fbp;
+    setTracking(params);
+  }, []);
 
   const update = (k: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setData((d) => ({ ...d, [k]: e.target.value }));
@@ -81,6 +101,7 @@ export function ContactFormEditorial() {
           service: data.program,
           message,
           website: honeypot,
+          ...tracking,
           pageUrl: window.location.href,
           eventId,
         }),

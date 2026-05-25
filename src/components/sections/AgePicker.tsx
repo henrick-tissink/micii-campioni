@@ -25,6 +25,16 @@ interface Stage {
   alt: string;
 }
 
+// Natural pixel dimensions of each creature PNG — passed to next/image so the
+// aspect ratio matches the asset (avoids distortion + dev warnings).
+const CREATURE_DIMS: Record<string, { w: number; h: number }> = {
+  crab: { w: 87, h: 70 },
+  fish: { w: 91, h: 52 },
+  seahorse: { w: 62, h: 76 },
+  tortoise: { w: 78, h: 74 },
+  whale: { w: 109, h: 61 },
+};
+
 const STAGES: Stage[] = [
   {
     id: "gravide",
@@ -266,11 +276,11 @@ export function AgePicker() {
               <Image
                 src={`/images/animations/animation-${stage.creature}.png`}
                 alt=""
-                width={130}
-                height={130}
+                width={CREATURE_DIMS[stage.creature].w}
+                height={CREATURE_DIMS[stage.creature].h}
                 aria-hidden="true"
-                className="float-bob absolute -bottom-2 -right-2.5 h-[130px]"
-                style={{ width: "auto", filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
+                className="float-bob absolute -bottom-2 -right-2.5 h-[130px] w-auto"
+                style={{ filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
               />
               <span className="absolute left-4 top-4 rounded-full bg-lagoon-foundation/55 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[var(--tracking-mono)] text-white backdrop-blur-sm">
                 {stage.no} · {stage.title}

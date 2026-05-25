@@ -19,6 +19,15 @@ export const metadata: Metadata = {
   },
 };
 
+// Natural pixel dimensions of each creature PNG (for correct aspect ratio).
+const CREATURE_DIMS: Record<string, { w: number; h: number }> = {
+  crab: { w: 87, h: 70 },
+  fish: { w: 91, h: 52 },
+  seahorse: { w: 62, h: 76 },
+  tortoise: { w: 78, h: 74 },
+  whale: { w: 109, h: 61 },
+};
+
 interface Course {
   id: string;
   no: string;
@@ -117,11 +126,11 @@ function CourseRow({ course, i }: { course: Course; i: number }) {
                 <Image
                   src={`/images/animations/animation-${course.creature}.png`}
                   alt=""
-                  width={140}
-                  height={140}
+                  width={CREATURE_DIMS[course.creature].w}
+                  height={CREATURE_DIMS[course.creature].h}
                   aria-hidden="true"
-                  className="float-bob absolute -bottom-2.5 -right-3.5 h-[140px]"
-                  style={{ width: "auto", filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
+                  className="float-bob absolute -bottom-2.5 -right-3.5 h-[140px] w-auto"
+                  style={{ filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
                 />
               )}
               <span className="absolute left-[18px] top-[18px] rounded-full bg-lagoon-foundation/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[var(--tracking-mono)] text-white backdrop-blur-md">

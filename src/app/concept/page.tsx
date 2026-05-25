@@ -201,11 +201,19 @@ export default function ConceptPage() {
                   i === 0 ? "" : "border-t border-lagoon-foundation/[0.08] dark:border-white/10"
                 }`}
               >
-                <div className="font-medium text-sand-700 dark:text-sand-200">{row.aspect}</div>
+                <div className="font-semibold text-sand-800 dark:text-sand-100 md:font-medium md:text-sand-700 md:dark:text-sand-200">
+                  {row.aspect}
+                </div>
                 <div className="display text-[18px] italic text-lagoon-foundation dark:text-lagoon-accent">
+                  <span className="mono-eyebrow mb-1 block not-italic text-lagoon-foundation/60 md:hidden dark:text-lagoon-accent/60">
+                    Metoda Sultana
+                  </span>
                   {row.sultana}
                 </div>
-                <div className="text-sand-500 dark:text-sand-400">{row.general}</div>
+                <div className="text-sand-500 dark:text-sand-400">
+                  <span className="mono-eyebrow mb-1 block text-sand-400 md:hidden">Cursuri generale</span>
+                  {row.general}
+                </div>
                 <div className="text-sm leading-relaxed text-sand-600 dark:text-sand-400">{row.note}</div>
               </div>
             ))}

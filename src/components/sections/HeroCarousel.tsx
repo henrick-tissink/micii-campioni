@@ -71,12 +71,12 @@ export function HeroCarousel() {
   const prefersReducedMotion = useReducedMotion();
   const total = HERO_SLIDES.length;
 
-  // Auto-rotate slides; pause on hover.
+  // Auto-rotate slides; pause on hover and when reduced motion is requested.
   useEffect(() => {
-    if (paused) return;
+    if (paused || prefersReducedMotion) return;
     const t = setInterval(() => setIdx((i) => (i + 1) % total), 8500);
     return () => clearInterval(t);
-  }, [paused, total]);
+  }, [paused, total, prefersReducedMotion]);
 
   // Scroll-linked parallax.
   useEffect(() => {
