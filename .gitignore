@@ -58,3 +58,6 @@ docs/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local scratch notes
+/text.txt
