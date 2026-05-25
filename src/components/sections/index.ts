@@ -3,6 +3,8 @@
 // =============================================================================
 
 export { HeroCarousel, type HeroCarouselProps } from "./HeroCarousel";
+export { PressStrip } from "./PressStrip";
+export { StatsBand } from "./StatsBand";
 export {
   ServicesSection,
   CompactServices,
