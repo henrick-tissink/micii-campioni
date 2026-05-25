@@ -122,8 +122,9 @@ export function Header({ navigation, siteSettings }: HeaderProps) {
                 width={180}
                 height={48}
                 priority
+                style={{ width: "auto" }}
                 className={cn(
-                  "h-10 w-auto transition-opacity duration-200 lg:h-11",
+                  "h-10 transition-opacity duration-200 lg:h-11",
                   !overHero && "dark:brightness-0 dark:invert"
                 )}
               />

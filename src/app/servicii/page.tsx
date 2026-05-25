@@ -120,8 +120,8 @@ function CourseRow({ course, i }: { course: Course; i: number }) {
                   width={140}
                   height={140}
                   aria-hidden="true"
-                  className="float-bob absolute -bottom-2.5 -right-3.5 h-[140px] w-auto"
-                  style={{ filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
+                  className="float-bob absolute -bottom-2.5 -right-3.5 h-[140px]"
+                  style={{ width: "auto", filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
                 />
               )}
               <span className="absolute left-[18px] top-[18px] rounded-full bg-lagoon-foundation/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[var(--tracking-mono)] text-white backdrop-blur-md">

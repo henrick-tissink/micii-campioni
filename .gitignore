@@ -48,6 +48,12 @@ docs/
 # Local screenshots from QA / brainstorming
 /home-*.jpeg
 /home-*.png
+/despre-*.jpeg
+/concept-*.jpeg
+/servicii-*.jpeg
+/galerie-*.jpeg
+/asociatia-*.jpeg
+/contact-*.jpeg
 
 # typescript
 *.tsbuildinfo

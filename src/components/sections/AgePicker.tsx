@@ -269,8 +269,8 @@ export function AgePicker() {
                 width={130}
                 height={130}
                 aria-hidden="true"
-                className="float-bob absolute -bottom-2 -right-2.5 h-[130px] w-auto"
-                style={{ filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
+                className="float-bob absolute -bottom-2 -right-2.5 h-[130px]"
+                style={{ width: "auto", filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.3))" }}
               />
               <span className="absolute left-4 top-4 rounded-full bg-lagoon-foundation/55 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[var(--tracking-mono)] text-white backdrop-blur-sm">
                 {stage.no} · {stage.title}

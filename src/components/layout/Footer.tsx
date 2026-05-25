@@ -82,7 +82,8 @@ export function Footer({ navigation, siteSettings }: FooterProps) {
               alt="Micii Campioni"
               width={208}
               height={52}
-              className="h-[52px] w-auto"
+              style={{ width: "auto" }}
+              className="h-[52px]"
             />
             <p className="mt-6 max-w-[340px] text-sm leading-relaxed">
               Primul Club de Educație Acvatică din România. Metoda Sultana — singura

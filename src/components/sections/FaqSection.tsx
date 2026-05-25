@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
 import { Plus, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -39,7 +39,7 @@ const FAQS = [
 
 export function FaqSection() {
   const [open, setOpen] = useState(0);
-  const baseId = useId();
+  const baseId = "home-faq";
 
   return (
     <section className="bg-cream py-24 md:py-28 dark:bg-night-800">
