@@ -95,7 +95,7 @@ export default function DespreNoiPage() {
               <p>
                 În 2016, Ministerul Muncii a acordat metodologiei codul ocupațional{" "}
                 <strong>COR 342215</strong> — singurul atestat românesc pentru „Instructor
-                educație acvatică timpurie". Astăzi, peste 7.900 de copii au absolvit cursurile
+                educație acvatică timpurie”. Astăzi, peste 7.900 de copii au absolvit cursurile
                 clubului, iar 50+ instructori certificați continuă munca.
               </p>
               <p>

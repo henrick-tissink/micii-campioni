@@ -1,295 +1,171 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { getSiteSettings, getPageBySlug } from "@/lib/contentful/queries";
-import { SectionHero } from "@/components/layout/PageLayout";
-import { Section } from "@/components/ui/Section";
-import { Card } from "@/components/ui/Card";
-import { ContactForm } from "@/components/forms/ContactForm";
-import { RichText } from "@/lib/contentful/rich-text";
+import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/ui/Container";
+import { Eyebrow } from "@/components/ui/Eyebrow";
+import { PageHero } from "@/components/layout/PageHero";
+import { ContactFormEditorial } from "./ContactFormEditorial";
 
-// =============================================================================
-// Helpers
-// =============================================================================
-
-/** Parse a schedule string like "9:00 - 20:00" into { opens, closes }. */
-function parseScheduleTimes(schedule: string): {
-  opens: string;
-  closes: string;
-} | null {
-  const match = schedule.match(/(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})/);
-  if (!match) return null;
-  const pad = (t: string) => (t.length === 4 ? `0${t}` : t);
-  return { opens: pad(match[1]), closes: pad(match[2]) };
-}
-
-// =============================================================================
-// Metadata
-// =============================================================================
-
-const FALLBACK_TITLE = "Contact";
-const FALLBACK_DESCRIPTION =
-  "Contactează-ne pentru informații despre cursurile de înot, programări sau orice alte întrebări. Suntem aici să te ajutăm.";
-
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPageBySlug("contact");
-
-  return {
-    title: page?.metaTitle || FALLBACK_TITLE,
-    description: page?.metaDescription || FALLBACK_DESCRIPTION,
-    alternates: { canonical: "/contact" },
-    openGraph: {
-      title: page?.metaTitle || `Contactează Micii Campioni`,
-      description: page?.metaDescription || FALLBACK_DESCRIPTION,
-      images: page?.heroImage
-        ? [{ url: page.heroImage.url, width: page.heroImage.width, height: page.heroImage.height, alt: page.heroImage.title }]
-        : undefined,
-    },
-  };
-}
-
-// =============================================================================
-// Page
-// =============================================================================
-
-export default async function ContactPage() {
-  const [settings, page] = await Promise.all([
-    getSiteSettings(),
-    getPageBySlug("contact"),
-  ]);
-
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
-
-  // Schedule values from Contentful with fallbacks
-  const scheduleWeekdays =
-    settings?.scheduleWeekdays || "Luni - Vineri: 9:00 - 20:00";
-  const scheduleSaturday =
-    settings?.scheduleSaturday || "Sâmbătă: 9:00 - 14:00";
-  const scheduleSunday = settings?.scheduleSunday || "Duminică: Închis";
-
-  // Build opening hours from dynamic schedule
-  const openingHoursSpecification: object[] = [];
-  const weekdayTimes = parseScheduleTimes(scheduleWeekdays);
-  if (weekdayTimes) {
-    openingHoursSpecification.push({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: weekdayTimes.opens,
-      closes: weekdayTimes.closes,
-    });
-  }
-  const saturdayTimes = parseScheduleTimes(scheduleSaturday);
-  if (saturdayTimes) {
-    openingHoursSpecification.push({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Saturday",
-      opens: saturdayTimes.opens,
-      closes: saturdayTimes.closes,
-    });
-  }
-  const sundayTimes = parseScheduleTimes(scheduleSunday);
-  if (sundayTimes) {
-    openingHoursSpecification.push({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Sunday",
-      opens: sundayTimes.opens,
-      closes: sundayTimes.closes,
-    });
-  }
-
-  const localBusinessJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${siteUrl}/#organization`,
-    name: "Clubul Micii Campioni",
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Contactează-ne pentru informații despre cursurile de înot, programări sau orice alte întrebări. Suntem aici să te ajutăm.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contactează Micii Campioni",
     description:
-      "Primul club de educatie acvatica din Romania - cursuri de inot pentru bebelusi si copii.",
-    url: siteUrl,
-    telephone: settings?.phone,
-    email: settings?.email,
-    address: settings?.address
-      ? {
-          "@type": "PostalAddress",
-          streetAddress: settings.address,
-          addressLocality: "Bucuresti",
-          addressCountry: "RO",
-        }
-      : undefined,
-    geo:
-      settings?.gpsLatitude && settings?.gpsLongitude
-        ? {
-            "@type": "GeoCoordinates",
-            latitude: settings.gpsLatitude,
-            longitude: settings.gpsLongitude,
-          }
-        : undefined,
-    openingHoursSpecification:
-      openingHoursSpecification.length > 0
-        ? openingHoursSpecification
-        : undefined,
-  };
+      "Contactează-ne pentru informații despre cursurile de înot, programări sau orice alte întrebări. Suntem aici să te ajutăm.",
+  },
+};
 
-  // Breadcrumb structured data
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Acasă", item: siteUrl },
-      { "@type": "ListItem", position: 2, name: "Contact", item: `${siteUrl}/contact` },
-    ],
-  };
+const TRANSPORT: [string, string][] = [
+  ["Metrou", "5 min de la M2 Aviatorilor (ieșirea sud)"],
+  ["Autobuz", "STB 282, 301, 335 (stația Piața Charles de Gaulle)"],
+  ["Mașină", "Parcare proprie · acces direct din Strabuna"],
+  ["Taxi", "Cere Strabuna 26 sau Piața Charles de Gaulle"],
+];
 
+export default function ContactPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessJsonLd),
-        }}
-      />
-
-      {/* Hero Section */}
-      <SectionHero
-        title={page?.title || "Contactează-ne"}
-        subtitle="Suntem aici să răspundem la toate întrebările tale. Completează formularul sau folosește una din metodele de contact de mai jos."
-        heroImage={page?.heroImage}
+      <PageHero
+        variant="dark"
+        eyebrow="CONTACT"
+        no="VI"
+        title={
+          <>
+            Vino la <em>bazin</em>. Sună-ne. Scrie-ne.
+          </>
+        }
+        sub="O întâlnire la bazin durează 45 minute și nu te obligă la nimic. Vezi spațiul, observi o ședință, primești răspunsuri. Prima vizită este gratuită."
+        height={520}
       />
 
-      {/* Rich Text Content from Contentful — 720px reading column */}
-      {page?.content && (
-        <Section background="white" spacing="lg">
-          <div className="mx-auto max-w-[720px]">
-            <div className="prose prose-lg max-w-none">
-              <RichText content={page.content} demoteH1 />
+      {/* Form + info */}
+      <section className="bg-cream py-24 md:py-28 dark:bg-night-800">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+            <ContactFormEditorial />
+
+            <div className="flex flex-col gap-[18px]">
+              {/* Direct contact */}
+              <div className="rounded-2xl bg-lagoon-foundation p-8 text-white">
+                <p className="mono-eyebrow text-amber-credential">CONTACT DIRECT</p>
+                <a
+                  href="tel:+40722310052"
+                  className="mt-[18px] block font-display text-[32px] italic tracking-[-0.012em] text-white no-underline"
+                >
+                  +40 722 310 052
+                </a>
+                <a
+                  href="mailto:clubulmiciicampioni@yahoo.com"
+                  className="mt-2.5 block font-mono text-[15px] tracking-[0.02em] text-white/85 no-underline"
+                >
+                  clubulmiciicampioni@yahoo.com
+                </a>
+                <div className="mt-6 border-t border-white/[0.18] pt-[22px]">
+                  <p className="mono-eyebrow text-white/70">PROGRAM</p>
+                  <div className="mt-3 text-sm leading-7 text-white">
+                    Luni — Vineri · 09:00—20:00
+                    <br />
+                    Sâmbătă · 09:00—14:00
+                    <br />
+                    Duminică · închis
+                  </div>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="rounded-2xl border border-lagoon-foundation/[0.06] bg-white p-7 shadow-soft dark:border-white/10 dark:bg-night-900">
+                <p className="mono-eyebrow text-coral-refined">LOCAȚIA NOASTRĂ</p>
+                <p className="display mt-3 text-[22px] italic leading-snug text-sand-900 dark:text-white">
+                  Str. Strabuna nr. 26
+                  <br />
+                  Sector 1, București
+                </p>
+                <p className="mt-3 text-[13.5px] leading-relaxed text-sand-600 dark:text-sand-400">
+                  Parcare proprie · Acces persoane cu mobilitate redusă · La 5 minute de metroul Aviatorilor
+                </p>
+                <a
+                  href="https://maps.google.com/?q=Str.+Strabuna+26+Bucuresti"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-[18px] inline-flex items-center gap-2 text-[13px] font-semibold text-lagoon-foundation no-underline dark:text-lagoon-accent"
+                >
+                  Deschide în Maps
+                  <ArrowRight className="h-3.5 w-3.5 -rotate-45" />
+                </a>
+              </div>
+
+              {/* WhatsApp */}
+              <div className="rounded-2xl border border-lagoon-foundation/[0.06] bg-white p-7 shadow-soft dark:border-white/10 dark:bg-night-900">
+                <p className="mono-eyebrow text-amber-credential">WHATSAPP</p>
+                <p className="mt-3 text-sm leading-relaxed text-sand-700 dark:text-sand-300">
+                  Pentru întrebări rapide, ne poți scrie pe WhatsApp. Răspundem în maxim 2 ore în
+                  programul de lucru.
+                </p>
+                <a
+                  href="https://wa.me/40722310052"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3.5 inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-[18px] py-3 text-[13px] font-semibold text-white no-underline"
+                >
+                  <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                    <path d="M16.003 2C8.27 2 2 8.27 2 16c0 2.476.65 4.797 1.786 6.812L2 30l7.395-1.764A13.93 13.93 0 0 0 16.003 30C23.732 30 30 23.732 30 16S23.732 2 16.003 2Z" />
+                  </svg>
+                  Scrie pe WhatsApp
+                </a>
+              </div>
             </div>
           </div>
-        </Section>
-      )}
+        </Container>
+      </section>
 
-      {/* Contact Info + Form */}
-      <Section background="sand" spacing="xl">
-        <div className="grid gap-12 lg:grid-cols-3">
-          {/* Contact Information */}
-          <div className="space-y-6 lg:col-span-1">
-            <h2 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[var(--tracking-mono)] text-lagoon-foundation dark:text-lagoon-accent">
-              INFORMAȚII CONTACT
-            </h2>
-
-            {/* Phone */}
-            {settings?.phone && (
-              <Card
-                variant="default"
-                padding="md"
-                className="flex items-start gap-4"
-              >
-                <Phone className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
-                <div>
-                  <h3 className="font-semibold text-sand-900">Telefon</h3>
-                  <a
-                    href={`tel:${settings.phone}`}
-                    className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
-                  >
-                    {settings.phone}
-                  </a>
+      {/* Map + transport */}
+      <section className="bg-white py-16 md:py-20 dark:bg-night-900">
+        <Container>
+          <div className="grid gap-7 lg:grid-cols-[2fr_1fr]">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-lagoon-foundation">
+              <svg viewBox="0 0 800 450" className="block h-full w-full" aria-hidden="true">
+                <defs>
+                  <pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(94,234,219,0.08)" strokeWidth="1" />
+                  </pattern>
+                </defs>
+                <rect width="800" height="450" fill="url(#map-grid)" />
+                <path d="M -20 320 Q 200 280 400 310 T 820 290" stroke="rgba(94,234,219,0.2)" strokeWidth="20" fill="none" />
+                <path d="M 0 200 L 800 220" stroke="rgba(255,255,255,0.12)" strokeWidth="2" />
+                <path d="M 380 0 L 410 450" stroke="rgba(255,255,255,0.12)" strokeWidth="2" />
+                <path d="M 100 0 L 130 450" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" />
+                <path d="M 580 0 L 620 450" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" />
+                <g transform="translate(400,220)">
+                  <circle r="80" fill="rgba(234,88,12,0.12)" />
+                  <circle r="40" fill="rgba(234,88,12,0.20)" />
+                  <circle r="14" fill="#ea580c" />
+                  <circle r="6" fill="#fff" />
+                </g>
+                <text x="420" y="190" fill="rgba(255,255,255,0.85)" fontFamily="var(--font-dm-mono), monospace" fontSize="11" letterSpacing="2">
+                  MICII CAMPIONI
+                </text>
+                <text x="420" y="206" fill="rgba(94,234,219,0.8)" fontFamily="var(--font-dm-mono), monospace" fontSize="10" letterSpacing="2">
+                  STR. STRABUNA 26
+                </text>
+              </svg>
+              <span className="absolute left-[18px] top-[18px] rounded-full bg-lagoon-foundation/55 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[var(--tracking-mono)] text-white backdrop-blur-md">
+                SECTOR 1 · BUCUREȘTI
+              </span>
+            </div>
+            <div className="flex flex-col justify-center gap-[18px] rounded-2xl bg-cream p-7 dark:bg-night-800">
+              <Eyebrow color="coral">CUM AJUNGI</Eyebrow>
+              {TRANSPORT.map(([k, v]) => (
+                <div key={k} className="grid grid-cols-[80px_1fr] items-baseline gap-3.5">
+                  <span className="mono-eyebrow text-sand-500 dark:text-sand-400">{k.toUpperCase()}</span>
+                  <span className="text-[14.5px] leading-normal text-sand-800 dark:text-sand-200">{v}</span>
                 </div>
-              </Card>
-            )}
-
-            {/* Email */}
-            {settings?.email && (
-              <Card
-                variant="default"
-                padding="md"
-                className="flex items-start gap-4"
-              >
-                <Mail className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
-                <div>
-                  <h3 className="font-semibold text-sand-900">Email</h3>
-                  <a
-                    href={`mailto:${settings.email}`}
-                    className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
-                  >
-                    {settings.email}
-                  </a>
-                </div>
-              </Card>
-            )}
-
-            {/* Address */}
-            {settings?.address && (
-              <Card
-                variant="default"
-                padding="md"
-                className="flex items-start gap-4"
-              >
-                <MapPin className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
-                <div>
-                  <h3 className="font-semibold text-sand-900">Adresă</h3>
-                  <a
-                    href={
-                      settings.gpsLatitude && settings.gpsLongitude
-                        ? `https://www.google.com/maps/search/?api=1&query=${settings.gpsLatitude},${settings.gpsLongitude}`
-                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lagoon-foundation transition-colors hover:text-lagoon-deep"
-                  >
-                    {settings.address}
-                  </a>
-                </div>
-              </Card>
-            )}
-
-            {/* Working Hours */}
-            <Card
-              variant="default"
-              padding="md"
-              className="flex items-start gap-4"
-            >
-              <Clock className="h-6 w-6 flex-shrink-0 text-lagoon-foundation" aria-hidden="true" />
-              <div>
-                <h3 className="font-semibold text-sand-900">Program</h3>
-                <p className="text-sand-600">{scheduleWeekdays}</p>
-                <p className="text-sand-600">{scheduleSaturday}</p>
-                <p className="text-sand-600">{scheduleSunday}</p>
-              </div>
-            </Card>
+              ))}
+            </div>
           </div>
-
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <Card variant="default" padding="lg">
-              <h2 className="mb-6 font-heading text-xl font-semibold text-sand-900 tracking-[var(--tracking-section)]">
-                Trimite-ne un mesaj
-              </h2>
-              <ContactForm />
-            </Card>
-          </div>
-        </div>
-      </Section>
-
-      {/* Map Section - Uses GPS coordinates if available */}
-      {settings?.gpsLatitude && settings?.gpsLongitude && (
-        <Section background="white" spacing="lg" noContainer>
-          <div className="h-[400px] w-full">
-            <iframe
-              src={`https://www.google.com/maps?q=${settings.gpsLatitude},${settings.gpsLongitude}&z=15&output=embed`}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Locația Micii Campioni"
-            />
-          </div>
-        </Section>
-      )}
+        </Container>
+      </section>
     </>
   );
 }

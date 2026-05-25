@@ -106,7 +106,7 @@ export default function ConceptPage() {
               >
                 „Am început cu o întrebare: <em>de ce</em> bebelușul nostru plânge când îl punem în
                 apă? Nu pentru că e speriat — pentru că noi suntem. Metoda Sultana începe acolo: cu
-                părintele care își recapătă liniștea."
+                părintele care își recapătă liniștea.”
               </p>
               <p className="mono-eyebrow mt-5 text-sand-500 dark:text-sand-400">
                 Georgeta Sultana · Fondatoare, 2001
