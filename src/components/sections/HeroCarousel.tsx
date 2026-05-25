@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -64,12 +64,7 @@ const AVATARS = ["/images/carousel/hero-2.jpg", "/images/carousel/hero-4.jpg", "
 // Component
 // =============================================================================
 
-export interface HeroCarouselProps {
-  /** @deprecated Slides are hardcoded per the design handoff; prop ignored. */
-  slides?: unknown;
-}
-
-export function HeroCarousel(_props: HeroCarouselProps = {}) {
+export function HeroCarousel() {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const [scrollY, setScrollY] = useState(0);

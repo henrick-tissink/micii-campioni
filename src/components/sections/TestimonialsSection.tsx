@@ -3,14 +3,6 @@ import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { SectionHead } from "@/components/ui/SectionHead";
 
-// =============================================================================
-// Types (back-compat — `testimonials` prop optional and ignored)
-// =============================================================================
-
-export interface TestimonialsSectionProps {
-  testimonials?: unknown;
-}
-
 interface Testimonial {
   quote: string;
   author: string;
@@ -55,7 +47,7 @@ const TESTIMONIALS: Testimonial[] = [
 // Component
 // =============================================================================
 
-export function TestimonialsSection(_props: TestimonialsSectionProps = {}) {
+export function TestimonialsSection() {
   const featured = TESTIMONIALS.find((t) => t.featured) ?? TESTIMONIALS[0];
   const rest = TESTIMONIALS.filter((t) => t !== featured);
 

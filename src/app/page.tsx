@@ -1,102 +1,84 @@
-import {
-  getCarouselSlides,
-  getServices,
-  getTestimonials,
-  getHomepageContent,
-} from "@/lib/contentful/queries";
 import { HeroCarousel } from "@/components/sections/HeroCarousel";
-import { ServicesSection } from "@/components/sections/ServicesSection";
+import { PressStrip } from "@/components/sections/PressStrip";
+import { StatsBand } from "@/components/sections/StatsBand";
+import { MetodaSection } from "@/components/sections/MetodaSection";
+import { AgePicker } from "@/components/sections/AgePicker";
+import { FacilityStrip } from "@/components/sections/FacilityStrip";
+import { HistoryTimeline } from "@/components/sections/HistoryTimeline";
+import { FounderSection } from "@/components/sections/FounderSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
-import { StatsSection } from "@/components/sections/StatsSection";
-import { AboutSection } from "@/components/sections/AboutSection";
-import { CTASection } from "@/components/sections/CTASection";
-import { FounderStrip } from "@/components/sections/FounderStrip";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { ClosingCta } from "@/components/sections/ClosingCta";
 import { AnimatedSection } from "./HomePageSections";
 
-export default async function HomePage() {
-  const [slides, services, testimonials, homepageContent] = await Promise.all([
-    getCarouselSlides(),
-    getServices(),
-    getTestimonials(),
-    getHomepageContent(),
-  ]);
+// Static reviews for structured data (mirrors the testimonials rendered on-page).
+const REVIEWS = [
+  { author: "Simona Bălănescu", quote: "Înotul timpuriu crește încrederea în sine și independența copilului." },
+  { author: "Adela și Dragoș Stan", quote: "Metoda a pus bazele psihomotorii ale unor performanțe remarcabile." },
+  { author: "Sanda Ladoși", quote: "Mișcarea încă de la o vârstă fragedă nu poate să facă decât bine." },
+  { author: "Andreea P.", quote: "E calm, e atent, e prezent. Apa devine prietena lui." },
+];
 
+export default function HomePage() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://miciicampioni.ro";
 
-  // Review structured data for testimonials
-  const reviewsJsonLd = testimonials.length > 0 ? {
+  const reviewsJsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${siteUrl}/#organization`,
     name: "Clubul Micii Campioni",
-    review: testimonials.map((t) => ({
+    review: REVIEWS.map((r) => ({
       "@type": "Review",
-      author: {
-        "@type": "Person",
-        name: t.authorName,
-      },
-      reviewBody: t.quote,
+      author: { "@type": "Person", name: r.author },
+      reviewBody: r.quote,
     })),
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.9",
       bestRating: "5",
       worstRating: "1",
-      ratingCount: testimonials.length.toString(),
+      ratingCount: REVIEWS.length.toString(),
     },
-  } : null;
+  };
 
   return (
     <>
-      {reviewsJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd) }}
-        />
-      )}
-      {/* Hero Carousel */}
-      <HeroCarousel slides={slides} />
-
-      {/* Stats Section */}
-      <StatsSection variant="foundation-deep" />
-
-      {/* About Section */}
-      <AnimatedSection>
-        <AboutSection
-          media={homepageContent?.aboutMedia}
-          title={homepageContent?.aboutTitle}
-          subtitle={homepageContent?.aboutSubtitle}
-          description={homepageContent?.aboutDescription}
-          features={homepageContent?.aboutFeatures}
-        />
-      </AnimatedSection>
-
-      {/* Continuous cream block: Services + Testimonials (no divider between) */}
-      <AnimatedSection delay={100}>
-        <ServicesSection services={services} />
-      </AnimatedSection>
-
-      <AnimatedSection delay={100}>
-        <TestimonialsSection testimonials={testimonials} />
-      </AnimatedSection>
-
-      {/* Founder Strip — anchors the brand to Georgeta Sultana */}
-      <AnimatedSection>
-        <FounderStrip
-          imageUrl="/images/team/georgeta-sultana.png"
-          imageAlt="Georgeta Sultana, fondatoarea Clubului Micii Campioni"
-          quote="Cred că apa nu se cucerește — se înțelege. Iar fiecare copil învață în ritmul lui."
-          attribution="Georgeta Sultana — Fondatoare, Clubul Micii Campioni"
-        />
-      </AnimatedSection>
-
-      {/* CTA Section */}
-      <CTASection
-        title="Pregătit să începi aventura acvatică?"
-        description="Înscrie-ți copilul astăzi și oferă-i șansa de a deveni un mic campion al apei."
-        primaryButton={{ label: "Programeaza o vizită", href: "/contact" }}
-        secondaryButton={{ label: "Vezi Programul", href: "/servicii" }}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd) }}
       />
+
+      <HeroCarousel />
+      <PressStrip />
+      <StatsBand />
+
+      <AnimatedSection>
+        <MetodaSection />
+      </AnimatedSection>
+
+      <AnimatedSection>
+        <AgePicker />
+      </AnimatedSection>
+
+      <AnimatedSection>
+        <FacilityStrip />
+      </AnimatedSection>
+
+      <HistoryTimeline />
+
+      <AnimatedSection>
+        <FounderSection />
+      </AnimatedSection>
+
+      <AnimatedSection>
+        <TestimonialsSection />
+      </AnimatedSection>
+
+      <AnimatedSection>
+        <FaqSection />
+      </AnimatedSection>
+
+      <ClosingCta />
     </>
   );
 }
