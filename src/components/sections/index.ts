@@ -5,6 +5,9 @@
 export { HeroCarousel, type HeroCarouselProps } from "./HeroCarousel";
 export { PressStrip } from "./PressStrip";
 export { StatsBand } from "./StatsBand";
+export { MetodaSection } from "./MetodaSection";
+export { AgePicker } from "./AgePicker";
+export { FacilityStrip } from "./FacilityStrip";
 export {
   ServicesSection,
   CompactServices,
