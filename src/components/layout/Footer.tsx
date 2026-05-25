@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { Badge } from "@/components/ui/Badge";
 import type { Navigation as NavigationType, SiteSettings } from "@/types/contentful";
 
 // =============================================================================
@@ -13,209 +13,123 @@ export interface FooterProps {
   siteSettings?: SiteSettings | null;
 }
 
+const CURSURI = [
+  { label: "Metoda Sultana", href: "/servicii#metoda-sultana" },
+  { label: "Educație acvatică", href: "/servicii#educatie-acvatica" },
+  { label: "Joacă acvatică", href: "/servicii#joaca-acvatica" },
+  { label: "Inițiere înot", href: "/servicii#initiere-inot" },
+  { label: "Gravide", href: "/servicii#gravide" },
+  { label: "Școala Părinților", href: "/servicii#scoala-parintilor" },
+];
+
+// =============================================================================
+// Subcomponent
+// =============================================================================
+
+function FooterCol({
+  title,
+  items,
+}: {
+  title: string;
+  items: { label: string; href: string }[];
+}) {
+  return (
+    <div>
+      <h3 className="mono-eyebrow mb-[18px] font-medium text-lagoon-accent">{title}</h3>
+      <ul className="m-0 flex list-none flex-col gap-[11px] p-0">
+        {items.map((i) => (
+          <li key={i.label} className="text-sm">
+            <Link href={i.href} className="link-underline text-white/[0.78]">
+              {i.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 // =============================================================================
 // Component
 // =============================================================================
 
 export function Footer({ navigation, siteSettings }: FooterProps) {
-  const currentYear = new Date().getFullYear();
-  const navItems = navigation?.items || [];
+  const year = new Date().getFullYear();
+  const phone = siteSettings?.phone || "+40 722 310 052";
+  const email = siteSettings?.email || "clubulmiciicampioni@yahoo.com";
 
-  // Navigation items for footer
-  const mainLinks = navItems;
+  const navItems =
+    navigation?.items && navigation.items.length > 0
+      ? navigation.items
+      : [
+          { label: "Acasă", href: "/" },
+          { label: "Despre noi", href: "/despre-noi" },
+          { label: "Metoda", href: "/concept" },
+          { label: "Cursuri", href: "/servicii" },
+          { label: "Galerie", href: "/galerie" },
+          { label: "Asociația", href: "/asociatia" },
+          { label: "Contact", href: "/contact" },
+        ];
 
   return (
-    <footer className="bg-lagoon-deep text-lagoon-100 dark:bg-lagoon-deep">
-      {/* Main footer content */}
-      <Container>
-        <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand column */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="inline-block">
-              {siteSettings?.logo ? (
-                <Image
-                  src={siteSettings.logo.url}
-                  alt={siteSettings.logo.title || "Micii Campioni"}
-                  width={160}
-                  height={40}
-                  className="h-10 w-auto brightness-0 invert"
-                />
-              ) : (
-                <span className="font-heading text-xl font-bold text-white">
-                  Micii Campioni
-                </span>
-              )}
-            </Link>
-            <p className="mt-4 text-sm leading-relaxed">
-              {siteSettings?.tagline ||
-                "Primul club de educație acvatică din România, oferind cursuri de înot pentru copii de toate vârstele."}
+    <footer className="texture-grain relative overflow-hidden bg-lagoon-deep pb-8 pt-[72px] text-white/70">
+      <Container className="relative">
+        <div className="mb-14 grid gap-12 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+          {/* Brand */}
+          <div>
+            <Image
+              src="/images/logos/logo-micii-campioni-white.png"
+              alt="Micii Campioni"
+              width={208}
+              height={52}
+              className="h-[52px] w-auto"
+            />
+            <p className="mt-6 max-w-[340px] text-sm leading-relaxed">
+              Primul Club de Educație Acvatică din România. Metoda Sultana — singura
+              metodologie acreditată pentru educație acvatică timpurie.
             </p>
-
-            {/* Social links */}
-            <div className="mt-6 flex gap-4">
-              {siteSettings?.facebookUrl && (
-                <a
-                  href={siteSettings.facebookUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-lagoon-100 transition-colors hover:bg-lagoon-foundation hover:text-white"
-                  aria-label="Facebook"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
-              )}
-              {siteSettings?.instagramUrl && (
-                <a
-                  href={siteSettings.instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-lagoon-100 transition-colors hover:bg-lagoon-foundation hover:text-white"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-              )}
-              {siteSettings?.twitterUrl && (
-                <a
-                  href={siteSettings.twitterUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-lagoon-100 transition-colors hover:bg-lagoon-foundation hover:text-white"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="h-5 w-5" />
-                </a>
-              )}
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              <Badge variant="credential">COR · 342215</Badge>
+              <Badge variant="credential">EST · 2001</Badge>
             </div>
+            <p
+              className="display mt-8 max-w-[320px] italic leading-tight text-lagoon-accent"
+              style={{ fontSize: 28 }}
+            >
+              Apa nu se cucerește, se înțelege.
+            </p>
           </div>
 
-          {/* Navigation columns */}
-          <div>
-            <h3 className="mb-4 font-heading font-semibold text-white">
-              Navigare
-            </h3>
-            <ul className="space-y-2">
-              {mainLinks.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className="text-sm transition-colors hover:text-white"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterCol title="NAVIGAȚIE" items={navItems} />
+          <FooterCol title="CURSURI" items={CURSURI} />
+          <FooterCol
+            title="CONTACT"
+            items={[
+              { label: phone, href: `tel:${phone.replace(/\s/g, "")}` },
+              { label: email, href: `mailto:${email}` },
+              { label: "București · Sector 1", href: "/contact" },
+              { label: siteSettings?.address || "Str. Strabuna nr. 26", href: "/contact" },
+            ]}
+          />
+        </div>
 
-          <div>
-            <h3 className="mb-4 font-heading font-semibold text-white">
-              Despre
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/despre-noi"
-                  className="text-sm transition-colors hover:text-white"
-                >
-                  Despre Noi
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/concept"
-                  className="text-sm transition-colors hover:text-white"
-                >
-                  Conceptul Nostru
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/galerie"
-                  className="text-sm transition-colors hover:text-white"
-                >
-                  Galerie Foto
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/asociatia"
-                  className="text-sm transition-colors hover:text-white"
-                >
-                  Asociația
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/termeni-conditii"
-                  className="text-sm transition-colors hover:text-white"
-                >
-                  Termeni și Condiții
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/politica-confidentialitate"
-                  className="text-sm transition-colors hover:text-white"
-                >
-                  Politica de Confidențialitate
-                </Link>
-              </li>
-            </ul>
+        {/* Bottom bar */}
+        <div className="flex flex-wrap justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[11px] uppercase tracking-[var(--tracking-mono)] text-white/45">
+          <span>© {year} Clubul Micii Campioni · Toate drepturile rezervate</span>
+          <div className="flex gap-7">
+            <Link href="/termeni-conditii" className="text-inherit no-underline hover:text-white">
+              Termeni
+            </Link>
+            <Link
+              href="/politica-confidentialitate"
+              className="text-inherit no-underline hover:text-white"
+            >
+              Confidențialitate
+            </Link>
           </div>
-
-          {/* Contact column */}
-          <div>
-            <h3 className="mb-4 font-heading font-semibold text-white">
-              Contact
-            </h3>
-            <ul className="space-y-3">
-              {siteSettings?.phone && (
-                <li>
-                  <a
-                    href={`tel:${siteSettings.phone}`}
-                    className="flex items-start gap-3 text-sm transition-colors hover:text-white"
-                  >
-                    <Phone className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-accent" />
-                    {siteSettings.phone}
-                  </a>
-                </li>
-              )}
-              {siteSettings?.email && (
-                <li>
-                  <a
-                    href={`mailto:${siteSettings.email}`}
-                    className="flex items-start gap-3 text-sm transition-colors hover:text-white"
-                  >
-                    <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-accent" />
-                    {siteSettings.email}
-                  </a>
-                </li>
-              )}
-              {siteSettings?.address && (
-                <li className="flex items-start gap-3 text-sm">
-                  <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-lagoon-accent" />
-                  <span>{siteSettings.address}</span>
-                </li>
-              )}
-            </ul>
-          </div>
+          <span className="text-coral-refined">Designed with care for little swimmers</span>
         </div>
       </Container>
-
-      {/* Bottom bar */}
-      <div className="border-t border-lagoon-foundation/30">
-        <Container>
-          <div className="flex flex-col items-center justify-between gap-4 py-6 text-sm md:flex-row">
-            <p>
-              © {currentYear} Micii Campioni. Toate drepturile rezervate.
-            </p>
-            <p className="text-lagoon-200">
-              Designed with ❤️ for little swimmers
-            </p>
-          </div>
-        </Container>
-      </div>
     </footer>
   );
 }

@@ -20,6 +20,7 @@ export {
 } from "./TestimonialsSection";
 export { HistoryTimeline } from "./HistoryTimeline";
 export { FounderStrip, type FounderStripProps } from "./FounderStrip";
+export { FaqSection } from "./FaqSection";
 export { StatsSection, type StatsSectionProps, type Stat } from "./StatsSection";
 export { CTASection, type CTASectionProps } from "./CTASection";
 export { AboutSection, type AboutSectionProps } from "./AboutSection";
