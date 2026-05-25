@@ -13,6 +13,7 @@ export { FounderSection } from "./FounderSection";
 export { TestimonialsSection } from "./TestimonialsSection";
 export { FaqSection } from "./FaqSection";
 export { ClosingCta } from "./ClosingCta";
+export { CTAStrip, type CTAStripProps } from "./CTAStrip";
 export {
   ServicesSection,
   CompactServices,
