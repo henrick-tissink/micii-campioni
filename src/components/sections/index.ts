@@ -16,10 +16,10 @@ export {
 } from "./ServicesSection";
 export {
   TestimonialsSection,
-  FeaturedTestimonial,
   type TestimonialsSectionProps,
-  type FeaturedTestimonialProps,
 } from "./TestimonialsSection";
+export { HistoryTimeline } from "./HistoryTimeline";
+export { FounderStrip, type FounderStripProps } from "./FounderStrip";
 export { StatsSection, type StatsSectionProps, type Stat } from "./StatsSection";
 export { CTASection, type CTASectionProps } from "./CTASection";
 export { AboutSection, type AboutSectionProps } from "./AboutSection";
